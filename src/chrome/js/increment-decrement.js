@@ -22,7 +22,7 @@ var IncrementDecrement = (() => {
     try {
       if (preference === "custom" && selectionCustom) {
         // TODO: Validate custom regex with current url for alphanumeric selection
-        const custom = new RegExp(selectionCustom.pattern, selectionCustom.flags).exec(url);
+        const custom = new RegExp(selectionCustom.regex, selectionCustom.flags).exec(url);
         if (custom && custom[selectionCustom.group]) { return {selection: custom[selectionCustom.group].substring(selectionCustom.index), selectionStart: custom.index + selectionCustom.index}; }
       }
       if (preference === "prefixes" || preference === "custom") {

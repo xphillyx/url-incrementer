@@ -326,7 +326,7 @@
   "selection_option_firstnumber": { "message": "Select the first number in the URL" },
   "selection_option_custom": { "message": "Use a custom regular expression" },
   "selection_custom_url_label": { "message": "Test URL String (Required, note this is saved)" },
-  "selection_custom_pattern_label": { "message": "Regular Expression" },
+  "selection_custom_regex_label": { "message": "Regular Expression" },
   "selection_custom_flags_label": { "message": "Flags" },
   "selection_custom_group_label": { "message": "Capturing Group (Usually 0)" },
   "selection_custom_index_label": { "message": "Index Position (Usually 0)" },

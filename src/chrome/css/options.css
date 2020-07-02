@@ -206,7 +206,7 @@ input[type="image"].key-clear {
   word-break: break-all;
 }
 
-#selection-custom-pattern-input {
+#selection-custom-regex-input {
   width: 120px;
   margin: 0 4px;
 }

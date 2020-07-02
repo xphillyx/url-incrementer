@@ -223,7 +223,7 @@ var Options = (() => {
       DOM["#selection-select"].value = items.selectionPriority;
       DOM["#selection-custom"].className = items.selectionPriority === "custom" ? "display-block" : "display-none";
       DOM["#selection-custom-url-textarea"].value = items.selectionCustom.url;
-      DOM["#selection-custom-pattern-input"].value = items.selectionCustom.pattern;
+      DOM["#selection-custom-regex-input"].value = items.selectionCustom.regex;
       DOM["#selection-custom-flags-input"].value = items.selectionCustom.flags;
       DOM["#selection-custom-group-input"].value = items.selectionCustom.group;
       DOM["#selection-custom-index-input"].value = items.selectionCustom.index;
@@ -544,7 +544,7 @@ var Options = (() => {
    */
   async function customSelection(action) {
     const url = DOM["#selection-custom-url-textarea"].value;
-    const pattern = DOM["#selection-custom-pattern-input"].value;
+    const regex = DOM["#selection-custom-regex-input"].value;
     const flags = DOM["#selection-custom-flags-input"].value;
     const group = +DOM["#selection-custom-group-input"].value;
     const index = +DOM["#selection-custom-index-input"].value;
@@ -595,7 +595,7 @@ var Options = (() => {
       DOM["#selection-custom-url-textarea"].focus();
     } else if (action === "save") {
       DOM["#selection-custom-message-span"].textContent = chrome.i18n.getMessage("selection_custom_save_success");
-      chrome.storage.local.set({"selectionCustom": { "url": url, "pattern": pattern, "flags": flags, "group": group, "index": index }});
+      chrome.storage.local.set({"selectionCustom": { "url": url, "regex": regex, "flags": flags, "group": group, "index": index }});
     }
   }
 

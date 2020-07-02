@@ -17,7 +17,7 @@ var Background = (() => {
     "mouseEnabled": true, "mouseQuickEnabled": true, "mouseClickSpeed": 400, "mouseIncrement": {"button": 3, "clicks": 2}, "mouseDecrement": {"button": 4, "clicks": 2}, "mouseNext": null, "mousePrev": null, "mouseClear": null, "mouseReturn": null, "mouseAuto": null, "mouseDownload": null,
     "interval": 1, "leadingZerosPadByDetection": true, "shuffleLimit": 1000, "shuffleStart": false, "listStart": false,
     "base": 10, "baseCase": "lowercase", "baseDateFormat": "", "baseRoman": "latin", "baseCustom": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-    "selectionPriority": "prefixes", "selectionCustom": { "url": "", "pattern": "", "flags": "", "group": 0, "index": 0 },
+    "selectionPriority": "prefixes", "selectionCustom": { "url": "", "regex": "", "flags": "", "group": 0, "index": 0 },
     "errorSkip": 0, "errorCodes": ["404", "3XX"], "errorCodesCustom": [],
     "nextPrevSameDomainPolicy": true, "nextPrevPopupButtons": false,
     "nextType": "selector", "nextSelector": "[rel=\"next\"]", "nextXpath": "//*[@rel=\"next\"]", "nextAttribute": ["href"],
