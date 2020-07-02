@@ -553,9 +553,9 @@ var Options = (() => {
     let selection;
     let selectionStart;
     try {
-      regexp = new RegExp(pattern, flags);
+      regexp = new RegExp(regex, flags);
       matches = regexp.exec(url);
-      if (!pattern || !matches) {
+      if (!regex || !matches) {
         throw chrome.i18n.getMessage("selection_custom_match_error");
       }
       if (group < 0) {
