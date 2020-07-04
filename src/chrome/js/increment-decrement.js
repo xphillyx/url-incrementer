@@ -9,7 +9,7 @@ var IncrementDecrement = (() => {
 
   /**
    * Finds a selection in the url to increment or decrement depending on the preference:
-   * "prefixes" (e.g. page=1 /1 =1), "lastnumber", "firstnumber", or "custom".
+   * "prefixes" (e.g. page=1), "lastnumber", "firstnumber", or "custom".
    *
    * @param url               the url to find the selection in
    * @param preference        the preferred strategy to use to find the selection
