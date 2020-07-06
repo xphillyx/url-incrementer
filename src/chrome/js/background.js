@@ -156,7 +156,7 @@ var Background = (() => {
       "tabId": tab.id, "url": url,
       "saveFound": saveFound, "saveType": saveFound ? object.type : "", "savePattern": saveFound ? object.pattern : "",
       "selection": selection.selection, "selectionStart": selection.selectionStart,
-      "leadingZeros": saveFound && object.type === "url" ? object.leadingZeros : object.leadingZerosPadByDetection && selection.selection.charAt(0) === '0' && selection.selection.length > 1,
+      "leadingZeros": saveFound && object.type === "url" ? object.leadingZeros : items.leadingZerosPadByDetection && selection.selection.charAt(0) === '0' && selection.selection.length > 1,
       "interval": object.interval,
       "base": object.base, "baseCase": object.baseCase, "baseDateFormat": object.baseDateFormat, "baseRoman": object.baseRoman, "baseCustom": object.baseCustom,
       "errorSkip": object.errorSkip, "errorCodes": object.errorCodes, "errorCodesCustom": object.errorCodesCustom,
