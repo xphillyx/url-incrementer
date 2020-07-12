@@ -155,7 +155,7 @@ var IncrementDecrement = (() => {
     IncrementDecrementMulti.multiPre(action, instance);
     let selectionmod;
     // Perform the increment or decrement operation depending on the base type
-    switch(base) {
+    switch (instance.base) {
       case "date":
         selectionmod = IncrementDecrementDate.incrementDecrementDate(action, instance.selection, instance.interval, instance.baseDateFormat);
         break;
@@ -448,7 +448,7 @@ var IncrementDecrementDate = (() => {
     const now = new Date();
     const mapParts = new Map([["y", now.getFullYear()], ["m", now.getMonth() + 1], ["d", 15], ["h", 12], ["i", 0], ["s", 0], ["l", 0]]);
     for (let i = 0; i < dateFormatParts.length; i++) {
-      switch(dateFormatParts[i]) {
+      switch (dateFormatParts[i]) {
         case "yyyy": mapParts.set("y", strParts[i]); break;
         case "yy":   mapParts.set("y", parseInt(strParts[i]) >= 70 ? "19" + strParts[i] : "20" + strParts[i]); break;
         case "mmmm": case "Mmmm": case"MMMM": mapParts.set("m", mmmm.findIndex(m => m === strParts[i].toLowerCase()) + 1); break;
@@ -485,7 +485,7 @@ var IncrementDecrementDate = (() => {
     interval = action.startsWith("increment") ? interval : -interval;
     const lowestregexp = /(l|(s|i|h|d|M|m|y(?!.*m))(?!.*M)(?!.*d)(?!.*h)(?!.*i)(?!.*s)(?!.*l))/;
     const lowestmatch = lowestregexp.exec(dateFormat)[0];
-    switch(lowestmatch) {
+    switch (lowestmatch) {
       case "l": date.setMilliseconds(date.getMilliseconds() + interval); break;
       case "s": date.setSeconds(date.getSeconds() + interval); break;
       case "i": date.setMinutes(date.getMinutes() + interval); break;
