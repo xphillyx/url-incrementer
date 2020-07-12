@@ -153,31 +153,28 @@ var IncrementDecrement = (() => {
    */
   function incrementDecrementURL(action, instance) {
     IncrementDecrementMulti.multiPre(action, instance);
-    const url = instance.url, selection = instance.selection, selectionStart = instance.selectionStart,
-          interval = instance.interval, leadingZeros = instance.leadingZeros,
-          base = instance.base, baseCase = instance.baseCase, baseDateFormat = instance.baseDateFormat, baseRoman = instance.baseRoman, baseCustom = instance.baseCustom;
     let selectionmod;
     // Perform the increment or decrement operation depending on the base type
     switch(base) {
       case "date":
-        selectionmod = IncrementDecrementDate.incrementDecrementDate(action, selection, interval, baseDateFormat);
+        selectionmod = IncrementDecrementDate.incrementDecrementDate(action, instance.selection, instance.interval, instance.baseDateFormat);
         break;
       case "decimal":
-        selectionmod = incrementDecrementDecimal(action, selection, interval, leadingZeros);
+        selectionmod = incrementDecrementDecimal(action, instance.selection, instance.interval, instance.leadingZeros);
         break;
       case "roman":
-        selectionmod = IncrementDecrementRoman.incrementDecrementRoman(action, selection, interval, baseRoman);
+        selectionmod = IncrementDecrementRoman.incrementDecrementRoman(action, instance.selection, instance.interval, instance.baseRoman);
         break;
       case "custom":
-        selectionmod = incrementDecrementBaseCustom(action, selection, interval, baseCustom, leadingZeros);
+        selectionmod = incrementDecrementBaseCustom(action, instance.selection, instance.interval, instance.baseCustom, instance.leadingZeros);
         break;
       // Base 2-36
       default:
-        selectionmod = incrementDecrementAlphanumeric(action, selection, interval, base, baseCase, leadingZeros);
+        selectionmod = incrementDecrementAlphanumeric(action, instance.selection, instance.interval, instance.base, instance.baseCase, instance.leadingZeros);
         break;
     }
     // Append: part 1 of the URL + modified selection + part 2 of the URL. (Note: We can't cache part1 and part2 at the beginning due to multi)
-    const urlmod = url.substring(0, selectionStart) + selectionmod + url.substring(selectionStart + selection.length);
+    const urlmod = instance.url.substring(0, instance.selectionStart) + selectionmod + instance.url.substring(instance.selectionStart + instance.selection.length);
     IncrementDecrementMulti.multiPost(selectionmod, urlmod, instance);
     instance.url = urlmod;
     instance.selection = selectionmod;
