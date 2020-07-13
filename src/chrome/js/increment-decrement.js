@@ -661,10 +661,17 @@ var IncrementDecrementArray = (() => {
    * @public
    */
   function stepThruURLs(action, instance) {
-    const urlProps =
-      (!instance.autoEnabled && action === "increment") || (action === instance.autoAction) ?
-        instance.urls[instance.urlsCurrentIndex + 1 < instance.urls.length ? !instance.autoEnabled ? ++instance.urlsCurrentIndex : instance.urlsCurrentIndex++ : instance.urls.length - 1] :
-        instance.urls[instance.urlsCurrentIndex - 1 >= 0 ? !instance.autoEnabled ? --instance.urlsCurrentIndex : instance.urlsCurrentIndex-- : 0];
+    let urlProps;
+    if (instance.scrollEnabled) {
+      // If scrolling, there's only one possible direction and it doesn't need auto handling (simply increment the array position)
+      urlProps = instance.urls[instance.urlsCurrentIndex + 1 < instance.urls.length ? instance.urlsCurrentIndex++ : instance.urls.length - 1];
+    } else if ((action === "increment" && !instance.autoEnabled) || (action === instance.autoAction)) {
+      // If action is manual increment or if action is same as auto action, increment array position (forward). Else Decrement array position (backwards)
+      urlProps = instance.urls[instance.urlsCurrentIndex + 1 < instance.urls.length ? !instance.autoEnabled ? ++instance.urlsCurrentIndex : instance.urlsCurrentIndex++ : instance.urls.length - 1];
+    } else {
+      // Else action is decrement array position (backwards)
+      urlProps = instance.urls[instance.urlsCurrentIndex - 1 >= 0 ? !instance.autoEnabled ? --instance.urlsCurrentIndex : instance.urlsCurrentIndex-- : 0];
+    }
     instance.url = urlProps.urlmod;
     instance.selection = urlProps.selectionmod;
   }
