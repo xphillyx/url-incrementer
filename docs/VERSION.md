@@ -43,7 +43,7 @@
 
 # Version 5.2 (6/30/2018)
 - New "1 Click" Increment Button and Decrement Button mini extensions for your toolbar are now available on the Chrome Web Store -- no more popups needed, super convenient, and consume 0 background memory when inactive! They're a win-win!
-- Improved increment decrement prefixes selection to find the last = or / instead of the first = or / (the last one is usually the one we want to increment!)
+- Improved increment decrement smart/prefixes selection to find the last = or / instead of the first = or / (the last one is usually the one we want to increment!)
 - Increased Error Skip max value from 10 to 100 times, but also added warning about using high values ("Too Many Requests")
 - Internal Shortcuts now have easier to press default modifiers Ctrl+Shift (like Chrome Shortcuts) instead of Alt+Ctrl (sorry for the awkward defaults!)
 - Internal Shortcuts modifier keys by themselves can no longer be used as shortcuts due to unforeseen complexities that arise in modifier-only combinations (Apologies, but hopefully no one was doing this anyway!)

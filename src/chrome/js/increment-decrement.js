@@ -9,7 +9,7 @@ var IncrementDecrement = (() => {
 
   /**
    * Finds a selection in the url to increment or decrement depending on the preference:
-   * "prefixes" (e.g. page=1), "lastnumber", "firstnumber", or "custom".
+   * "smart" (e.g. page=1), "lastnumber", "firstnumber", or "custom".
    *
    * @param url               the url to find the selection in
    * @param preference        the preferred strategy to use to find the selection
@@ -25,7 +25,7 @@ var IncrementDecrement = (() => {
         const custom = new RegExp(selectionCustom.regex, selectionCustom.flags).exec(url);
         if (custom && custom[selectionCustom.group]) { return {selection: custom[selectionCustom.group].substring(selectionCustom.index), selectionStart: custom.index + selectionCustom.index}; }
       }
-      if (preference === "prefixes" || preference === "custom") {
+      if (preference === "smart" || preference === "custom") {
         // page= lookbehind regex: /(?<=page)=(\d+)/i
         const page = /page=\d+/i.exec(url);
         if (page) { return {selection: page[0].substring(5), selectionStart: page.index + 5}; }
@@ -33,7 +33,7 @@ var IncrementDecrement = (() => {
         const terms = /(?:(p|id|next)=\d+)(?!.*(p|id|next)=\d+)/i.exec(url);
         if (terms) { return {selection: terms[0].substring(terms[1].length + 1), selectionStart: terms.index + terms[1].length + 1}; }
       }
-      if (preference === "lastnumber" || preference === "prefixes" || preference === "custom") {
+      if (preference === "lastnumber" || preference === "smart" || preference === "custom") {
         const last = /\d+(?!.*\d+)/.exec(url);
         if (last) { return {selection: last[0], selectionStart: last.index}; }
       }
