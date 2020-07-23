@@ -698,11 +698,16 @@ var IncrementDecrementArray = (() => {
         urls = buildURLs(instance, instance.autoAction, instance.autoTimes);
       } else {
         const shuffleLimit = instance.shuffleLimit;
-        const urlsIncrement = buildURLs(instance, "increment", shuffleLimit);
-        const urlsDecrement = buildURLs(instance, "decrement", shuffleLimit);
-        const urlOriginal = [{"urlmod": instance.url, "selectionmod": instance.selection}];
-        currentIndex = urlsDecrement.length;
-        urls = [...urlsDecrement, ...urlOriginal, ...urlsIncrement];
+        // If scroll enabled, only need to build urls array in one direction (increment or decrement)
+        if (instance.scrollEnabled) {
+          urls = buildURLs(instance, instance.scrollAction, shuffleLimit);
+        } else {
+          const urlsIncrement = buildURLs(instance, "increment", shuffleLimit);
+          const urlsDecrement = buildURLs(instance, "decrement", shuffleLimit);
+          const urlOriginal = [{"urlmod": instance.url, "selectionmod": instance.selection}];
+          currentIndex = urlsDecrement.length;
+          urls = [...urlsDecrement, ...urlOriginal, ...urlsIncrement];
+        }
       }
     }
     return {"urls": urls, "currentIndex": currentIndex};
