@@ -14,10 +14,10 @@
 <br>
 <img src="https://raw.githubusercontent.com/roysix/url-incrementer/master/assets/svg/urli.svg?sanitize=true" width="196" height="196" align="right" title="URLI">
 
-URLI can help you increment URLs. For example, if the URL has a "page=1" in it or if there's a Next [>] link on the page, URLI can get you to "page=2" in a variety of ways.
+URLI can help you increment URLs. For example, if the URL has a "page=1" in it or if there's a Next link on the page, URLI can get you to "page=2" in a variety of ways.
 
 # Features
-<em>Coming Soon in 6.0 (February 2019)</em>
+<em>Coming Soon in 6.0</em>
 - Customizable Keyboard and Mouse Shortcuts (Multi-Click + Rocker)
 - 1-Click Increment Decrement Button Extensions for Your Toolbar (Available on AMO)
 - Auto Incrementing
@@ -51,17 +51,8 @@ NickMWPrince & Gopi P (AUTO Concept), Coolio Wolfus (Ver 1.x Testing), Eric C (A
 
 ... and most of all you for using URLI :)
 
-# License
+# License and Copyright
 URLI, a URL Incrementer  
-Copyright © 2011 - 2019 Roy Six  
+Copyright © 2011 - 2020 Roy Six  
 License: LGPL-3.0  
 https://www.gnu.org/licenses/lgpl-3.0.html
-
-chromium.css  
-Copyright © 2015 The Chromium Authors. All rights reserved.  
-License: BSD 3-Clause  
-https://chromium.googlesource.com/chromium/src/+/master/LICENSE
-
-This open-source software uses code made by user contributions to the StackOverflow website  
-License: CC BY-SA 3.0  
-https://creativecommons.org/licenses/by-sa/3.0/

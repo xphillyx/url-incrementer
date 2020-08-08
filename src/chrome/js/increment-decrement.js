@@ -32,6 +32,10 @@ var IncrementDecrement = (() => {
         // p|id|next= lookbehind regex: /(?<=p|id|next)=(\d+)/i
         const terms = /(?:(p|id|next)=\d+)(?!.*(p|id|next)=\d+)/i.exec(url);
         if (terms) { return {selection: terms[0].substring(terms[1].length + 1), selectionStart: terms.index + terms[1].length + 1}; }
+        // =|/|- TODO: The / and - prefixes may be a bit aggressive, so they've been commented out for now. Also, don't capture the prefix itself so substring(1) will no longer be needed
+        // const prefixes = /(?:[=\/-]\d+)(?!.*[=\/-]\d+)/.exec(url);
+        const prefixes = /(?:[=]\d+)(?!.*[=]\d+)/.exec(url);
+        if (prefixes) { return {selection: prefixes[0].substring(1), selectionStart: prefixes.index + 1}; }
       }
       if (preference === "lastnumber" || preference === "smart" || preference === "custom") {
         const last = /\d+(?!.*\d+)/.exec(url);

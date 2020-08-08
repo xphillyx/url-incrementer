@@ -1,13 +1,33 @@
 URLI, a URL Incrementer
-Copyright © 2011 - 2019 Roy Six
-License: LGPL-3.0
-https://www.gnu.org/licenses/lgpl-3.0.html
+Copyright © 2011 - 2020 Roy Six
+License:
+https://github.com/roysix/url-incrementer/blob/master/LICENSE
 
-chromium.css
-Copyright © 2015 The Chromium Authors. All rights reserved.
-License: BSD 3-Clause
-https://chromium.googlesource.com/chromium/src/+/master/LICENSE
+Material Components for the web
+Copyright © 2014-2020 Google, Inc.
+License: MIT
+https://github.com/material-components/material-components-web/blob/master/LICENSE
 
-This open-source software uses code made by user contributions to the StackOverflow website
+Roboto Font
+Copyright © 2011 Google, Inc.
+License: Apache
+https://fonts.google.com/specimen/Roboto?selection.family=Roboto
+
+Font Awesome
+Copyright © Fonticons, Inc.
+License: MIT, CC BY 4.0 License, SIL OFL 1.1 License
+https://fontawesome.com/license/free
+
+Balloon.css
+Copyright © 2016 Claudio Holanda
+License: MIT
+https://github.com/kazzkiq/balloon.css/blob/master/LICENSE
+
+Hover.css
+Copyright © 2017 Ian Lunn
+License: MIT
+https://github.com/IanLunn/Hover/blob/master/license.txt
+
+This software has fragments of code derived from user contributions to the StackOverflow website
 License: CC BY-SA 3.0
 https://creativecommons.org/licenses/by-sa/3.0/
