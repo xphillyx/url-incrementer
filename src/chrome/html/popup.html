@@ -51,453 +51,555 @@
       </div>
     </div>
     <div id="setup" class="display-none">
-      <section id="increment-decrement">
-        <div class="heading">
-          <div id="increment-decrement-heading">
-            <img id="increment-decrement-img-mouse-pointer" src="../img/mouse-pointer.png" alt="" width="12" height="12">
-            <h3 id="increment-decrement-h3" data-i18n="textContent"></h3>
-          </div>
-          <div id="list-heading">
-            <img id="list-img-mouse-pointer" src="../img/mouse-pointer.png" alt="" width="12" height="12">
-            <h3 id="list-h3" data-i18n="textContent"></h3>
-          </div>
-          <div class="heading-right">
-            <div id="auto-repeat-button" class="icon-button hvr-grow-2x" data-i18n="title">
-              <label id="auto-repeat-label" for="auto-repeat-input">
-                <input id="auto-repeat-input" type="checkbox" class="display-none">
-                <img src="../img/retweet.png" alt="" width="16" height="16" class="checkbox-img">
-              </label>
-            </div>
-            <div id="shuffle-urls-button" class="icon-button hvr-grow-2x" data-i18n="title">
-              <label id="shuffle-urls-label" for="shuffle-urls-input">
-                <input id="shuffle-urls-input" type="checkbox" class="display-none">
-                <img src="../img/random.png" alt="" width="16" height="16" class="checkbox-img">
-              </label>
-            </div>
-            <div id="save-url-button" class="icon-button hvr-grow-2x" data-i18n="title">
-              <label id="save-url-label" for="save-url-input">
-                <input id="save-url-input" type="checkbox" class="display-none">
-                <img id="save-url-img" src="../img/heart-o.png" alt="" width="16" height="16">
-              </label>
-            </div>
-          </div>
+      <aside class="mdc-drawer">
+        <div class="mdc-drawer__header">
+          <h3 class="mdc-drawer__title" id="name" data-i18n="textContent"></h3>
         </div>
-        <div id="url">
-          <label id="url-label" for="url-textarea" class="label-display-inline-block" data-i18n="textContent"></label>
-          <div id="list-button" class="icon-button hvr-grow-2x" data-i18n="title">
-            <label id="list-label" for="list-input">
-              <input id="list-input" type="checkbox" class="display-none">
-              <img src="../img/list-alt.png" alt="" width="16" height="16" class="checkbox-img">
-            </label>
-          </div>
-          <textarea id="url-textarea" spellcheck="false"></textarea>
+        <div class="mdc-drawer__content">
+          <nav id="action-list" class="mdc-list">
+            <a class="mdc-list-item" href="#" data-action="increment">
+              <svg class="mdc-list-item__graphic"><use xlink:href="../lib/fontawesome.svg#solid-plus-circle"></use></svg>
+              <span class="mdc-list-item__text" id="scroll-action-increment-label" data-i18n="textContent"></span>
+            </a>
+            <a class="mdc-list-item" href="#" data-action="list">
+              <svg class="mdc-list-item__graphic"><use xlink:href="../lib/fontawesome.svg#solid-minus-circle"></use></svg>
+              <span class="mdc-list-item__text" id="scroll-action-decrement-label" data-i18n="textContent"></span>
+            </a>
+            <a class="mdc-list-item" href="#" data-action="toolkit">
+              <svg class="mdc-list-item__graphic"><use xlink:href="../lib/fontawesome.svg#solid-star"></use></svg>
+              <span class="mdc-list-item__text" id="scroll-action-special-label" data-i18n="textContent"></span>
+            </a>
+            <div id="drawer-image" class="mdc-drawer__header">
+              <img id="drawer-urli" src="../img/urli.svg" alt="urli" class="infy"/>
+              <svg id="drawer-infinity" class="urli"><use xlink:href="../img/urli.svg"></use></svg>
+            </div>
+          </nav>
         </div>
-        <div id="properties">
+      </aside>
+      <main class="main-content" id="main-content">
+        <div id="save-url-button" class="tooltip-without-underline" aria-describedby="tooltip" aria-label="save-url-button" data-balloon-pos="left">
+          <button id="save-fab" class="mdc-fab mdc-fab--mini mdc-ripple-upgraded" aria-label="Favorite">
+            <div class="mdc-fab__ripple"></div>
+            <svg id="save-url-button-icon" class="mdc-fab--icon"><use xlink:href="../lib/fontawesome.svg#regular-heart"></use></svg>
+          </button>
+        </div>
+        <input id="save-url-input" type="checkbox" class="display-none">
+        <div id="save-dialog" class="mdc-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">
+          <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface">
+              <h2 class="mdc-dialog__title" id="save-url-title" data-i18n="textContent"></h2>
+              <div class="mdc-dialog__content" id="my-dialog-content">
+                <p id="save-instructions" data-i18n="textContent"></p>
+                <div id="save-url-text-field-container" class="text-field-container">
+                  <div id="save-url-text-field" class="mdc-text-field mdc-text-field--fullwidth mdc-text-field--textarea">
+                    <textarea id="save-url-textarea" class="mdc-text-field__input" spellcheck="false"></textarea>
+                    <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+                      <div class="mdc-notched-outline__leading"></div>
+                      <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label mdc-floating-label--float-above" for="save-url-textarea" id="save-url-label" data-i18n="textContent"></label>
+                      </div>
+                      <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mdc-form-field">
+                  <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="save-url-type-pattern" name="save-url-type" value="pattern">
+                    <div class="mdc-radio__background">
+                      <div class="mdc-radio__outer-circle"></div>
+                      <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                  </div>
+                  <label for="save-url-type-pattern" id="save-url-type-pattern-label" data-i18n="textContent"></label>
+                  <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="save-url-type-regex" name="save-url-type" value="regex">
+                    <div class="mdc-radio__background">
+                      <div class="mdc-radio__outer-circle"></div>
+                      <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                  </div>
+                  <label for="save-url-type-regex" id="save-url-type-regex-label" data-i18n="textContent"></label>
+                  <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="save-url-type-exact" name="save-url-type" value="exact">
+                    <div class="mdc-radio__background">
+                      <div class="mdc-radio__outer-circle"></div>
+                      <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                  </div>
+                  <label for="save-url-type-exact" id="save-url-type-exact-label" data-i18n="textContent"></label>
+                </div>
+                <div class="mdc-text-field-helper-line">
+                  <div class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">
+                    <div id="save-url-help-title" class="help-title" data-i18n="textContent"></div>
+                    <p id="save-url-help-content" data-i18n="textContent"></p>
+                    <div id="save-url-example-title" class="help-title" data-i18n="textContent"></div>
+                    <p id="save-url-example-content" data-i18n="textContent"></p>
+                  </div>
+                </div>
+              </div>
+              <footer class="mdc-dialog__actions">
+                <button id="save-url-button-no" type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
+                  <span class="mdc-button__label">No</span>
+                </button>
+                <button id="save-url-button-yes" type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+                  <span class="mdc-button__label">Yes</span>
+                </button>
+              </footer>
+            </div>
+          </div>
+          <div class="mdc-dialog__scrim"></div>
+        </div>
+        <section id="increment-decrement">
+          <div class="heading">
+            <div id="increment-decrement-heading">
+              <img id="increment-decrement-img-mouse-pointer" src="../img/mouse-pointer.png" alt="" width="12" height="12">
+              <h3 id="increment-decrement-h3" data-i18n="textContent"></h3>
+            </div>
+            <div id="list-heading">
+              <img id="list-img-mouse-pointer" src="../img/mouse-pointer.png" alt="" width="12" height="12">
+              <h3 id="list-h3" data-i18n="textContent"></h3>
+            </div>
+            <div class="heading-right">
+              <div id="auto-repeat-button" class="icon-button hvr-grow-2x" data-i18n="title">
+                <label id="auto-repeat-label" for="auto-repeat-input">
+                  <input id="auto-repeat-input" type="checkbox" class="display-none">
+                  <img src="../img/retweet.png" alt="" width="16" height="16" class="checkbox-img">
+                </label>
+              </div>
+              <div id="shuffle-urls-button" class="icon-button hvr-grow-2x" data-i18n="title">
+                <label id="shuffle-urls-label" for="shuffle-urls-input">
+                  <input id="shuffle-urls-input" type="checkbox" class="display-none">
+                  <img src="../img/random.png" alt="" width="16" height="16" class="checkbox-img">
+                </label>
+              </div>
+              <div id="save-url-button" class="icon-button hvr-grow-2x" data-i18n="title">
+                <label id="save-url-label" for="save-url-input">
+                  <input id="save-url-input" type="checkbox" class="display-none">
+                  <img id="save-url-img" src="../img/heart-o.png" alt="" width="16" height="16">
+                </label>
+              </div>
+            </div>
+          </div>
+          <div id="url">
+            <label id="url-label" for="url-textarea" class="label-display-inline-block" data-i18n="textContent"></label>
+            <div id="list-button" class="icon-button hvr-grow-2x" data-i18n="title">
+              <label id="list-label" for="list-input">
+                <input id="list-input" type="checkbox" class="display-none">
+                <img src="../img/list-alt.png" alt="" width="16" height="16" class="checkbox-img">
+              </label>
+            </div>
+            <textarea id="url-textarea" spellcheck="false"></textarea>
+          </div>
+          <div id="properties">
+            <div class="table">
+              <div class="row">
+                <div id="selection" class="column">
+                  <label id="selection-label" for="selection-input" class="label-display-inline-block" data-i18n="textContent"></label>
+                  <div id="multi-button" class="icon-button hvr-grow-2x" data-i18n="title">
+                    <img id="multi-img-1" src="../img/plus-circle.png" alt="" width="14" height="14" class="disabled">
+                    <img id="multi-img-2" src="../img/plus-circle-2.png" alt="" width="14" height="14" class="disabled">
+                    <img id="multi-img-3" src="../img/plus-circle-3.png" alt="" width="14" height="14" class="disabled">
+                    <input id="multi-count" type="hidden" value="0"> <!-- saves multiCount -->
+                  </div>
+                  <div class="clear-both"></div>
+                  <input id="selection-input" type="text" readonly="readonly" spellcheck="false">
+                  <input id="selection-start-input" type="hidden" value="-1"> <!-- saves selectionStart -->
+                  <div class="checkbox">
+                    <label>
+                      <input id="leading-zeros-input" type="checkbox">
+                      <span id="leading-zeros-pad-label" data-i18n="textContent"></span>
+                    </label>
+                  </div>
+                </div>
+                <div id="interval" class="column">
+                  <label id="interval-label" for="interval-input" data-i18n="textContent"></label>
+                  <input id="interval-input" type="number" min="0">
+                </div>
+                <div id="error-skip" class="column">
+                  <div id="error-skip-description" data-i18n="title">
+                    <label id="error-skip-label" for="error-skip-input" class="label-display-block" data-i18n="textContent"></label>
+                  </div>
+                  <input id="error-skip-input" type="number" min="0" max="100">
+                </div>
+                <div id="base" class="column">
+                  <label id="base-label" for="base-select" data-i18n="textContent"></label>
+                  <select id="base-select">
+                    <option id="base-option-default" value="10" data-i18n="textContent"></option>
+                    <option id="base-option-date" value="date" data-i18n="textContent"></option>
+                    <option id="base-option-decimal" value="decimal" data-i18n="textContent"></option>
+                    <option id="base-option-roman" value="roman" data-i18n="textContent"></option>
+                    <option id="base-option-custom" value="custom" data-i18n="textContent"></option>
+                    <option id="base-option-2" value="2" data-i18n="textContent"></option>
+                    <option id="base-option-3" value="3" data-i18n="textContent"></option>
+                    <option id="base-option-4" value="4" data-i18n="textContent"></option>
+                    <option id="base-option-5" value="5" data-i18n="textContent"></option>
+                    <option id="base-option-6" value="6" data-i18n="textContent"></option>
+                    <option id="base-option-7" value="7" data-i18n="textContent"></option>
+                    <option id="base-option-8" value="8" data-i18n="textContent"></option>
+                    <option id="base-option-9" value="9" data-i18n="textContent"></option>
+                    <option id="base-option-10" value="10" data-i18n="textContent"></option>
+                    <option id="base-option-11" value="11" data-i18n="textContent"></option>
+                    <option id="base-option-12" value="12" data-i18n="textContent"></option>
+                    <option id="base-option-13" value="13" data-i18n="textContent"></option>
+                    <option id="base-option-14" value="14" data-i18n="textContent"></option>
+                    <option id="base-option-15" value="15" data-i18n="textContent"></option>
+                    <option id="base-option-16" value="16" data-i18n="textContent"></option>
+                    <option id="base-option-17" value="17" data-i18n="textContent"></option>
+                    <option id="base-option-18" value="18" data-i18n="textContent"></option>
+                    <option id="base-option-19" value="19" data-i18n="textContent"></option>
+                    <option id="base-option-20" value="20" data-i18n="textContent"></option>
+                    <option id="base-option-21" value="21" data-i18n="textContent"></option>
+                    <option id="base-option-22" value="22" data-i18n="textContent"></option>
+                    <option id="base-option-23" value="23" data-i18n="textContent"></option>
+                    <option id="base-option-24" value="24" data-i18n="textContent"></option>
+                    <option id="base-option-25" value="25" data-i18n="textContent"></option>
+                    <option id="base-option-26" value="26" data-i18n="textContent"></option>
+                    <option id="base-option-27" value="27" data-i18n="textContent"></option>
+                    <option id="base-option-28" value="28" data-i18n="textContent"></option>
+                    <option id="base-option-29" value="29" data-i18n="textContent"></option>
+                    <option id="base-option-30" value="30" data-i18n="textContent"></option>
+                    <option id="base-option-31" value="31" data-i18n="textContent"></option>
+                    <option id="base-option-32" value="32" data-i18n="textContent"></option>
+                    <option id="base-option-33" value="33" data-i18n="textContent"></option>
+                    <option id="base-option-34" value="34" data-i18n="textContent"></option>
+                    <option id="base-option-35" value="35" data-i18n="textContent"></option>
+                    <option id="base-option-36" value="36" data-i18n="textContent"></option>
+                  </select>
+                  <div id="base-case" class="display-none">
+                    <div class="radio">
+                      <label>
+                        <input id="base-case-lowercase-input" type="radio" name="base-case" value="lowercase">
+                        <span id="base-case-lowercase-label" data-i18n="textContent"></span>
+                      </label>
+                      <label>
+                        <input id="base-case-uppercase-input" type="radio" name="base-case" value="uppercase">
+                        <span id="base-case-uppercase-label" data-i18n="textContent"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div id="base-date" class="display-none">
+                    <a id="base-date-format-a" href="https://github.com/roysix/url-incrementer/wiki/Help#date-time-incrementing" target="_blank">
+                      <span id="base-date-format-label" data-i18n="textContent"></span>
+                    </a>
+                    <input id="base-date-format-input" type="text" placeholder="e.g. yyyy/mm/dd" spellcheck="false">
+                  </div>
+                  <div id="base-decimal" class="display-none"></div>
+                  <div id="base-roman" class="display-none">
+                    <div class="radio">
+                      <label>
+                        <input id="base-roman-latin-input" type="radio" name="base-roman" value="latin">
+                        <span id="base-roman-latin-label" data-i18n="textContent"></span>
+                      </label>
+                      <label>
+                        <input id="base-roman-u216x-input" type="radio" name="base-roman" value="u216x">
+                        <span id="base-roman-u216x-label" data-i18n="textContent"></span>
+                      </label>
+                      <label>
+                        <input id="base-roman-u217x-input" type="radio" name="base-roman" value="u217x">
+                        <span id="base-roman-u217x-label" data-i18n="textContent"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div id="base-custom" class="display-none">
+                    <a id="base-custom-a" href="https://github.com/roysix/url-incrementer/wiki/Help#bases-and-custom-bases" target="_blank">
+                      <span id="base-custom-label" data-i18n="textContent"></span>
+                    </a>
+                    <input id="base-custom-input" type="text" placeholder="e.g. 0123abcXYZ" spellcheck="false">
+                  </div>
+                </div>
+                <div id="list-instructions" class="column" data-i18n="textContent"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="toolkit" class="display-none">
+          <div class="heading">
+            <img src="../img/wrench.png" alt="" width="15" height="15">
+            <h3 id="toolkit-h3" data-i18n="textContent"></h3>
+            <div class="heading-right">
+              <img src="../img/star-2.png" alt="" width="12" height="12">
+              <span id="special-feature-label*toolkit" data-i18n="textContent"></span>
+            </div>
+          </div>
+          <div id="toolkit-instructions" data-i18n="textContent"></div>
           <div class="table">
             <div class="row">
-              <div id="selection" class="column">
-                <label id="selection-label" for="selection-input" class="label-display-inline-block" data-i18n="textContent"></label>
-                <div id="multi-button" class="icon-button hvr-grow-2x" data-i18n="title">
-                  <img id="multi-img-1" src="../img/plus-circle.png" alt="" width="14" height="14" class="disabled">
-                  <img id="multi-img-2" src="../img/plus-circle-2.png" alt="" width="14" height="14" class="disabled">
-                  <img id="multi-img-3" src="../img/plus-circle-3.png" alt="" width="14" height="14" class="disabled">
-                  <input id="multi-count" type="hidden" value="0"> <!-- saves multiCount -->
+              <div id="toolkit-tool" class="column">
+                <label id="toolkit-tool-label" data-i18n="textContent"></label>
+                <div class="radio">
+                  <label>
+                    <input id="toolkit-tool-crawl-input" type="radio" name="toolkit-tool" value="crawl">
+                    <img src="../img/spider.png" alt="" width="14" height="14">
+                    <span id="toolkit-tool-crawl-label" data-i18n="textContent"></span>
+                  </label>
                 </div>
-                <div class="clear-both"></div>
-                <input id="selection-input" type="text" readonly="readonly" spellcheck="false">
-                <input id="selection-start-input" type="hidden" value="-1"> <!-- saves selectionStart -->
+                <div class="radio">
+                  <label>
+                    <input id="toolkit-tool-tabs-input" type="radio" name="toolkit-tool" value="tabs">
+                    <img src="../img/window-maximize.png" alt="" width="14" height="14">
+                    <span id="toolkit-tool-tabs-label" data-i18n="textContent"></span>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input id="toolkit-tool-links-input" type="radio" name="toolkit-tool" value="links">
+                    <img src="../img/link.png" alt="" width="14" height="14">
+                    <span id="toolkit-tool-links-label" data-i18n="textContent"></span>
+                  </label>
+                </div>
+              </div>
+              <div id="toolkit-action" class="column">
+                <label id="toolkit-action-label" data-i18n="textContent"></label>
+                <div class="radio">
+                  <label>
+                    <input id="toolkit-action-increment-input" type="radio" name="toolkit-action" value="increment">
+                    <img src="../img/plus-circle.png" alt="" width="14" height="14">
+                    <span id="toolkit-action-increment-label" data-i18n="textContent"></span>
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input id="toolkit-action-decrement-input" type="radio" name="toolkit-action" value="decrement">
+                    <img src="../img/minus-circle.png" alt="" width="14" height="14">
+                    <span id="toolkit-action-decrement-label" data-i18n="textContent"></span>
+                  </label>
+                </div>
+              </div>
+              <div id="toolkit-quantity" class="column">
+                <label id="toolkit-quantity-label" for="toolkit-quantity-input" data-i18n="textContent"></label>
+                <input id="toolkit-quantity-input" type="number" min="1" max="10000">
+              </div>
+              <div id="toolkit-seconds" class="column">
+                <label id="toolkit-seconds-label" for="toolkit-seconds-input" data-i18n="textContent"></label>
+                <input id="toolkit-seconds-input" type="number" min="0" max="600">
+              </div>
+              <div id="toolkit-urli" class="column">
+                <div id="toolkit-urli-button-div" class="icon-button hvr-grow-2x">
+                  <img id="toolkit-urli-button-img" src="../img/urli.png" alt="" width="64" height="64">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="toolkit-scrape">
+            <div class="checkbox">
+              <label>
+                <input id="toolkit-scrape-input" type="checkbox">
+                <img src="../img/tools.png" alt="" width="12" height="12">
+                <span id="toolkit-scrape-label" data-i18n="textContent"></span>
+              </label>
+            </div>
+          </div>
+          <div id="scrape">
+            <div id="scrape-heading">
+              <img src="../img/tools.png" alt="" width="14" height="14">
+              <h3 id="scrape-h3" data-i18n="textContent"></h3>
+            </div>
+            <div id="scrape-instructions" data-i18n="textContent"></div>
+            <div id="scrape-table" class="table">
+              <div class="row">
+                <div class="column">
+                  <label id="scrape-method-label" for="scrape-method-select" data-i18n="textContent"></label>
+                  <select id="scrape-method-select">
+                    <option id="scrape-method-option-selector" value="selector">document.querySelector</option>
+                    <option id="scrape-method-option-selector-all" value="selector-all">document.querySelectorAll</option>
+                  </select>
+                </div>
+                <div class="column">
+                  <label id="scrape-selector-label" for="scrape-selector-input" data-i18n="textContent"></label>
+                  <span>("&nbsp;</span><input id="scrape-selector-input" type="text" placeholder="e.g. title" spellcheck="false"><span>&nbsp;").</span>
+                </div>
+                <div class="column">
+                  <label id="scrape-property-label" for="scrape-property-input" data-i18n="textContent"></label>
+                  <input id="scrape-property-input" type="text" placeholder="e.g. textContent" spellcheck="false">
+                </div>
+              </div>
+            </div>
+            <div id="scrape-example">
+              <em>
+                <span id="scrape-example-span" data-i18n="textContent"></span>
+                document.querySelector("<strong>title</strong>").<strong>textContent</strong>
+                <span id="scrape-example-return-span" data-i18n="textContent"></span>
+              </em>
+            </div>
+          </div>
+          <div id="toolkit-table-outer" class="display-none">
+            <div id="toolkit-table-div"><div></div></div>
+            <button id="toolkit-table-download-button" title="urli-generate-links.html" data-i18n="textContent"></button>
+          </div>
+        </section>
+        <section id="auto">
+          <div class="heading">
+            <img src="../img/refresh.png" alt="" width="16" height="16">
+            <h3 id="auto-h3" data-i18n="textContent"></h3>
+            <div class="heading-right">
+              <img src="../img/clock-o.png" alt="" width="13" height="13">
+              <span id="eta-label*auto" data-i18n="textContent"></span>
+              <span id="auto-eta-value"></span>
+            </div>
+          </div>
+          <div class="table">
+            <div class="row">
+              <div id="auto-action" class="column">
+                <label id="auto-action-label" for="auto-action-select" data-i18n="textContent"></label>
+                <select id="auto-action-select">
+                  <option id="auto-action-option-increment" value="increment" data-i18n="textContent"></option>
+                  <option id="auto-action-option-decrement" value="decrement" data-i18n="textContent"></option>
+                  <option id="auto-action-option-next" value="next" data-i18n="textContent"></option>
+                  <option id="auto-action-option-prev" value="prev" data-i18n="textContent"></option>
+                </select>
+              </div>
+              <div id="auto-times" class="column">
+                <label id="auto-times-label" for="auto-times-input" data-i18n="textContent"></label>
+                <input id="auto-times-input" type="number" min="1" max="10000">
+              </div>
+              <div id="auto-seconds" class="column">
+                <label id="auto-seconds-label" for="auto-seconds-input" data-i18n="textContent"></label>
+                <input id="auto-seconds-input" type="number" min="1" max="3600">
+              </div>
+              <div id="auto-wait-badge" class="column">
                 <div class="checkbox">
                   <label>
-                    <input id="leading-zeros-input" type="checkbox">
-                    <span id="leading-zeros-pad-label" data-i18n="textContent"></span>
+                    <input id="auto-wait-input" type="checkbox">
+                    <span id="auto-wait-label" data-i18n="textContent"></span>
                   </label>
                 </div>
-              </div>
-              <div id="interval" class="column">
-                <label id="interval-label" for="interval-input" data-i18n="textContent"></label>
-                <input id="interval-input" type="number" min="0">
-              </div>
-              <div id="error-skip" class="column">
-                <div id="error-skip-description" data-i18n="title">
-                  <label id="error-skip-label" for="error-skip-input" class="label-display-block" data-i18n="textContent"></label>
-                </div>
-                <input id="error-skip-input" type="number" min="0" max="100">
-              </div>
-              <div id="base" class="column">
-                <label id="base-label" for="base-select" data-i18n="textContent"></label>
-                <select id="base-select">
-                  <option id="base-option-default" value="10" data-i18n="textContent"></option>
-                  <option id="base-option-date" value="date" data-i18n="textContent"></option>
-                  <option id="base-option-decimal" value="decimal" data-i18n="textContent"></option>
-                  <option id="base-option-roman" value="roman" data-i18n="textContent"></option>
-                  <option id="base-option-custom" value="custom" data-i18n="textContent"></option>
-                  <option id="base-option-2" value="2" data-i18n="textContent"></option>
-                  <option id="base-option-3" value="3" data-i18n="textContent"></option>
-                  <option id="base-option-4" value="4" data-i18n="textContent"></option>
-                  <option id="base-option-5" value="5" data-i18n="textContent"></option>
-                  <option id="base-option-6" value="6" data-i18n="textContent"></option>
-                  <option id="base-option-7" value="7" data-i18n="textContent"></option>
-                  <option id="base-option-8" value="8" data-i18n="textContent"></option>
-                  <option id="base-option-9" value="9" data-i18n="textContent"></option>
-                  <option id="base-option-10" value="10" data-i18n="textContent"></option>
-                  <option id="base-option-11" value="11" data-i18n="textContent"></option>
-                  <option id="base-option-12" value="12" data-i18n="textContent"></option>
-                  <option id="base-option-13" value="13" data-i18n="textContent"></option>
-                  <option id="base-option-14" value="14" data-i18n="textContent"></option>
-                  <option id="base-option-15" value="15" data-i18n="textContent"></option>
-                  <option id="base-option-16" value="16" data-i18n="textContent"></option>
-                  <option id="base-option-17" value="17" data-i18n="textContent"></option>
-                  <option id="base-option-18" value="18" data-i18n="textContent"></option>
-                  <option id="base-option-19" value="19" data-i18n="textContent"></option>
-                  <option id="base-option-20" value="20" data-i18n="textContent"></option>
-                  <option id="base-option-21" value="21" data-i18n="textContent"></option>
-                  <option id="base-option-22" value="22" data-i18n="textContent"></option>
-                  <option id="base-option-23" value="23" data-i18n="textContent"></option>
-                  <option id="base-option-24" value="24" data-i18n="textContent"></option>
-                  <option id="base-option-25" value="25" data-i18n="textContent"></option>
-                  <option id="base-option-26" value="26" data-i18n="textContent"></option>
-                  <option id="base-option-27" value="27" data-i18n="textContent"></option>
-                  <option id="base-option-28" value="28" data-i18n="textContent"></option>
-                  <option id="base-option-29" value="29" data-i18n="textContent"></option>
-                  <option id="base-option-30" value="30" data-i18n="textContent"></option>
-                  <option id="base-option-31" value="31" data-i18n="textContent"></option>
-                  <option id="base-option-32" value="32" data-i18n="textContent"></option>
-                  <option id="base-option-33" value="33" data-i18n="textContent"></option>
-                  <option id="base-option-34" value="34" data-i18n="textContent"></option>
-                  <option id="base-option-35" value="35" data-i18n="textContent"></option>
-                  <option id="base-option-36" value="36" data-i18n="textContent"></option>
-                </select>
-                <div id="base-case" class="display-none">
-                  <div class="radio">
-                    <label>
-                      <input id="base-case-lowercase-input" type="radio" name="base-case" value="lowercase">
-                      <span id="base-case-lowercase-label" data-i18n="textContent"></span>
-                    </label>
-                    <label>
-                      <input id="base-case-uppercase-input" type="radio" name="base-case" value="uppercase">
-                      <span id="base-case-uppercase-label" data-i18n="textContent"></span>
-                    </label>
-                  </div>
-                </div>
-                <div id="base-date" class="display-none">
-                  <a id="base-date-format-a" href="https://github.com/roysix/url-incrementer/wiki/Help#date-time-incrementing" target="_blank">
-                    <span id="base-date-format-label" data-i18n="textContent"></span>
-                  </a>
-                  <input id="base-date-format-input" type="text" placeholder="e.g. yyyy/mm/dd" spellcheck="false">
-                </div>
-                <div id="base-decimal" class="display-none"></div>
-                <div id="base-roman" class="display-none">
-                  <div class="radio">
-                    <label>
-                      <input id="base-roman-latin-input" type="radio" name="base-roman" value="latin">
-                      <span id="base-roman-latin-label" data-i18n="textContent"></span>
-                    </label>
-                    <label>
-                      <input id="base-roman-u216x-input" type="radio" name="base-roman" value="u216x">
-                      <span id="base-roman-u216x-label" data-i18n="textContent"></span>
-                    </label>
-                    <label>
-                      <input id="base-roman-u217x-input" type="radio" name="base-roman" value="u217x">
-                      <span id="base-roman-u217x-label" data-i18n="textContent"></span>
-                    </label>
-                  </div>
-                </div>
-                <div id="base-custom" class="display-none">
-                  <a id="base-custom-a" href="https://github.com/roysix/url-incrementer/wiki/Help#bases-and-custom-bases" target="_blank">
-                    <span id="base-custom-label" data-i18n="textContent"></span>
-                  </a>
-                  <input id="base-custom-input" type="text" placeholder="e.g. 0123abcXYZ" spellcheck="false">
-                </div>
-              </div>
-              <div id="list-instructions" class="column" data-i18n="textContent"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="toolkit" class="display-none">
-        <div class="heading">
-          <img src="../img/wrench.png" alt="" width="15" height="15">
-          <h3 id="toolkit-h3" data-i18n="textContent"></h3>
-          <div class="heading-right">
-            <img src="../img/star-2.png" alt="" width="12" height="12">
-            <span id="special-feature-label*toolkit" data-i18n="textContent"></span>
-          </div>
-        </div>
-        <div id="toolkit-instructions" data-i18n="textContent"></div>
-        <div class="table">
-          <div class="row">
-            <div id="toolkit-tool" class="column">
-              <label id="toolkit-tool-label" data-i18n="textContent"></label>
-              <div class="radio">
-                <label>
-                  <input id="toolkit-tool-crawl-input" type="radio" name="toolkit-tool" value="crawl">
-                  <img src="../img/spider.png" alt="" width="14" height="14">
-                  <span id="toolkit-tool-crawl-label" data-i18n="textContent"></span>
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input id="toolkit-tool-tabs-input" type="radio" name="toolkit-tool" value="tabs">
-                  <img src="../img/window-maximize.png" alt="" width="14" height="14">
-                  <span id="toolkit-tool-tabs-label" data-i18n="textContent"></span>
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input id="toolkit-tool-links-input" type="radio" name="toolkit-tool" value="links">
-                  <img src="../img/link.png" alt="" width="14" height="14">
-                  <span id="toolkit-tool-links-label" data-i18n="textContent"></span>
-                </label>
-              </div>
-            </div>
-            <div id="toolkit-action" class="column">
-              <label id="toolkit-action-label" data-i18n="textContent"></label>
-              <div class="radio">
-                <label>
-                  <input id="toolkit-action-increment-input" type="radio" name="toolkit-action" value="increment">
-                  <img src="../img/plus-circle.png" alt="" width="14" height="14">
-                  <span id="toolkit-action-increment-label" data-i18n="textContent"></span>
-                </label>
-              </div>
-              <div class="radio">
-                <label>
-                  <input id="toolkit-action-decrement-input" type="radio" name="toolkit-action" value="decrement">
-                  <img src="../img/minus-circle.png" alt="" width="14" height="14">
-                  <span id="toolkit-action-decrement-label" data-i18n="textContent"></span>
-                </label>
-              </div>
-            </div>
-            <div id="toolkit-quantity" class="column">
-              <label id="toolkit-quantity-label" for="toolkit-quantity-input" data-i18n="textContent"></label>
-              <input id="toolkit-quantity-input" type="number" min="1" max="10000">
-            </div>
-            <div id="toolkit-seconds" class="column">
-              <label id="toolkit-seconds-label" for="toolkit-seconds-input" data-i18n="textContent"></label>
-              <input id="toolkit-seconds-input" type="number" min="0" max="600">
-            </div>
-            <div id="toolkit-urli" class="column">
-              <div id="toolkit-urli-button-div" class="icon-button hvr-grow-2x">
-                <img id="toolkit-urli-button-img" src="../img/urli.png" alt="" width="64" height="64">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="toolkit-scrape">
-          <div class="checkbox">
-            <label>
-              <input id="toolkit-scrape-input" type="checkbox">
-              <img src="../img/tools.png" alt="" width="12" height="12">
-              <span id="toolkit-scrape-label" data-i18n="textContent"></span>
-            </label>
-          </div>
-        </div>
-        <div id="scrape">
-          <div id="scrape-heading">
-            <img src="../img/tools.png" alt="" width="14" height="14">
-            <h3 id="scrape-h3" data-i18n="textContent"></h3>
-          </div>
-          <div id="scrape-instructions" data-i18n="textContent"></div>
-          <div id="scrape-table" class="table">
-            <div class="row">
-              <div class="column">
-                <label id="scrape-method-label" for="scrape-method-select" data-i18n="textContent"></label>
-                <select id="scrape-method-select">
-                  <option id="scrape-method-option-selector" value="selector">document.querySelector</option>
-                  <option id="scrape-method-option-selector-all" value="selector-all">document.querySelectorAll</option>
-                </select>
-              </div>
-              <div class="column">
-                <label id="scrape-selector-label" for="scrape-selector-input" data-i18n="textContent"></label>
-                <span>("&nbsp;</span><input id="scrape-selector-input" type="text" placeholder="e.g. title" spellcheck="false"><span>&nbsp;").</span>
-              </div>
-              <div class="column">
-                <label id="scrape-property-label" for="scrape-property-input" data-i18n="textContent"></label>
-                <input id="scrape-property-input" type="text" placeholder="e.g. textContent" spellcheck="false">
-              </div>
-            </div>
-          </div>
-          <div id="scrape-example">
-            <em>
-              <span id="scrape-example-span" data-i18n="textContent"></span>
-              document.querySelector("<strong>title</strong>").<strong>textContent</strong>
-              <span id="scrape-example-return-span" data-i18n="textContent"></span>
-            </em>
-          </div>
-        </div>
-        <div id="toolkit-table-outer" class="display-none">
-          <div id="toolkit-table-div"><div></div></div>
-          <button id="toolkit-table-download-button" title="urli-generate-links.html" data-i18n="textContent"></button>
-        </div>
-      </section>
-      <section id="auto">
-        <div class="heading">
-          <img src="../img/refresh.png" alt="" width="16" height="16">
-          <h3 id="auto-h3" data-i18n="textContent"></h3>
-          <div class="heading-right">
-            <img src="../img/clock-o.png" alt="" width="13" height="13">
-            <span id="eta-label*auto" data-i18n="textContent"></span>
-            <span id="auto-eta-value"></span>
-          </div>
-        </div>
-        <div class="table">
-          <div class="row">
-            <div id="auto-action" class="column">
-              <label id="auto-action-label" for="auto-action-select" data-i18n="textContent"></label>
-              <select id="auto-action-select">
-                <option id="auto-action-option-increment" value="increment" data-i18n="textContent"></option>
-                <option id="auto-action-option-decrement" value="decrement" data-i18n="textContent"></option>
-                <option id="auto-action-option-next" value="next" data-i18n="textContent"></option>
-                <option id="auto-action-option-prev" value="prev" data-i18n="textContent"></option>
-              </select>
-            </div>
-            <div id="auto-times" class="column">
-              <label id="auto-times-label" for="auto-times-input" data-i18n="textContent"></label>
-              <input id="auto-times-input" type="number" min="1" max="10000">
-            </div>
-            <div id="auto-seconds" class="column">
-              <label id="auto-seconds-label" for="auto-seconds-input" data-i18n="textContent"></label>
-              <input id="auto-seconds-input" type="number" min="1" max="3600">
-            </div>
-            <div id="auto-wait-badge" class="column">
-              <div class="checkbox">
-                <label>
-                  <input id="auto-wait-input" type="checkbox">
-                  <span id="auto-wait-label" data-i18n="textContent"></span>
-                </label>
-              </div>
-              <div class="checkbox">
-                <label>
-                  <input id="auto-badge-input" type="checkbox">
-                  <span id="auto-badge-label" data-i18n="textContent"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="download">
-        <div class="heading">
-          <img src="../img/cloud-download.png" alt="" width="18" height="18">
-          <h3 id="download-h3" data-i18n="textContent"></h3>
-          <div class="heading-right">
-            <img src="../img/flask.png" alt="" width="12" height="12">
-            <span id="experimental-label*download" data-i18n="textContent"></span>
-          </div>
-        </div>
-        <div id="download-setup" class="table">
-          <div class="row">
-            <div id="download-strategy" class="column">
-              <label id="download-strategy-help" title="">
-                <img src="../img/question-circle.png" alt="" width="12" height="12">
-                <span id="download-strategy-help-label"></span>
-              </label>
-              <label id="download-strategy-label" for="download-strategy-select" data-i18n="textContent"></label>
-              <select id="download-strategy-select">
-                <option id="download-strategy-option-extensions" value="extensions" data-i18n="textContent"></option>
-                <option id="download-strategy-option-tags" value="tags" data-i18n="textContent"></option>
-                <option id="download-strategy-option-attributes" value="attributes" data-i18n="textContent"></option>
-                <option id="download-strategy-option-selector" value="selector" data-i18n="textContent"></option>
-                <option id="download-strategy-option-page" value="page" data-i18n="textContent"></option>
-              </select>
-              <div id="download-strategy-sub-options">
-                <input id="download-extensions-generated" type="hidden" value="">
-                <input id="download-tags-generated" type="hidden" value="">
-                <input id="download-attributes-generated" type="hidden" value="">
-                <div id="download-extensions" class="checkbox"><div></div></div>
-                <div id="download-tags" class="checkbox"><div></div></div>
-                <div id="download-attributes" class="checkbox"><div></div></div>
-                <div id="download-selector">
-                  <label id="download-selector-label">document.querySelectorAll()</label>
-                  <div id="download-selector-all-label" data-i18n="textContent"></div>
-                  <input id="download-selector-input" type="text" placeholder="e.g. [src*='.jpg' i],[href*='.jpg' i]" spellcheck="false">
-                </div>
-              </div>
-            </div>
-            <div id="download-optional" class="column">
-              <div id="download-filters-label-div">
-                <img src="../img/filter.png" alt="" width="12" height="12">
-                <span id="download-filters-label" data-i18n="textContent"></span>
-              </div>
-              <label id="download-filters-help" data-i18n="title">
-                <img src="../img/question-circle.png" alt="" width="12" height="12">
-                <span id="download-filters-help-label" data-i18n="textContent"></span>
-              </label>
-              <div class="row">
-                <div id="download-includes" class="column">
-                  <label id="download-includes-label" for="download-includes-input" data-i18n="textContent"></label>
-                  <input id="download-includes-input" type="text" placeholder="e.g. /img/large/" spellcheck="false">
-                </div>
-                <div id="download-excludes" class="column">
-                  <label id="download-excludes-label" for="download-excludes-input" data-i18n="textContent"></label>
-                  <input id="download-excludes-input" type="text" placeholder="e.g. /img/thumbs/" spellcheck="false">
-                </div>
-              </div>
-              <div id="download-subfolder">
-                <div id="download-subfolder-label-div">
-                  <img src="../img/folder-open.png" alt="" width="12" height="12">
-                  <span id="download-subfolder-label" data-i18n="textContent"></span>
-                </div>
-                <label id="download-subfolder-help" data-i18n="title">
-                  <img src="../img/question-circle.png" alt="" width="12" height="12">
-                  <span id="download-subfolder-help-label" data-i18n="textContent"></span>
-                </label>
-                <input id="download-subfolder-input" type="text" placeholder="e.g. folder_001" spellcheck="false">
-                <div id="download-subfolder-increment" class="checkbox">
+                <div class="checkbox">
                   <label>
-                    <input id="download-subfolder-increment-input" type="checkbox">
-                    <span id="download-subfolder-increment-label" data-i18n="textContent"></span>
+                    <input id="auto-badge-input" type="checkbox">
+                    <span id="auto-badge-label" data-i18n="textContent"></span>
                   </label>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div id="download-preview">
-          <input id="download-preview-checkboxes-generated" type="hidden" value="">
-          <input id="download-selecteds" type="hidden" value="">
-          <input id="download-unselecteds" type="hidden" value="">
-          <div id="download-preview-heading">
-            <div id="download-preview-heading-title">
-              <div></div>
-            </div>
-            <div id="download-preview-checkboxes" class="clear-both checkbox">
-              <label>
-                <input id="download-preview-count-input" value="count" type="checkbox">
-                <span id="download-preview-count-label" data-i18n="textContent"></span>
-              </label>
-              <label>
-                <input id="download-preview-thumb-input" value="thumb" type="checkbox">
-                <span id="download-preview-thumb-label" data-i18n="textContent"></span>
-              </label>
-              <label>
-                <input id="download-preview-filename-input" value="filename" type="checkbox">
-                <span id="download-preview-filename-label" data-i18n="textContent"></span>
-              </label>
-              <label>
-                <input id="download-preview-extension-input" value="extension" type="checkbox">
-                <span id="download-preview-extension-label" data-i18n="textContent"></span>
-              </label>
-              <label>
-                <input id="download-preview-tag-input" value="tag" type="checkbox">
-                <span id="download-preview-tag-label" data-i18n="textContent"></span>
-              </label>
-              <label>
-                <input id="download-preview-attribute-input" value="attribute" type="checkbox">
-                <span id="download-preview-attribute-label" data-i18n="textContent"></span>
-              </label>
-              <label>
-                <input id="download-preview-url-input" value="url" type="checkbox">
-                <span id="download-preview-url-label" data-i18n="textContent"></span>
-              </label>
-              <label>
-                <input id="download-preview-compressed-input" value="compressed" type="checkbox">
-                <span id="download-preview-compressed-label" data-i18n="textContent"></span>
-              </label>
+        </section>
+        <section id="download">
+          <div class="heading">
+            <img src="../img/cloud-download.png" alt="" width="18" height="18">
+            <h3 id="download-h3" data-i18n="textContent"></h3>
+            <div class="heading-right">
+              <img src="../img/flask.png" alt="" width="12" height="12">
+              <span id="experimental-label*download" data-i18n="textContent"></span>
             </div>
           </div>
-          <div id="download-preview-table-div"><div id="download_preview_blocked" data-i18n="textContent"></div></div>
-        </div>
-      </section>
+          <div id="download-setup" class="table">
+            <div class="row">
+              <div id="download-strategy" class="column">
+                <label id="download-strategy-help" title="">
+                  <img src="../img/question-circle.png" alt="" width="12" height="12">
+                  <span id="download-strategy-help-label"></span>
+                </label>
+                <label id="download-strategy-label" for="download-strategy-select" data-i18n="textContent"></label>
+                <select id="download-strategy-select">
+                  <option id="download-strategy-option-extensions" value="extensions" data-i18n="textContent"></option>
+                  <option id="download-strategy-option-tags" value="tags" data-i18n="textContent"></option>
+                  <option id="download-strategy-option-attributes" value="attributes" data-i18n="textContent"></option>
+                  <option id="download-strategy-option-selector" value="selector" data-i18n="textContent"></option>
+                  <option id="download-strategy-option-page" value="page" data-i18n="textContent"></option>
+                </select>
+                <div id="download-strategy-sub-options">
+                  <input id="download-extensions-generated" type="hidden" value="">
+                  <input id="download-tags-generated" type="hidden" value="">
+                  <input id="download-attributes-generated" type="hidden" value="">
+                  <div id="download-extensions" class="checkbox"><div></div></div>
+                  <div id="download-tags" class="checkbox"><div></div></div>
+                  <div id="download-attributes" class="checkbox"><div></div></div>
+                  <div id="download-selector">
+                    <label id="download-selector-label">document.querySelectorAll()</label>
+                    <div id="download-selector-all-label" data-i18n="textContent"></div>
+                    <input id="download-selector-input" type="text" placeholder="e.g. [src*='.jpg' i],[href*='.jpg' i]" spellcheck="false">
+                  </div>
+                </div>
+              </div>
+              <div id="download-optional" class="column">
+                <div id="download-filters-label-div">
+                  <img src="../img/filter.png" alt="" width="12" height="12">
+                  <span id="download-filters-label" data-i18n="textContent"></span>
+                </div>
+                <label id="download-filters-help" data-i18n="title">
+                  <img src="../img/question-circle.png" alt="" width="12" height="12">
+                  <span id="download-filters-help-label" data-i18n="textContent"></span>
+                </label>
+                <div class="row">
+                  <div id="download-includes" class="column">
+                    <label id="download-includes-label" for="download-includes-input" data-i18n="textContent"></label>
+                    <input id="download-includes-input" type="text" placeholder="e.g. /img/large/" spellcheck="false">
+                  </div>
+                  <div id="download-excludes" class="column">
+                    <label id="download-excludes-label" for="download-excludes-input" data-i18n="textContent"></label>
+                    <input id="download-excludes-input" type="text" placeholder="e.g. /img/thumbs/" spellcheck="false">
+                  </div>
+                </div>
+                <div id="download-subfolder">
+                  <div id="download-subfolder-label-div">
+                    <img src="../img/folder-open.png" alt="" width="12" height="12">
+                    <span id="download-subfolder-label" data-i18n="textContent"></span>
+                  </div>
+                  <label id="download-subfolder-help" data-i18n="title">
+                    <img src="../img/question-circle.png" alt="" width="12" height="12">
+                    <span id="download-subfolder-help-label" data-i18n="textContent"></span>
+                  </label>
+                  <input id="download-subfolder-input" type="text" placeholder="e.g. folder_001" spellcheck="false">
+                  <div id="download-subfolder-increment" class="checkbox">
+                    <label>
+                      <input id="download-subfolder-increment-input" type="checkbox">
+                      <span id="download-subfolder-increment-label" data-i18n="textContent"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="download-preview">
+            <input id="download-preview-checkboxes-generated" type="hidden" value="">
+            <input id="download-selecteds" type="hidden" value="">
+            <input id="download-unselecteds" type="hidden" value="">
+            <div id="download-preview-heading">
+              <div id="download-preview-heading-title">
+                <div></div>
+              </div>
+              <div id="download-preview-checkboxes" class="clear-both checkbox">
+                <label>
+                  <input id="download-preview-count-input" value="count" type="checkbox">
+                  <span id="download-preview-count-label" data-i18n="textContent"></span>
+                </label>
+                <label>
+                  <input id="download-preview-thumb-input" value="thumb" type="checkbox">
+                  <span id="download-preview-thumb-label" data-i18n="textContent"></span>
+                </label>
+                <label>
+                  <input id="download-preview-filename-input" value="filename" type="checkbox">
+                  <span id="download-preview-filename-label" data-i18n="textContent"></span>
+                </label>
+                <label>
+                  <input id="download-preview-extension-input" value="extension" type="checkbox">
+                  <span id="download-preview-extension-label" data-i18n="textContent"></span>
+                </label>
+                <label>
+                  <input id="download-preview-tag-input" value="tag" type="checkbox">
+                  <span id="download-preview-tag-label" data-i18n="textContent"></span>
+                </label>
+                <label>
+                  <input id="download-preview-attribute-input" value="attribute" type="checkbox">
+                  <span id="download-preview-attribute-label" data-i18n="textContent"></span>
+                </label>
+                <label>
+                  <input id="download-preview-url-input" value="url" type="checkbox">
+                  <span id="download-preview-url-label" data-i18n="textContent"></span>
+                </label>
+                <label>
+                  <input id="download-preview-compressed-input" value="compressed" type="checkbox">
+                  <span id="download-preview-compressed-label" data-i18n="textContent"></span>
+                </label>
+              </div>
+            </div>
+            <div id="download-preview-table-div"><div id="download_preview_blocked" data-i18n="textContent"></div></div>
+          </div>
+        </section>
+      </main>
       <div id="setup-buttons">
         <div id="extra-toggles">
           <div id="auto-toggle" class="tgl-outer">
