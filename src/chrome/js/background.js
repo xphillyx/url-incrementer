@@ -214,13 +214,13 @@ var Background = (() => {
     if (details.reason === "install" || (details.reason === "update" && details.previousVersion < "6.0")) {
       console.log("installedListener() - details.reason=" + details.reason);
       await Promisify.clearItems("sync");
-      console.log("cleared sync items!")
+      console.log("installedListener() - cleared sync items");
       await Promisify.clearItems("local");
-      console.log("cleared local items!")
+      console.log("installedListener() - cleared local items");
       await Promisify.setItems("local", STORAGE_DEFAULT_VALUES);
       if (details.reason === "install") {
         chrome.runtime.openOptionsPage();
-        console.log("opened options page!");
+        console.log("installedListener() - opened options page");
       } else if (details.reason === "update" && details.previousVersion < "6.0") {
         await Permissions.removeAllPermissions();
       }
