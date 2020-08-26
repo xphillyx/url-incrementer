@@ -46,7 +46,9 @@ URLI can help you increment URLs. For example, if the URL has a "page=1" in it o
 7. Firefox only: Firefox 60 (non ESR) Users won't be able to grant Download permissions on the Options page due to a bug in Firefox 60 (Bug 1382953); please update to Firefox 61 or higher.
 
 # Permissions Justification
-URL Incrementer requires no special permissions on Chrome and Edge. However, the Firefox version requires the <all_urls> permission in order to offer Internal Shortcuts because Firefox does not support the chrome.declarativeContent API to make this an optional feature like in Chrome/Edge.
+Chrome/Edge: URL Incrementer requires no special permissions.
+
+Firefox: URL Incrementer requires the <all_urls> permission in order to offer Internal Shortcuts because Firefox does not support the chrome.declarativeContent API to make this an optional feature that sticks like in Chrome/Edge.
 
 #### Optional Permissions
 URL Incrementer has some optional features that require extra permissions:
