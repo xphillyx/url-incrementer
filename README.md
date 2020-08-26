@@ -19,7 +19,7 @@ URLI can help you increment URLs. For example, if the URL has a "page=1" in it o
 <br><br><br><br><br><br>
 
 # Features
-<em>Coming Soon in 6.0</em>
+<em>Some Features Coming Soon in 6.0</em>
 - Customizable Keyboard and Mouse Shortcuts (Multi-Click + Rocker)
 - 1-Click Increment Decrement Button Extensions for Your Toolbar (Optional)
 - Auto Incrementing
@@ -48,9 +48,9 @@ URLI can help you increment URLs. For example, if the URL has a "page=1" in it o
 # Permissions Justification
 URL Incrementer requires no special permissions on Chrome and Edge. However, the Firefox version requires the <all_urls> permission in order to offer Internal Shortcuts because Firefox does not support the chrome.declarativeContent API to make this an optional feature like in Chrome/Edge.
 
-*Optional Permissions*
+#### Optional Permissions
 URL Incrementer has some optional features that require extra permissions:
-1. Browser Shortcuts - requires the <all_urls> Permission
+1. Internal Shortcuts - requires the <all_urls> Permission
 2. Enhanced Mode - requires the <all_urls> Permission
 3. Download - requires the Download Permission and <all_urls> Permission
 
