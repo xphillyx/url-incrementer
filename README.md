@@ -11,7 +11,7 @@
 </a>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <a href="https://microsoftedge.microsoft.com/addons/detail/url-incrementer/hnndkchemmjdlodgpcnojbmadckbieek" title="Microsoft Edge Extension Download">
-  <img src="https://raw.githubusercontent.com/roysix/infy-scroll/master/assets/edge/1024px-Microsoft_Edge_logo_(2019).svg.png" height="64" alt="Microsoft Edge Extension, Icon: By Source, Fair use, https://en.wikipedia.org/w/index.php?curid=62848768">
+  <img src="https://raw.githubusercontent.com/roysix/url-incrementer/master/assets/img/edge/1024px-Microsoft_Edge_logo_(2019).svg.png" height="64" alt="Microsoft Edge Extension, Icon: By Source, Fair use, https://en.wikipedia.org/w/index.php?curid=62848768">
   Microsoft Edge
 </a>
 
