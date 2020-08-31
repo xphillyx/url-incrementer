@@ -35,7 +35,7 @@ var Popup = (() => {
       element[element.dataset.i18n] = chrome.i18n.getMessage(element.id.replace(/-/g, '_').replace(/\*.*/, ''));
     }
     // Add Event Listeners to the DOM elements
-    DOM["#setup-input"].addEventListener("click", toggleView);
+    DOM["#setup-button"].addEventListener("click", toggleView);
     DOM["#accept-button"].addEventListener("click", setup);
     DOM["#cancel-button"].addEventListener("click", toggleView);
     DOM["#multi-button"].addEventListener("click", clickMulti);
@@ -93,9 +93,8 @@ var Popup = (() => {
     }
     instance = backgroundPage.Background.getInstance(tabs[0].id) || await backgroundPage.Background.buildInstance(tabs[0], items);
     _ = JSON.parse(JSON.stringify(instance));
-    const buttons = document.querySelectorAll("#controls input");
+    const buttons = document.querySelectorAll("#controls-buttons svg");
     for (const button of buttons) {
-      button.className = items.popupAnimationsEnabled ? "hvr-grow": "";
       button.style.width = button.style.height = items.popupButtonSize + "px";
       button.addEventListener("click", clickActionButton);
     }
@@ -113,13 +112,13 @@ var Popup = (() => {
     DOM["#crawl-other-input"].checked = items.toolkitCrawlCheckboxes.includes("other");
     DOM["#crawl-exception-input"].checked = items.toolkitCrawlCheckboxes.includes("exception");
     // Download icon (cloud-download.png) is an irregular shape and needs adjustment
-    DOM["#download-input"].style.width = DOM["#download-input"].style.height = (items.popupButtonSize + (items.popupButtonSize <= 24 ? 4 : items.popupButtonSize <= 44 ? 6 : 8)) + "px";
+    DOM["#download-button"].style.width = DOM["#download-button"].style.height = (items.popupButtonSize + (items.popupButtonSize <= 24 ? 4 : items.popupButtonSize <= 44 ? 6 : 8)) + "px";
     updateSetup();
     // 3 Popup Views: Crawl Window if instance is toolkit crawl, Setup if instance not enabled/saved URL, or Controls if instance enabled/saved URL
     if (instance.toolkitEnabled && instance.toolkitTool === "crawl") {
       crawlWindow();
     } else if ((!instance.enabled && !instance.saveFound)) {
-      toggleView.call(DOM["#setup-input"]);
+      toggleView.call(DOM["#setup-button"]);
     } else {
       toggleView.call(DOM["#accept-button"]);
     }
@@ -133,7 +132,7 @@ var Popup = (() => {
   function toggleView() {
     switch (this.id) {
       // Hide controls, show setup
-      case "setup-input":
+      case "setup-button":
         DOM["#controls"].className = "display-none";
         DOM["#setup"].className = "display-block fade-in";
         updateSetup(true);
@@ -160,15 +159,14 @@ var Popup = (() => {
    */
   function clickActionButton() {
     const action = this.dataset.action;
+    console.log("clickActionButton - action=" + action);
     if (((action === "increment" || action === "decrement" || action === "clear") && (instance.enabled || instance.saveFound)) ||
         ((action === "increment1" || action === "decrement1" || action === "increment2" || action === "decrement2" || action === "increment3" || action === "decrement3") && instance.multiEnabled && !instance.multiRangeEnabled) ||
          (action === "next" || action === "prev") ||
          (action === "return" && instance.enabled) ||
          (action === "auto" && instance.autoEnabled) ||
          (action === "download" && instance.downloadEnabled)) {
-      if (items.popupAnimationsEnabled) {
-        UI.clickHoverCss(this, "hvr-push-click");
-      }
+      UI.clickHoverCss(this, "hvr-push-click");
       backgroundPage.Action.performAction(action, "popupClickActionButton", instance, items);
     }
   }
@@ -185,36 +183,36 @@ var Popup = (() => {
     DOM["#auto-repeat-icon"].style.display = instance.autoEnabled && instance.autoRepeat ? "" : "none";
     DOM["#shuffle-urls-icon"].style.display = instance.enabled && instance.shuffleURLs ? "" : "none";
     DOM["#list-icon"].style.display = instance.listEnabled ? "" : "none";
-    DOM["#increment-input"].style.display =
-    DOM["#decrement-input"].style.display = instance.multiEnabled || (instance.autoEnabled && (instance.autoAction === "next" || instance.autoAction === "prev")) ? "none" : "";
-    DOM["#increment-input-r"].style.display =
-    DOM["#decrement-input-r"].style.display =
+    DOM["#increment-button"].style.display =
+    DOM["#decrement-button"].style.display = instance.multiEnabled || (instance.autoEnabled && (instance.autoAction === "next" || instance.autoAction === "prev")) ? "none" : "";
+    DOM["#increment-button-r"].style.display =
+    DOM["#decrement-button-r"].style.display =
     DOM["#increment-span-r"].style.display =
     DOM["#decrement-span-r"].style.display = instance.multiEnabled && instance.multiRangeEnabled && !(instance.autoEnabled && (instance.autoAction === "next" || instance.autoAction === "prev")) ? "" : "none";
-    DOM["#increment-input-s"].style.display =
-    DOM["#decrement-input-s"].style.display =
+    DOM["#increment-button-s"].style.display =
+    DOM["#decrement-button-s"].style.display =
     DOM["#increment-span-s"].style.display =
     DOM["#decrement-span-s"].style.display = instance.multiEnabled && !instance.multiRangeEnabled && !(instance.autoEnabled && (instance.autoAction === "next" || instance.autoAction === "prev")) ? "" : "none";
-    DOM["#increment-input-1"].style.display =
-    DOM["#decrement-input-1"].style.display =
+    DOM["#increment-button-1"].style.display =
+    DOM["#decrement-button-1"].style.display =
     DOM["#increment-span-1"].style.display =
     DOM["#decrement-span-1"].style.display = instance.multiEnabled && !instance.multiRangeEnabled && !instance.autoEnabled && !instance.shuffleURLs && instance.multiCount >= 1 ? "" : "none";
-    DOM["#increment-input-2"].style.display =
-    DOM["#decrement-input-2"].style.display =
+    DOM["#increment-button-2"].style.display =
+    DOM["#decrement-button-2"].style.display =
     DOM["#increment-span-2"].style.display =
     DOM["#decrement-span-2"].style.display = instance.multiEnabled && !instance.multiRangeEnabled && !instance.autoEnabled && !instance.shuffleURLs && instance.multiCount >= 2 ? "" : "none";
-    DOM["#increment-input-3"].style.display =
-    DOM["#decrement-input-3"].style.display =
+    DOM["#increment-button-3"].style.display =
+    DOM["#decrement-button-3"].style.display =
     DOM["#increment-span-3"].style.display =
     DOM["#decrement-span-3"].style.display = instance.multiEnabled && !instance.multiRangeEnabled && !instance.autoEnabled && !instance.shuffleURLs && instance.multiCount === 3 ? "" : "none";
-    DOM["#next-input"].style.display =
-    DOM["#prev-input"].style.display = (items.permissionsEnhancedMode && items.nextPrevPopupButtons) || (instance.autoEnabled && (instance.autoAction === "next" || instance.autoAction === "prev")) ? "" : "none";
-    DOM["#clear-input"].style.opacity = DOM["#increment-input"].style.opacity = DOM["#decrement-input"].style.opacity = instance.enabled || instance.saveFound ? 1 : 0.2;
-    DOM["#return-input"].style.display = instance.enabled ? "" : "none";
-    DOM["#auto-input"].style.display = instance.autoEnabled ? "" : "none";
-    DOM["#auto-input"].src = instance.autoPaused ? "../img/play-circle.png" : "../img/pause-circle.png";
-    DOM["#auto-input"].title = chrome.i18n.getMessage(instance.autoPaused ? "auto_resume_input" : "auto_pause_input");
-    DOM["#download-input"].style.display = items.permissionsDownload && instance.downloadEnabled ? "" : "none";
+    DOM["#next-button"].style.display =
+    DOM["#prev-button"].style.display = (items.permissionsEnhancedMode && items.nextPrevPopupButtons) || (instance.autoEnabled && (instance.autoAction === "next" || instance.autoAction === "prev")) ? "" : "none";
+    DOM["#clear-button"].style.opacity = DOM["#increment-button"].style.opacity = DOM["#decrement-button"].style.opacity = instance.enabled || instance.saveFound ? 1 : 0.2;
+    DOM["#return-button"].style.display = instance.enabled ? "" : "none";
+    DOM["#auto-button"].style.display = instance.autoEnabled ? "" : "none";
+    DOM["#auto-button"].src = instance.autoPaused ? "../img/play-circle.png" : "../img/pause-circle.png";
+    DOM["#auto-button"].title = chrome.i18n.getMessage(instance.autoPaused ? "auto_resume_input" : "auto_pause_input");
+    DOM["#download-button"].style.display = items.permissionsDownload && instance.downloadEnabled ? "" : "none";
   }
 
   /**

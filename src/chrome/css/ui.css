@@ -29,6 +29,34 @@
   --default-color: #333333;
 }
 
+/* Fonts */
+/* Locally include 300, 400, and 500 (latin) fonts. This is essentially equivalent to remotely doing: */
+/* <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"> */
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../lib/roboto-light.woff2') format("woff2");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../lib/roboto-regular.woff2') format("woff2");
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../lib/roboto-medium.woff2') format("woff2");
+}
+
 /* Native */
 
 img {
@@ -40,6 +68,23 @@ h3 {
   font-weight: inherit;
   display: inline;
   user-select: initial;
+}
+
+/* Flex */
+
+.flex-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.flex-row.align-start > * {
+  align-self: start;
+}
+
+.flex-row.align-center > * {
+  align-self: center;
 }
 
 /* Classes */
