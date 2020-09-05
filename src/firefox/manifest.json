@@ -10,7 +10,7 @@
   "options_ui": { "page": "html/options.html", "browser_style": false, "open_in_tab": true },
   "background": { "scripts": ["js/promisify.js", "js/permissions.js", "js/cryptography.js", "js/saves.js", "js/increment-decrement.js", "js/auto.js", "js/action.js", "js/background.js"] },
   "permissions": ["activeTab", "storage", "<all_urls>"],
-  "optional_permissions": ["downloads"],
+  "optional_permissions": ["downloads", "pageCapture"],
   "content_scripts": [{ "matches": ["<all_urls>"], "js": ["js/shortcuts.js"] }],
   "applications": { "gecko": { "id": "url-incrementer@webextensions", "strict_min_version": "60.0" } }
 }

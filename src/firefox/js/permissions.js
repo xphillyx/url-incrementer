@@ -15,7 +15,7 @@ var Permissions = (() => {
     },
     "download": {
       "storageKey": "permissionsDownload",
-      "request": {permissions: ["downloads"]}
+      "request": {permissions: ["downloads", "pageCapture"]}
     },
     "enhancedMode": {
       "storageKey": "permissionsEnhancedMode"

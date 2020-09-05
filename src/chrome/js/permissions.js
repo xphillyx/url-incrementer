@@ -18,8 +18,8 @@ var Permissions = (() => {
     },
     "download": {
       "storageKey": "permissionsDownload",
-      "request": {permissions: ["downloads"], origins: ["<all_urls>"]},
-      "requestConflict": {permissions: ["downloads"]}
+      "request": {permissions: ["downloads", "pageCapture"], origins: ["<all_urls>"]},
+      "requestConflict": {permissions: ["downloads", "pageCapture"]}
     },
     "enhancedMode": {
       "storageKey": "permissionsEnhancedMode",

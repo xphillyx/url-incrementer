@@ -384,7 +384,7 @@ var Action = (() => {
    * @param callback (optional) the function callback - only called by auto
    * @private
    */
-  function download(instance, callback) {
+  async function download(instance, callback) {
     let actionPerformed = false;
     if (instance.downloadEnabled) {
       actionPerformed = true;
@@ -414,6 +414,22 @@ var Action = (() => {
                   });
                 });
               }
+            }
+            // TODO: Mhtml requires pageCapture... See https://stackoverflow.com/a/24673271
+            if (instance.downloadStrategy === "page") {
+              console.log("downloading full web page...hello!")
+              chrome.pageCapture.saveAsMHTML({tabId: instance.tabId}, function (blob) {
+                const url = URL.createObjectURL(blob);
+                console.log("download() - downloading complete web page");
+
+                const params = { url: url };
+                chrome.downloads.download(params, function(downloadId) {
+                  // Handle error if download subfolder and fileNameAndExtension is invalid by downloading in root folder
+                  if (chrome.runtime.lastError && instance.downloadSubfolder) {
+                    chrome.downloads.download({url: url});
+                  }
+                });
+              });
             }
             for (const download of downloads) {
               console.log("download() - downloading url=" + download.url + " ... ");
