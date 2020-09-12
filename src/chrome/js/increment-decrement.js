@@ -5,6 +5,17 @@
  * @license LGPL-3.0
  */
 
+/**
+ * IncrementDecrement handles all main increment or decrement functions. This includes finding the selection in a string
+ * to increment, validating the selection, and actually incrementing it. Bases 2-36 (10 is the default) as well as
+ * Custom Bases (custom alphabets) are all supported.
+ *
+ * There are additional variables in this file for handling more complex increment functions. They are for:
+ * 1. Multi Incrementing: incrementing multiple parts of a URL individually, simultaneously, or in rages
+ * 2. Date/Time Incrementing: incrementing dates and times
+ * 3. Roman Numeral Incrementing: incrementing roman numerals like vii
+ * 4. Arrays: stepping through arrays (e.g. increment steps forward, decrement steps backward)
+ */
 var IncrementDecrement = (() => {
 
   /**
@@ -19,6 +30,7 @@ var IncrementDecrement = (() => {
    * @public
    */
   function findSelection(url, preference, selectionCustom, previousException) {
+    console.log("findSelection() - url=" + url + ", preference=" + preference + ", selectionCustom=" + selectionCustom + ", previousException=" + previousException);
     try {
       if (preference === "custom" && selectionCustom) {
         // TODO: Validate custom regex with current url for alphanumeric selection
@@ -41,13 +53,14 @@ var IncrementDecrement = (() => {
         const last = /\d+(?!.*\d+)/.exec(url);
         if (last) { return {selection: last[0], selectionStart: last.index}; }
       }
-      if (preference === "firstnumber") {
+      if (preference === "firstnumber" || preference === "lastnumber" || preference === "smart" || preference === "custom") {
         const first = /\d+/.exec(url);
         if (first) { return {selection: first[0], selectionStart: first.index}; }
       }
+      throw ("no selection was found, preference=" + preference);
     } catch(e) {
       console.log("findSelection() - exception encountered:" + e);
-      if (!previousException) { return findSelection(url, "firstnumber", selectionCustom, true); }
+      if (!previousException) { return findSelection(url, "lastnumber", selectionCustom, true); }
     }
     return {selection: "", selectionStart: -1};
   }
@@ -302,6 +315,11 @@ var IncrementDecrement = (() => {
 
 })();
 
+/**
+ * IncrementDecrementMulti handles incrementing multiple parts of a URL individually, simultaneously, or in rages.
+ * The actual increment is handled individually by the respective object (e.g. IncrementDecrement for Base 2-36).
+ * However, there are "pre" and "post" functions in order to pre-handle and post-handle the increment properly.
+ */
 var IncrementDecrementMulti = (() => {
 
   /**
@@ -373,6 +391,13 @@ var IncrementDecrementMulti = (() => {
 
 })();
 
+/**
+ * IncrementDecrementDate handles incrementing dates and times.
+ *
+ * It supports multiple date-time formats, such as:
+ * 1. Date Formats - year, month, day
+ * 2. Time Formats - hours, minutes, seconds, and miliseconds
+ */
 var IncrementDecrementDate = (() => {
 
   const mmm =  ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
@@ -548,6 +573,14 @@ var IncrementDecrementDate = (() => {
 
 })();
 
+/**
+ * IncrementDecrementRoman handles incrementing roman numerals like vii.
+ *
+ * It supports three character sets:
+ * 1. Latin - the default latin character set, e.g. vii
+ * 2. u216x - the Unicode 216 character set, e.g. Ⅶ
+ * 3. u217x - the Unicode 217 character set, e.g. ⅶ
+ */
 var IncrementDecrementRoman = (() => {
 
   // Latin handles both upper and lowercase. U+216x and U+217x handle both forms of unicode. The XI and XII single-character unicodes are removed so they can be compatible with the algorithm (based on the latin alphabet)
@@ -634,6 +667,11 @@ var IncrementDecrementRoman = (() => {
 
 })();
 
+/**
+ * IncrementDecrementArray handles stepping through arrays (e.g. increment steps forward, decrement steps backward).
+ * This is called whenever we need to build out an array in advance, such as when Shuffle is enabled, or when
+ * multi-range incrementing.
+ */
 var IncrementDecrementArray = (() => {
 
   /**
