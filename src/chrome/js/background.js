@@ -271,7 +271,9 @@ var Background = (() => {
     console.log("messageListener() - request.greeting=" + request.greeting);
     if (request && request.greeting === "performAction") {
       // Firefox: sender.tab.url is undefined in FF due to not having tabs permissions (even though we have <all_urls>!), so use sender.url, which should be identical in 99% of cases (e.g. iframes may be different)
-      sender.tab.url = sender.url;
+      if (sender && sender.url && sender.tab && !sender.tab.url) {
+        sender.tab.url = sender.url;
+      }
       const items = await Promisify.getItems();
       const instance = getInstance(sender.tab.id) || await buildInstance(sender.tab, items);
       if ((request.shortcut === "key" && items.keyEnabled && (items.keyQuickEnabled || (instance && (instance.enabled || instance.saveFound)))) ||

@@ -17,6 +17,6 @@
                 "return":    { "description": "Return To Start" },
                 "auto":      { "description": "Auto (Pause Or Resume)" }},
   "permissions": ["activeTab", "storage"],
-  "optional_permissions": ["<all_urls>", "downloads", "pageCapture", "declarativeContent"],
+  "optional_permissions": ["<all_urls>", "downloads", "declarativeContent"],
   "minimum_chrome_version": "60"
 }

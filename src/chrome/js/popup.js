@@ -5,18 +5,31 @@
  * @license LGPL-3.0
  */
 
+/**
+ * TODO
+ */
 var Popup = (() => {
 
-  // The DOM elements cache
+  /**
+   * Variables
+   *
+   * @param DOM      the DOM elements cache
+   * @param _        the temporary instance before being accepted in setup
+   * @param instance the actual instance object after being accepted in setup and before being loaded
+   * @param items    the storage items cache
+   * @param tabs     TODO Is this needed? the reusable tabs object
+   * @param timeouts reusable timeouts object that stores all named timeouts used on this page
+   * @param backgroundPage TODO Remove This
+   * @param downloadPreviewCache TODO
+   */
   const DOM = {};
-
-  // The _ temporary instance and real instance caches, storage caches, backgroundPage and downloadPreview cache, and timeouts object
-  let _ = {};
-  let instance = {};
-  let items = {};
+  let _;
+  let instance;
+  let items;
+  let tabs;
+  let timeouts = {};
   let backgroundPage = {};
   let downloadPreviewCache = {};
-  let timeouts = {};
 
   /**
    * Initializes the Popup window. This script is set to defer so the DOM is guaranteed to be parsed by this point.
@@ -24,8 +37,16 @@ var Popup = (() => {
    * @private
    */
   async function init() {
+    // If we don't have chrome, display an error message. Note: Firefox allows Private Window Installation, which causes problems with not having chrome
+    if (typeof chrome === "undefined") {
+      console.log("init() - error: chrome is undefined!");
+      document.getElementById("messages").className = "display-flex";
+      document.getElementById("page-unsupported-reason").textContent = "chrome is undefined";
+      return;
+    }
     const ids = document.querySelectorAll("[id]");
     const i18ns = document.querySelectorAll("[data-i18n]");
+    const tooltips = document.querySelectorAll("[aria-label][aria-describedby='tooltip']");
     // Cache DOM elements
     for (const element of ids) {
       DOM["#" + element.id] = element;
@@ -33,6 +54,10 @@ var Popup = (() => {
     // Set i18n (internationalization) text from messages.json
     for (const element of i18ns) {
       element[element.dataset.i18n] = chrome.i18n.getMessage(element.id.replace(/-/g, '_').replace(/\*.*/, ''));
+    }
+    // Set Tooltip text from messages.json
+    for (const element of tooltips) {
+      element.setAttribute("aria-label", chrome.i18n.getMessage(element.getAttribute("aria-label").replace(/-/g, '_')));
     }
     // Add Event Listeners to the DOM elements
     DOM["#setup-button"].addEventListener("click", toggleView);
@@ -43,8 +68,8 @@ var Popup = (() => {
       DOM["#increment-decrement-heading"].className = this.checked ? "display-none" : "display-block";
       DOM["#list-heading"].className = this.checked ? "display-block" : "display-none";
       DOM["#url-label"].textContent = chrome.i18n.getMessage((this.checked ? "list_" : "url_") + "label");
-      DOM["#selection"].className = DOM["#interval"].className = DOM["#base"].className = this.checked ? "display-none" : "column";
-      DOM["#list-instructions"].className = this.checked ? "column" : "display-none";
+      DOM["#selection"].className = DOM["#interval-text-field"].className = DOM["#base-case"].className = this.checked ? "display-none" : "column";
+      //DOM["#list-instructions"].className = this.checked ? "column" : "display-none";
       chrome.storage.local.set({ "listStart": this.checked });
     });
     DOM["#auto-repeat-input"].addEventListener("change", function() { chrome.storage.local.set({ "autoRepeatStart": this.checked }); });
@@ -56,7 +81,7 @@ var Popup = (() => {
     DOM["#base-select"].addEventListener("change", function() {
       DOM["#base-case"].className = +this.value > 10 ? "display-block fade-in" : "display-none";
       DOM["#base-date"].className = this.value === "date" ? "display-block fade-in" : "display-none";
-      DOM["#base-decimal"].className = this.value === "decimal" ? "display-block fade-in" : "display-none";
+      //DOM["#base-decimal"].className = this.value === "decimal" ? "display-block fade-in" : "display-none";
       DOM["#base-roman"].className = this.value === "roman" ? "display-block fade-in" : "display-none";
       DOM["#base-custom"].className = this.value === "custom" ? "display-block fade-in" : "display-none";
     });
@@ -227,8 +252,8 @@ var Popup = (() => {
     DOM["#increment-decrement-heading"].className =  DOM["#list-input"].checked ? "display-none" : "display-block";
     DOM["#list-heading"].className = DOM["#list-input"].checked ? "display-block" : "display-none";
     DOM["#url-label"].textContent = chrome.i18n.getMessage((DOM["#list-input"].checked ? "list_" : "url_") + "label");
-    DOM["#selection"].className = DOM["#interval"].className = DOM["#base"].className = DOM["#list-input"].checked ? "display-none" : "column";
-    DOM["#list-instructions"].className = DOM["#list-input"].checked ? "column" : "display-none";
+    DOM["#selection"].className = DOM["#interval-text-field"].className = DOM["#base-case"].className = DOM["#list-input"].checked ? "display-none" : "column";
+    //DOM["#list-instructions"].className = DOM["#list-input"].checked ? "column" : "display-none";
     if (instance.saveFound || items.savePreselect) {
       DOM["#save-url-input"].checked = true;
       DOM["#save-url-img"].src = DOM["#save-url-img"].src.replace("-o", "");
@@ -254,7 +279,7 @@ var Popup = (() => {
     DOM["#base-case-uppercase-input"].checked = instance.baseCase === "uppercase";
     DOM["#base-date"].className = instance.base === "date" ? "display-block" : "display-none";
     DOM["#base-date-format-input"].value = instance.baseDateFormat;
-    DOM["#base-decimal"].className = instance.base === "decimal" ? "display-block" : "display-none";
+    //DOM["#base-decimal"].className = instance.base === "decimal" ? "display-block" : "display-none";
     DOM["#base-roman"].className = instance.base === "roman" ? "display-block" : "display-none";
     DOM["#base-roman-latin-input"].checked = instance.baseRoman === "latin";
     DOM["#base-roman-u216x-input"].checked = instance.baseRoman === "u216x";
@@ -263,9 +288,10 @@ var Popup = (() => {
     DOM["#base-custom-input"].value = instance.baseCustom;
     DOM["#leading-zeros-input"].checked = instance.leadingZeros;
     DOM["#multi-count"].value = instance.multiEnabled ? instance.multiCount : 0;
-    DOM["#multi-img-1"].className = instance.multiEnabled && instance.multiCount >= 1 ? "" : "disabled";
-    DOM["#multi-img-2"].className = instance.multiEnabled && instance.multiCount >= 2 ? "" : "disabled";
-    DOM["#multi-img-3"].className = instance.multiEnabled && instance.multiCount >= 3 ? "" : "disabled";
+    // Multi Buttons are SVGs, so use className.baseVal instead of just className
+    DOM["#multi-button-1"].className.baseVal = instance.multiEnabled && instance.multiCount >= 1 ? "" : "disabled";
+    DOM["#multi-button-2"].className.baseVal = instance.multiEnabled && instance.multiCount >= 2 ? "" : "disabled";
+    DOM["#multi-button-3"].className.baseVal = instance.multiEnabled && instance.multiCount >= 3 ? "" : "disabled";
     DOM["#list-input"].checked = instance.listEnabled;
     DOM["#url-label"].textContent = chrome.i18n.getMessage((instance.listEnabled ? "list_" : "url_") + "label");
     // Toolkit Setup:
@@ -346,18 +372,20 @@ var Popup = (() => {
    *
    * @private
    */
-  function clickMulti() {
+  async function clickMulti() {
     setupInputs("multi");
-    const e = setupErrors("multi");
+    const errors = await setupErrors("multi");
     if (_.multiCount >= 3) {
       DOM["#multi-count"].value = 0;
-      DOM["#multi-img-1"].className = DOM["#multi-img-2"].className = DOM["#multi-img-3"].className = "disabled";
-    } else if (e.incrementDecrementErrorsExist) {
-      UI.generateAlert(e.incrementDecrementErrors);
+      // Note use className.baseVal instead of className when toggling svg classes
+      DOM["#multi-button-1"].className.baseVal = DOM["#multi-button-2"].className.baseVal = DOM["#multi-button-3"].className.baseVal = "disabled";
+    } else if (errors && errors.length > 0) {
+      UI.generateAlert(errors, true);
     } else {
       const multiCountNew = _.multiCount + 1;
       DOM["#multi-count"].value = multiCountNew;
-      DOM["#multi-img-" + multiCountNew].className = "";
+      DOM["#multi-button-" + multiCountNew].className.baseVal = "";
+      DOM["#multi-button-" + multiCountNew].classList.remove("disabled");
       _.multi[multiCountNew].selection = _.selection;
       _.multi[multiCountNew].startingSelection = _.selection;
       // If multiRange, selectionStart is -1 from starting [
@@ -1197,8 +1225,8 @@ var Popup = (() => {
       if (_.listEnabled) {
         _.list = _.url;
         _.listArray = _.list.match(/[^\r\n]+/g);
-        _.saveURL = DOM["#save-url-input"].checked = false;
-        DOM["#save-url-img"].src = "../img/heart-o.png";
+        //_.saveURL = DOM["#save-url-input"].checked = false;
+        //DOM["#save-url-img"].src = "../img/heart-o.png";
       }
     }
     if (caller === "multi") {
