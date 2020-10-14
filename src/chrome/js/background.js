@@ -5,31 +5,40 @@
  * @license LGPL-3.0
  */
 
+/**
+ * Background handles all extension-specific background tasks, such as installation and update events, listeners, and
+ * supporting chrome.* apis that are only available in the background (such as commands or setting the toolbar icon).
+ *
+ * This extension is designed to primarily be a background-based extension and needs to maintain the state (objects in
+ * memory i.e. the instance), so it contains an on-demand way to persist the background when an instance exist.
+ */
 var Background = (() => {
 
   // The storage default values. Note: Storage.set can only set top-level JSON objects, avoid using nested JSON objects (instead, prefix keys that should be grouped together with a label e.g. "auto")
   const STORAGE_DEFAULT_VALUES = {
     "installVersion": chrome.runtime.getManifest().version, "installDate": new Date().toJSON(), "firstRun": true,
-    "permissionsInternalShortcuts": false, "permissionsDownload": false, "permissionsEnhancedMode": false,
-    "iconColor": "dark", "iconFeedbackEnabled": false,
-    "popupButtonSize": 32, "popupAnimationsEnabled": true,
-    "decodeURIEnabled": true, "commandsQuickEnabled": true, "shortcutsEditableDisabled": true,
+    "toolbarIcon": "dark", "buttonSize": 40, "interfaceImage": "infy", "interfaceMessages": true,
+    "decodeURIEnabled": false, "debugEnabled": false,
+    "commandsQuickEnabled": true, "shortcutsEditableDisabled": true,
     "keyEnabled": true, "keyQuickEnabled": true, "keyIncrement": {"modifiers": 6, "code": "ArrowUp"}, "keyDecrement": {"modifiers": 6, "code": "ArrowDown"}, "keyNext": {"modifiers": 6, "code": "ArrowRight"}, "keyPrev": {"modifiers": 6, "code": "ArrowLeft"}, "keyClear": {"modifiers": 6, "code": "KeyX"}, "keyReturn": {"modifiers": 6, "code": "KeyZ"}, "keyAuto": {"modifiers": 6, "code": "Space"}, "keyDownload": null,
     "mouseEnabled": true, "mouseQuickEnabled": true, "mouseClickSpeed": 400, "mouseIncrement": {"button": 3, "clicks": 2}, "mouseDecrement": {"button": 4, "clicks": 2}, "mouseNext": null, "mousePrev": null, "mouseClear": null, "mouseReturn": null, "mouseAuto": null, "mouseDownload": null,
-    "interval": 1, "leadingZerosPadByDetection": true, "shuffleLimit": 1000, "shuffleStart": false, "listStart": false,
-    "base": 10, "baseCase": "lowercase", "baseDateFormat": "", "baseRoman": "latin", "baseCustom": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+    "interval": 1, "leadingZerosPadByDetection": true, "shuffleLimit": 100, "shuffleStart": false, "listStart": false,
+    "base": 10, "baseCase": "lowercase", "baseDateFormat": "yyyy/mm/dd", "baseRoman": "latin", "baseCustom": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
     "selectionPriority": "smart", "selectionCustom": { "url": "", "regex": "", "flags": "", "group": 0, "index": 0 },
     "errorSkip": 0, "errorCodes": ["404", "3XX"], "errorCodesCustom": [],
-    "nextPrevSameDomainPolicy": true, "nextPrevPopupButtons": false,
     "nextType": "selector", "nextSelector": "[rel=\"next\"]", "nextXpath": "//*[@rel=\"next\"]", "nextAttribute": ["href"],
     "prevType": "selector", "prevSelector": "[rel=\"prev\"],[rel=\"previous\"]", "prevXpath": "//*[@rel=\"prev\"]|//*[@rel=\"previous\"]", "prevAttribute": ["href"],
-    "nextKeywords": ["pnnext", "next page", "next >", "next »", "next", "more results", "older posts", "older post", "older", "forward", "次", "&gt;", ">", "›", "→", "»"],
-    "prevKeywords": ["pnprev", "previous page", "< prev", "« prev", "prev", "previous", "newer posts", "newer post", "newer", "前", "&lt;", "<", "‹", "←", "«"],
-    "autoAction": "increment", "autoTimes": 10, "autoSeconds": 5, "autoWait": true, "autoBadge": "auto", "autoStart": false, "autoRepeatStart": false,
+    "nextKeywords": ["pnnext", "nextpage", "next-page", "next_page", "next>", "next»", "next→", "next", "moreresults", "olderposts", "olderpost", "older", "forward", "下一页", "次のページ", "次", "&gt;", ">", "›", "→", "»"],
+    "prevKeywords": ["pnprev", "previouspage", "prevpage", "prev-page", "prev_page", "<prev", "«prev", "←prev", "prev", "previous", "newerposts", "newerpost", "newer", "上一页", "前のページ", "前", "&lt;", "<", "‹", "←", "«"],
+    // TODO: These two nextPrev fields
+    "nextPrevSameDomainPolicy": true, "nextPrevPopupButtons": false,
+    "autoAction": "increment", "autoTimes": 10, "autoSeconds": 5, "autoWait": true, "autoBadge": "times", "autoStart": false, "autoRepeatStart": false,
     "downloadStrategy": "extensions", "downloadExtensions": [], "downloadTags": [], "downloadAttributes": [], "downloadSelector": "", "downloadIncludes": [], "downloadExcludes": [], "downloadSubfolder": "", "downloadSubfolderIncrement": false, "downloadPreview": ["count", "thumb", "extension", "tag", "url", "compressed"], "downloadStart": false,
     "toolkitTool": "crawl", "toolkitAction": "increment", "toolkitQuantity": 10, "toolkitSeconds": 1, "toolkitScrape": false, "toolkitCrawlCheckboxes": ["url", "response", "code", "info", "ok", "error", "redirected", "other", "exception"], "toolkitStart": false,
     "scrapeMethod": "selector", "scrapeSelector": "", "scrapeProperty": [],
-    "saves": [], "savePreselect": false, "saveKey": Cryptography.salt()
+    "saves": [], "savePreselect": false,
+    // "saveKey": Cryptography.salt(),
+    "permissionsInternalShortcuts": false, "permissionsDownload": false, "permissionsEnhancedMode": false
   };
 
   // The browser action badges that will be displayed against the extension icon
@@ -61,16 +70,6 @@ var Background = (() => {
 
   // A boolean flag to dynamically make the background temporarily persistent when an instance is enabled
   let persistent = false;
-
-  /**
-   * Gets the storage default values (SDV).
-   *
-   * @returns {{}} the storage default values (SDV)
-   * @public
-   */
-  function getSDV() {
-    return STORAGE_DEFAULT_VALUES;
-  }
 
   /**
    * Gets all the instances.
@@ -210,18 +209,22 @@ var Background = (() => {
    * @private
    */
   async function installedListener(details) {
-    // install: Open Options Page; update to 6.0: reset storage and remove permissions
-    if (details.reason === "install" || (details.reason === "update" && details.previousVersion < "6.0")) {
-      console.log("installedListener() - details.reason=" + details.reason);
-      await Promisify.clearItems("sync");
-      console.log("installedListener() - cleared sync items");
-      await Promisify.clearItems("local");
-      console.log("installedListener() - cleared local items");
-      await Promisify.setItems("local", STORAGE_DEFAULT_VALUES);
-      if (details.reason === "install") {
-        chrome.runtime.openOptionsPage();
-        console.log("installedListener() - opened options page");
-      } else if (details.reason === "update" && details.previousVersion < "6.0") {
+    console.log("installedListener() - details=" + JSON.stringify(details));
+    // Install:
+    if (details.reason === "install") {
+      console.log("installedListener() - installing...");
+      await Promisify.clearItems();
+      await Promisify.setItems(STORAGE_DEFAULT_VALUES);
+      chrome.runtime.openOptionsPage();
+    }
+    // Update:
+    else if (details.reason === "update") {
+      // Pre 6.0 needs to reset storage items
+      if (details.previousVersion < "6.0") {
+        console.log("installedListener() - updating to 6.0...");
+        await Promisify.clearItems("sync");
+        await Promisify.clearItems("local");
+        await Promisify.setItems(STORAGE_DEFAULT_VALUES);
         await Permissions.removeAllPermissions();
       }
     }
@@ -268,7 +271,17 @@ var Background = (() => {
    * @private
    */
   async function messageListener(request, sender, sendResponse) {
-    console.log("messageListener() - request.greeting=" + request.greeting);
+    console.log("messageListener() - request=" + (request ? JSON.stringify(request) : "undefined"));
+    switch (request.greeting) {
+      // case "setBadge":
+      //   setBadge(request.tabId ? request.tabId : sender.tab.id, request.badge, request.temporary, request.text, request.backgroundColor);
+      //   break;
+      case "getSDV":
+        sendResponse(STORAGE_DEFAULT_VALUES);
+        break;
+      default:
+        break;
+    }
     if (request && request.greeting === "performAction") {
       // Firefox: sender.tab.url is undefined in FF due to not having tabs permissions (even though we have <all_urls>!), so use sender.url, which should be identical in 99% of cases (e.g. iframes may be different)
       if (sender && sender.url && sender.tab && !sender.tab.url) {
@@ -360,7 +373,6 @@ var Background = (() => {
 
   // Return Public Functions
   return {
-    getSDV: getSDV,
     getInstances: getInstances,
     getInstance: getInstance,
     setInstance: setInstance,

@@ -2,7 +2,7 @@
  * URL Incrementer
  * @file increment-decrement.js
  * @author Roy Six
- * @license LGPL-3.0
+ * @license TBD
  */
 
 /**
@@ -11,7 +11,7 @@
  * Custom Bases (custom alphabets) are all supported.
  *
  * There are additional variables in this file for handling more complex increment functions. They are for:
- * 1. Multi Incrementing: incrementing multiple parts of a URL individually, simultaneously, or in rages
+ * 1. Multi Incrementing: incrementing multiple parts of a URL individually, simultaneously, or in ranges
  * 2. Date/Time Incrementing: incrementing dates and times
  * 3. Roman Numeral Incrementing: incrementing roman numerals like vii
  * 4. Arrays: stepping through arrays (e.g. increment steps forward, decrement steps backward)
@@ -44,8 +44,8 @@ var IncrementDecrement = (() => {
         // p|id|next= lookbehind regex: /(?<=p|id|next)=(\d+)/i
         const terms = /(?:(p|id|next)=\d+)(?!.*(p|id|next)=\d+)/i.exec(url);
         if (terms) { return {selection: terms[0].substring(terms[1].length + 1), selectionStart: terms.index + terms[1].length + 1}; }
-        // =|/|- TODO: The / and - prefixes may be a bit aggressive, so they've been commented out for now. Also, don't capture the prefix itself so substring(1) will no longer be needed
-        // const prefixes = /(?:[=\/-]\d+)(?!.*[=\/-]\d+)/.exec(url);
+        // = / - _ TODO: The / and - and _ prefixes may be a bit aggressive, so they've been commented out for now. Also, don't capture the prefix itself so substring(1) will no longer be needed
+        // const prefixes = /(?:[=\/-_]\d+)(?!.*[=\/-_]\d+)/.exec(url);
         const prefixes = /(?:[=]\d+)(?!.*[=]\d+)/.exec(url);
         if (prefixes) { return {selection: prefixes[0].substring(1), selectionStart: prefixes.index + 1}; }
       }
@@ -316,7 +316,7 @@ var IncrementDecrement = (() => {
 })();
 
 /**
- * IncrementDecrementMulti handles incrementing multiple parts of a URL individually, simultaneously, or in rages.
+ * IncrementDecrementMulti handles incrementing multiple parts of a URL individually, simultaneously, or in ranges.
  * The actual increment is handled individually by the respective object (e.g. IncrementDecrement for Base 2-36).
  * However, there are "pre" and "post" functions in order to pre-handle and post-handle the increment properly.
  */
@@ -396,7 +396,7 @@ var IncrementDecrementMulti = (() => {
  *
  * It supports multiple date-time formats, such as:
  * 1. Date Formats - year, month, day
- * 2. Time Formats - hours, minutes, seconds, and miliseconds
+ * 2. Time Formats - hours, minutes, seconds, and milliseconds
  */
 var IncrementDecrementDate = (() => {
 

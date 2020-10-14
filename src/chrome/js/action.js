@@ -205,14 +205,26 @@ var Action = (() => {
    */
   function nextPrev(action, instance) {
     let actionPerformed = true;
+    const result = NextPrev.findNextPrevURL(
+      instance[action + "Type"],
+      instance[action + "Selector"],
+      instance[action + "Xpath"],
+      instance[action + "Attribute"],
+      instance[action + "KeywordsEnabled"],
+      instance[action + "Keywords"],
+      instance.decodeURIEnabled,
+      instance.debugEnabled,
+      document_);
     chrome.tabs.executeScript(instance.tabId, {file: "/js/next-prev.js", runAt: "document_end"}, function() {
       const code = "NextPrev.findNextPrevURL(" +
         JSON.stringify(instance[action + "Type"]) + "," +
         JSON.stringify(instance[action + "Selector"]) + "," +
         JSON.stringify(instance[action + "Xpath"]) + "," +
         JSON.stringify(instance[action + "Attribute"]) + "," +
+        JSON.stringify(instance[action + "KeywordsEnabled"]) + "," +
         JSON.stringify(instance[action + "Keywords"]) + "," +
-        JSON.stringify(instance.nextPrevSameDomainPolicy) + ");";
+        JSON.stringify(instance.decodeURIEnabled) + ",";
+        JSON.stringify(instance.debugEnabled) + ",undefined);";
       chrome.tabs.executeScript(instance.tabId, {code: code, runAt: "document_end"}, function(results) {
         if (results && results[0] && results[0].url) {
           instance.url = results[0].url;

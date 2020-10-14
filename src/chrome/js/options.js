@@ -7,14 +7,21 @@
 
 var Options = (() => {
 
-  // The DOM elements cache, KeyboardEvent.key and modifier bits map, and array of internal shortcuts
+  /**
+   * Variables
+   *
+   * @param DOM           the DOM elements cache
+   * @param KEY_MODIFIERS the KeyboardEvent.key and modifier bits map
+   * @param shortcuts     the array of internal shortcuts
+   * @param key           key variable that stores the key between keyDown and keyUp
+   * @param items         the storage items cache
+   * @param timeouts      the reusable timeouts object that stores all named timeouts used on this page
+   */
   const DOM = {};
   const KEY_MODIFIERS = new Map([["Alt",0x1],["Control",0x2],["Shift",0x4],["Meta",0x8]]);
   const shortcuts = ["increment", "decrement", "next", "prev", "clear", "return", "auto", "download"];
-
-  // The backgroundPage cache, key variable that stores the key between keyDown and keyUp, and timeouts object
-  let backgroundPage = {};
   let key = {};
+  let items;
   let timeouts = {};
 
   /**
@@ -23,7 +30,6 @@ var Options = (() => {
    * @private
    */
   async function init() {
-    backgroundPage = await Promisify.getBackgroundPage();
     buildShortcuts();
     const ids = document.querySelectorAll("[id]");
     const i18ns = document.querySelectorAll("[data-i18n]");
@@ -409,92 +415,89 @@ var Options = (() => {
   }
 
   /**
-   * Builds out the saved URLs table HTML.
+   * Builds out the saved URLs table HTML using a template.
    *
-   * @param saves   the saved URLs to build from
-   * @param saveKey the saved secret key for decrypting wildcards and regexp urls
+   * @param saves the saved URLs to build from
    * @private
    */
-  async function buildSavedURLsTable(saves, saveKey) {
+  function buildSavedURLsTable(saves) {
+    // Remove all existing saves in case the user resets the options to re-populate them (Inefficient)
+    const tbody = DOM["#saved-urls-tbody"];
+    const template = DOM["#saved-urls-tr-template"];
+    while (tbody.rows.length > 0) {
+      tbody.deleteRow(0);
+    }
     if (saves && saves.length > 0) {
-      const table = document.createElement("table"); table.id = "saved-urls-table"; table.className = "display-block fade-in";
-      const thead = document.createElement("thead"); table.appendChild(thead);
-      const tr = document.createElement("tr"); thead.appendChild(tr);
-      let th;
-      th = document.createElement("th"); th.className = "check"; th.textContent = " "; tr.appendChild(th);
-      th = document.createElement("th"); th.className = "count"; th.textContent = "#"; tr.appendChild(th);
-      th = document.createElement("th"); th.className = "type"; th.textContent = "Type"; tr.appendChild(th);
-      th = document.createElement("th"); th.className = "url"; th.textContent = "URL"; tr.appendChild(th);
-      th = document.createElement("th"); th.className = "i"; th.textContent = "I"; th.title = "Interval"; tr.appendChild(th);
-      th = document.createElement("th"); th.className = "b"; th.textContent = "B"; th.title = "Base"; tr.appendChild(th);
-      th = document.createElement("th"); th.className = "e"; th.textContent = "E"; th.title="Error Skip"; tr.appendChild(th);
-      th = document.createElement("th"); th.className = "date"; th.textContent = "Date"; tr.appendChild(th);
-      const tbody = document.createElement("tbody"); table.appendChild(tbody);
-      let count = 1;
+      // Sort the saves by ID for presentation in the table
+      saves.sort((a, b) => (a.id > b.id) ? 1 : -1);
       for (const save of saves) {
-        const output = await backgroundPage.Cryptography.decrypt(save.ciphertext, save.iv, saveKey);
-        const tr = document.createElement("tr"); tr.className = "unselected"; tr.dataset.ciphertext = save.ciphertext;
-        //const check = document.createElement("img"); check.src = "../img/check-circle.png"; check.alt = ""; check.width = check.height = 16; check.className = "check-circle hvr-grow"; check.title = chrome.i18n.getMessage("download_preview_check_" + ("unselect"));
-        const checkbox = document.createElement("input"); checkbox.type = "checkbox"; checkbox.value = save.ciphertext;
-        let td;
-        td = document.createElement("td"); td.className = "check"; td.appendChild(checkbox); tr.appendChild(td);
-        td = document.createElement("td"); td.className = "count"; td.textContent = count++; tr.appendChild(td);
-        td = document.createElement("td"); td.className = "type"; td.textContent = save.type.substring(0 ,3); tr.appendChild(td);
-        td = document.createElement("td"); td.className = "url"; td.textContent = output; tr.appendChild(td);
-        td = document.createElement("td"); td.className = "i"; td.textContent = save.interval; tr.appendChild(td);
-        td = document.createElement("td"); td.className = "b"; td.textContent = save.base; tr.appendChild(td);
-        td = document.createElement("td"); td.className = "e"; td.textContent = save.errorSkip; tr.appendChild(td);
-        td = document.createElement("td"); td.className = "date"; td.textContent =  new Date(save.date).toLocaleDateString(); tr.appendChild(td);
+        const tr = template.content.children[0].cloneNode(true);
+        tr.children[0].children[0].children[0].value = save.id;
+        tr.children[1].textContent = save.id;
+        tr.children[2].children[0].dataset.id = save.id;
+        tr.children[2].children[0].textContent = save.url;
+        tr.children[2].children[0].title = chrome.i18n.getMessage("saved_urls_click_details");
+        tr.children[3].textContent = new Date(save.date).toLocaleDateString();
         tbody.appendChild(tr);
       }
-      DOM["#saved-urls-table-div"].replaceChild(table, DOM["#saved-urls-table-div"].firstChild);
+      MDC.tables.get("saved-urls-data-table").layout();
     } else {
-      DOM["#saved-urls-table-div"].replaceChild(document.createElement("div"), DOM["#saved-urls-table-div"].firstChild);
+      DOM["#saved-urls-buttons"].style.display = "none";
     }
-    DOM["#saved-urls-quantity"].textContent = " (" + (saves ? saves.length: 0) + "):";
-  }
-
-
-  /**
-   * Adds a Saved URL wildcard or regular expression. Note that exact URLs are added in a separate function in Saves.
-   *
-   * @private
-   */
-  async function addSavedURL() {
-    const url = DOM["#saved-urls-wildcard-url-textarea"].value;
-    const type = DOM["#saved-urls-regexp-input"].checked ? "regexp" : "wildcard";
-    // If the url textarea value is empty, return with error
-    if (!url || url.length < 0) {
-      DOM["#saved-urls-wildcard-errors"].textContent = chrome.i18n.getMessage("saved_urls_wildcard_url_error");
-      return;
-    }
-    // If the regexp is invalid, return with error
-    if (type === "regexp") {
-      try {
-        new RegExp(url);
-      } catch(e) {
-        DOM["#saved-urls-wildcard-errors"].textContent = e;
-        return;
-      }
-    }
-    await backgroundPage.Saves.addSave(type, undefined, url);
-    populateValuesFromStorage("savedURLs");
-    DOM["#saved-urls-wildcard"].className = "display-none";
+    DOM["#saved-urls-stats"].style.display = saves && saves.length > 0 ? "block" : "none";
+    DOM["#saved-urls-quantity"].textContent = saves && saves.length > 0 ? chrome.i18n.getMessage("saved_urls_quantity") + " " + saves.length : "";
+    DOM["#saved-urls-none"].style.display = saves && saves.length > 0 ? "none" : "block";
   }
 
   /**
-   * Deletes Saved URL(s) (all types) by their unique ciphertext.
+   * Views a Saved URL.
+   * The user must click on a Saved URL in the table and a dialog will open containing its properties.
+   *
+   * @param event the click event
+   */
+  function viewSave(event) {
+    const element = event.target;
+    if (element && element.dataset.id && element.classList.contains("saved-urls-details")) {
+      MDC.dialogs.get("saved-urls-dialog").open();
+      // Must convert the element's dataset id (now a string) back to a number for proper comparison
+      const id = Number(element.dataset.id);
+      const save = items.saves.find(e => e.id === id);
+      const date = new Date(save.date);
+      DOM["#saved-urls-dialog-title"].textContent = save.title ? save.title : chrome.i18n.getMessage("saved_urls_dialog_title");
+      DOM["#saved-urls-dialog-id-value"].textContent = save.id;
+      DOM["#saved-urls-dialog-url-value"].textContent = save.url;
+      DOM["#saved-urls-dialog-type-value"].textContent = save.type;
+      DOM["#saved-urls-dialog-action-value"].textContent = save.scrollAction;
+      DOM["#saved-urls-dialog-append-value"].textContent = save.scrollAppend;
+      DOM["#saved-urls-dialog-json"].style.display = DOM["#saved-urls-dialog-json-input"].checked ? "block" : "none";
+      DOM["#saved-urls-dialog-json-data"].textContent = JSON.stringify(save, null, ' ');
+      DOM["#saved-urls-dialog-date-value"].textContent = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+    }
+  }
+
+  /**
+   * Deletes Saved URL(s) (all types) by their unique ID.
    *
    * @private
    */
-  async function deleteSavedURL() {
-    // Dynamically Generated Checkboxes, must get elements dynamically, can't use DOM Cache
-    const checkboxes = [...document.querySelectorAll("#saved-urls-table input[type=checkbox]:checked")].map(o => o.value);
-    const saves = await Promisify.getItems("local", "saves");
+  async function deleteSaveById() {
+    // We must get the checkbox ID values dynamically via a query (can't use the DOM Cache)
+    const checkboxes = [...document.querySelectorAll("#saved-urls-tbody input[type=checkbox]:checked")].map(o => +o.value);
+    const saves = await Promisify.getItems("saves");
+    console.log("deleteSaveById() - checkboxes=" + checkboxes + ", saves=" + saves);
     if (saves && saves.length > 0 && checkboxes && checkboxes.length > 0) {
-      const newsaves = saves.filter(o => !checkboxes.includes(o.ciphertext));
-      await Promisify.setItems("local", {saves: newsaves});
-      populateValuesFromStorage("savedURLs");
+      const newsaves = saves.filter(o => !checkboxes.includes(o.id));
+      // Re-generate IDs in case there is now a gap after filtering, e.g. if deleting ID 3 in this array: [1, 2, 4, 5, ...]
+      newsaves.sort((a, b) => (a.id > b.id) ? 1 : -1);
+      for (let i = 0; i < newsaves.length; i++) {
+        if (newsaves[i]) {
+          newsaves[i].id = i + 1;
+        }
+      }
+      // Resort back to default sort order
+      newsaves.sort((a, b) => (a.order > b.order) ? 1 : (a.order === b.order) ? ((a.url && b.url && a.url.length < b.url.length) ? 1 : -1) : -1);
+      await Promisify.setItems({saves: newsaves});
+      populateValuesFromStorage("saves");
     }
   }
 
@@ -528,10 +531,15 @@ var Options = (() => {
     console.log("saveInput() - about to clearTimeout and setTimeout... input.id=" + input.id + ", storageKey=" + storageKey +", type=" + type);
     clearTimeout(timeouts[input.id]);
     timeouts[input.id] = setTimeout(function() {
+      // Note: We use Math.ceil in case the user tries to enter a decimal input for items where we expect a whole number. e.g. an input of "0.1" becomes "1"
       chrome.storage.local.set({[storageKey]:
-        type === "number" ? +input.value :
         type === "value" ? input.value :
-        type.startsWith("array") ? input.value ? input.value.toLowerCase().split(type === "array-split-all" ? /[, \n]+/ : /[,\n]/).filter(Boolean) : [] : undefined
+        type === "number" ? Math.ceil(+input.value) :
+        type === "percentage" ? Math.ceil(+input.value) / 100 :
+        type === "array-split-all" ? input.value ? input.value.split(/[, \n]+/).filter(Boolean) : [] :
+        type === "array-split-newline" ? input.value ? input.value.split(/[\n]+/).filter(Boolean) : [] :
+        type === "array-split-period" ? input.value ? input.value.split(".").filter(Boolean) : [] :
+        type === "array-split-nospace-lowercase" ? input.value ? input.value.toLowerCase().split(/[,\n]/).filter(Boolean) : [] : undefined
       });
     }, 1000);
   }
@@ -575,16 +583,16 @@ var Options = (() => {
       if (selectionStart > url.length || selectionStart + selection.length > url.length) {
         throw chrome.i18n.getMessage("selection_custom_matchindex_error");
       }
-      // TODO:
-      const base = isNaN(DOM["#base-select"].value) ? DOM["#base-select"].value : +DOM["#base-select"].value;
-      const baseCase = DOM["#base-case-uppercase-input"].checked ? DOM["#base-case-uppercase-input"].value : DOM["#base-case-lowercase-input"].checked;
-      const baseDateFormat = DOM["#base-date-format-input"].value;
-      const baseRoman = DOM["#base-roman-latin-input"].checked ? DOM["#base-roman-latin-input"].value : DOM["#base-roman-u216x-input"].checked ? DOM["#base-roman-u216x-input"].value : DOM["#base-roman-u217x-input"].value;
-      const baseCustom = DOM["#base-custom-input"].value;
-      const leadingZeros = selection.startsWith("0") && selection.length > 1;
-      if (backgroundPage.IncrementDecrement.validateSelection(selection, base, baseCase, baseDateFormat, baseRoman, baseCustom, leadingZeros)) {
-        throw url.substring(selectionStart, selectionStart + selection.length) + " " + chrome.i18n.getMessage("selection_custom_matchnotvalid_error");
-      }
+      // TODO: Can't validate selection because we can't call IncrementDecrement.validateSelection() from Options Page
+      // const base = isNaN(DOM["#base-select"].value) ? DOM["#base-select"].value : +DOM["#base-select"].value;
+      // const baseCase = DOM["#base-case-uppercase-input"].checked ? DOM["#base-case-uppercase-input"].value : DOM["#base-case-lowercase-input"].checked;
+      // const baseDateFormat = DOM["#base-date-format-input"].value;
+      // const baseRoman = DOM["#base-roman-latin-input"].checked ? DOM["#base-roman-latin-input"].value : DOM["#base-roman-u216x-input"].checked ? DOM["#base-roman-u216x-input"].value : DOM["#base-roman-u217x-input"].value;
+      // const baseCustom = DOM["#base-custom-input"].value;
+      // const leadingZeros = selection.startsWith("0") && selection.length > 1;
+      // if (IncrementDecrement.validateSelection(selection, base, baseCase, baseDateFormat, baseRoman, baseCustom, leadingZeros)) {
+      //   throw url.substring(selectionStart, selectionStart + selection.length) + " " + chrome.i18n.getMessage("selection_custom_matchnotvalid_error");
+      // }
     } catch (e) {
       DOM["#selection-custom-message-span"].textContent = e;
       return;
@@ -598,21 +606,32 @@ var Options = (() => {
       chrome.storage.local.set({"selectionCustom": { "url": url, "regex": regex, "flags": flags, "group": group, "index": index }});
     }
   }
-
   /**
    * Resets the options by clearing the storage and setting it with the default storage values, removing any extra
-   * permissions, and finally re-populating the options input values from storage again.
+   * permissions, and lastly re-populating the options input values from storage again.
+   *
+   * Note: This function does not reset Saved URLs and other one-time only storage items like install version.
    *
    * @private
    */
   async function resetOptions() {
+    console.log("resetOptions() - resetting options...");
+    items = await Promisify.getItems();
+    const SDV = await Promisify.runtimeSendMessage({greeting: "getSDV"});
     await Promisify.clearItems();
-    await Promisify.setItems("local", backgroundPage.Background.getSDV());
+    await Promisify.setItems(SDV);
     await Permissions.removeAllPermissions();
-    console.log("resetOptions() - storage cleared and set and permissions removed");
-    changeIconColor.call(DOM["#icon-color-radio-dark"]);
+    if (items) {
+      await Promisify.setItems({
+        "installVersion": items.installVersion ? items.installVersion : "",
+        "installDate": items.installDate ? items.installDate : null,
+        "firstRun": false,
+        "toolbarIcon": items.toolbarIcon ? items.toolbarIcon : SDV.toolbarIcon,
+        "saves": items.saves ? items.saves : SDV.saves,
+      });
+    }
     populateValuesFromStorage("all");
-    UI.generateAlert([chrome.i18n.getMessage("reset_options_message")]);
+    MDC.snackbars.get("reset-options-snackbar").open();
   }
 
   /**

@@ -18,7 +18,7 @@ var Popup = (() => {
    * @param instance the actual instance object after being accepted in setup and before being loaded
    * @param items    the storage items cache
    * @param tabs     TODO Is this needed? the reusable tabs object
-   * @param timeouts reusable timeouts object that stores all named timeouts used on this page
+   * @param timeouts the reusable timeouts object that stores all named timeouts used on this page
    * @param backgroundPage TODO Remove This
    * @param downloadPreviewCache TODO
    */
