@@ -5,17 +5,24 @@
  * @license LGPL-3.0
  */
 
+/**
+ * Promisify contains promise-based wrappers for common extension tasks, like getting storage items, getting tabs, and
+ * sending messages between different parts of the extension.
+ *
+ * Because the chrome.* api uses callbacks, this is a convenience object that allows the extension to use async/await
+ * and be coded in a simpler fashion.
+ */
 var Promisify = (() => {
 
   /**
    * Gets the storage items via a promise-based wrapper for async/await callers.
    *
-   * @param namespace (optional) the storage namespace, either "local" or "sync"
    * @param key       (optional) the storage item key to get or null for all items
+   * @param namespace (optional) the storage namespace, either "local" or "sync"
    * @returns {Promise<{}>} the storage items
    * @public
    */
-  function getItems(namespace = "local", key = null) {
+  function getItems(key = null, namespace = "local") {
     return new Promise(resolve => {
       chrome.storage[namespace].get(key, items => {
         key ? resolve(items[key]) : resolve(items);
@@ -26,14 +33,29 @@ var Promisify = (() => {
   /**
    * Sets the storage items via a promise-based wrapper for async/await callers.
    *
-   * @param namespace (optional) the storage namespace, either "local" or "sync"
    * @param items     the storage items (object {}) to set
+   * @param namespace (optional) the storage namespace, either "local" or "sync"
    * @returns {Promise<{}>}
    * @public
    */
-  function setItems(namespace = "local", items) {
+  function setItems(items, namespace = "local") {
     return new Promise(resolve => {
       chrome.storage[namespace].set(items, resolve);
+    });
+  }
+
+  /**
+   * Removes a storage item via a promise-based wrapper for async/await callers.
+   * Example: chrome.storage.local.remove("myStorageItemToRemove");
+   *
+   * @param items     the storage items to remove, this can either be a String for one value or Array [] for multiple
+   * @param namespace (optional) the storage namespace, either "local" or "sync"
+   * @returns {Promise<{}>}
+   * @public
+   */
+  function removeItems(items, namespace = "local") {
+    return new Promise(resolve => {
+      chrome.storage[namespace].remove(items, resolve);
     });
   }
 
@@ -49,7 +71,6 @@ var Promisify = (() => {
       chrome.storage[namespace].clear(resolve);
     });
   }
-
   /**
    * Gets the queried tabs via a promise-based wrapper for async/await callers.
    *
@@ -65,19 +86,19 @@ var Promisify = (() => {
     });
   }
 
-  /**
-   * Gets the background page via a promise-based wrapper for async/await callers.
-   *
-   * @returns {Promise<{}>} the background page
-   * @public
-   */
-  function getBackgroundPage() {
-    return new Promise(resolve => {
-      chrome.runtime.getBackgroundPage(backgroundPage => {
-        resolve(backgroundPage);
-      });
-    });
-  }
+  // /**
+  //  * Gets the background page via a promise-based wrapper for async/await callers.
+  //  *
+  //  * @returns {Promise<{}>} the background page
+  //  * @public
+  //  */
+  // function getBackgroundPage() {
+  //   return new Promise(resolve => {
+  //     chrome.runtime.getBackgroundPage(backgroundPage => {
+  //       resolve(backgroundPage);
+  //     });
+  //   });
+  // }
 
   /**
    * Sends a message to the extension's runtime (background) via a promise-based wrapper for async/await callers.
@@ -118,7 +139,6 @@ var Promisify = (() => {
     setItems: setItems,
     clearItems: clearItems,
     getTabs: getTabs,
-    getBackgroundPage: getBackgroundPage,
     runtimeSendMessage: runtimeSendMessage,
     tabsSendMessage: tabsSendMessage
   };

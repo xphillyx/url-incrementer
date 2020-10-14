@@ -4,6 +4,13 @@
   "description": { "message": "Increment a URL or go to the Next Page. Supports Auto, Download, Crawl, and Scrape Incrementing. Uses 0 Background memory when inactive." },
   "title": { "message": "URL Incrementer" },
 
+  "INSTALL": { "message": "----- INSTALL -----" },
+  "install_dialog_title": { "message": "Thank You for Adding URL Incrementer" },
+  "install_dialog_beta": { "message": "Before getting started, you'll probably want to know the following things..." },
+  "install_dialog_list_1": { "message": "The default shortcut keys for increment is Ctrl+Shift+Up and decrement is Ctrl+Shift+Down. You can adjust them" },
+  "install_dialog_list_2": { "message": "This extension has a lot of options; however, you don't have to adjust anything if you don't want to." },
+  "install_dialog_email": { "message": "Lastly, I want you to be 100% happy with URLI. If something isn't working right, please don't hesitate to email me for help: " },
+
   "BROWSER": { "message": "----- BROWSER -----" },
   "browser_shortcuts_h3": { "message": "Chrome Shortcuts" },
   "browser_shortcuts_enable_button": { "message": "Enable Chrome Shortcuts" },

@@ -272,27 +272,29 @@ var Background = (() => {
    */
   async function messageListener(request, sender, sendResponse) {
     console.log("messageListener() - request=" + (request ? JSON.stringify(request) : "undefined"));
+    // Firefox: sender.tab.url is undefined in FF due to not having tabs permissions (even though we have <all_urls>!), so use sender.url, which should be identical in 99% of cases (e.g. iframes may be different)
+    if (sender && sender.url && sender.tab && !sender.tab.url) {
+      sender.tab.url = sender.url;
+    }
+    let instance;
     switch (request.greeting) {
-      // case "setBadge":
-      //   setBadge(request.tabId ? request.tabId : sender.tab.id, request.badge, request.temporary, request.text, request.backgroundColor);
-      //   break;
       case "getSDV":
         sendResponse(STORAGE_DEFAULT_VALUES);
         break;
+      case "getInstance":
+        instance = getInstance(request.tab.id) || await buildInstance(request.tab, undefined);
+        sendResponse(instance);
+        break;
+      case "performAction":
+        const items = await Promisify.getItems();
+        instance = getInstance(sender.tab.id) || await buildInstance(sender.tab, items);
+        if ((request.shortcut === "key" && items.keyEnabled && (items.keyQuickEnabled || (instance && (instance.enabled || instance.saveFound)))) ||
+          (request.shortcut === "mouse" && items.mouseEnabled && (items.mouseQuickEnabled || (instance && (instance.enabled || instance.saveFound))))) {
+          Action.performAction(request.action, "message", instance, items);
+        }
+        break;
       default:
         break;
-    }
-    if (request && request.greeting === "performAction") {
-      // Firefox: sender.tab.url is undefined in FF due to not having tabs permissions (even though we have <all_urls>!), so use sender.url, which should be identical in 99% of cases (e.g. iframes may be different)
-      if (sender && sender.url && sender.tab && !sender.tab.url) {
-        sender.tab.url = sender.url;
-      }
-      const items = await Promisify.getItems();
-      const instance = getInstance(sender.tab.id) || await buildInstance(sender.tab, items);
-      if ((request.shortcut === "key" && items.keyEnabled && (items.keyQuickEnabled || (instance && (instance.enabled || instance.saveFound)))) ||
-        (request.shortcut === "mouse" && items.mouseEnabled && (items.mouseQuickEnabled || (instance && (instance.enabled || instance.saveFound))))) {
-        Action.performAction(request.action, "message", instance, items);
-      }
     }
   }
 

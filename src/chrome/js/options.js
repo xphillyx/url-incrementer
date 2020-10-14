@@ -30,9 +30,16 @@ var Options = (() => {
    * @private
    */
   async function init() {
+    // If we don't have chrome, display an error message. Note: Firefox allows Private Window Installation, which causes problems with not having chrome
+    if (typeof chrome === "undefined") {
+      console.log("init() - error: chrome is undefined");
+      MDC.dialogs.get("error-dialog").open();
+      return;
+    }
     buildShortcuts();
     const ids = document.querySelectorAll("[id]");
     const i18ns = document.querySelectorAll("[data-i18n]");
+    const tooltips = document.querySelectorAll("[aria-label][aria-describedby='tooltip']");
     // Cache DOM elements
     for (const element of ids) {
       DOM["#" + element.id] = element;
@@ -41,7 +48,24 @@ var Options = (() => {
     for (const element of i18ns) {
       element[element.dataset.i18n] = chrome.i18n.getMessage(element.id.replace(/-/g, '_').replace(/\*.*/, ''));
     }
+    // Set Tooltip text from messages.json
+    for (const element of tooltips) {
+      element.setAttribute("aria-label", chrome.i18n.getMessage(element.getAttribute("aria-label").replace(/-/g, '_')));
+    }
     // Add Event Listeners to the DOM elements
+    // MDC Tab Bar
+    MDC.tabBars.get("options-tab-bar").listen("MDCTabBar:activated", (event) => {
+      document.querySelector(".mdc-tab-content--active").classList.remove("mdc-tab-content--active");
+      document.querySelectorAll(".mdc-tab-content:not([data-unavailable])")[event.detail.index].classList.add("mdc-tab-content--active");
+    });
+    // UI
+    DOM["#toolbar-icon-radios"].addEventListener("change", function(event) { changeToolbarIcon.call(event.target); });
+    DOM["#button-size-input"].addEventListener("change", function () { if (+this.value >= 16 && +this.value <= 128) { saveInput(this, "buttonSize", "number");
+      DOM["#button-size-icon"].style = "width:" + (+this.value) + "px; height:" + (+this.value) + "px;"; } });
+    DOM["#button-size-icon"].addEventListener("click", function () { UI.clickHoverCss(this, "hvr-push-click"); });
+    MDC.selects.get("interface-image-select").listen("MDCSelect:change", () => { chrome.storage.local.set({"interfaceImage": MDC.selects.get("interface-image-select").value}); });
+    DOM["#interface-messages-input"].addEventListener("change", function () { chrome.storage.local.set({"interfaceMessages": this.checked}); });
+    // Shortcuts
     DOM["#internal-shortcuts-enable-button"].addEventListener("click", function() { Permissions.requestPermission("internalShortcuts", function(granted) { if (granted) { populateValuesFromStorage("internalShortcuts"); } }) });
     DOM["#browser-shortcuts-enable-button"].addEventListener("click", function() { Permissions.removePermission("internalShortcuts", function(removed) { if (removed) { populateValuesFromStorage("internalShortcuts"); } }) });
     DOM["#browser-shortcuts-quick-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"commandsQuickEnabled": this.checked}); });
@@ -50,31 +74,25 @@ var Options = (() => {
     DOM["#key-quick-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"keyQuickEnabled": this.checked}); });
     DOM["#mouse-quick-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"mouseQuickEnabled": this.checked}); });
     DOM["#mouse-click-speed-input"].addEventListener("change", function () { chrome.storage.local.set({"mouseClickSpeed": +this.value >= 100 && +this.value <= 1000 ? +this.value : 400}); });
-    DOM["#icon-color-radios"].addEventListener("change", function(event) { changeIconColor.call(event.target); });
-    DOM["#icon-feedback-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"iconFeedbackEnabled": this.checked}); });
-    DOM["#popup-button-size-input"].addEventListener("change", function () { if (+this.value >= 16 && +this.value <= 64) { saveInput(this, "popupButtonSize", "number");
-      DOM["#popup-button-size-img"].style = "width:" + (+this.value) + "px; height:" + (+this.value) + "px;"; } });
-    DOM["#popup-button-size-img"].addEventListener("click", function () { if (DOM["#popup-animations-enable-input"].checked) { UI.clickHoverCss(this, "hvr-push-click"); } });
-    DOM["#popup-animations-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"popupAnimationsEnabled": this.checked});
-      DOM["#popup-button-size-img"].className = this.checked ? "hvr-grow" : "" });
-    DOM["#decode-uri-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"decodeURIEnabled": this.checked}); });
-    DOM["#saved-urls-preselect-input"].addEventListener("change", function () { chrome.storage.local.set({"savePreselect": this.checked}); });
-    DOM["#saved-urls-delete-button"].addEventListener("click", function() { deleteSavedURL(); });
-    DOM["#saved-urls-wildcard-add-button"].addEventListener("click", function() { DOM["#saved-urls-wildcard"].className = "display-block fade-in"; DOM["#saved-urls-wildcard-url-textarea"].value = DOM["#saved-urls-wildcard-errors"].textContent = ""; });
-    DOM["#saved-urls-wildcard-cancel-button"].addEventListener("click", function() { DOM["#saved-urls-wildcard"].className = "display-none"; });
-    DOM["#saved-urls-wildcard-save-button"].addEventListener("click", function() { addSavedURL(); });
-    DOM["#selection-select"].addEventListener("change", function() { DOM["#selection-custom"].className = this.value === "custom" ? "display-block fade-in" : "display-none"; chrome.storage.local.set({"selectionPriority": this.value}); });
+    // Saves
+    DOM["#saved-urls-tbody"].addEventListener("click", viewSave);
+    DOM["#saved-urls-delete-button"].addEventListener("click", function() { deleteSaveById(); });
+    DOM["#saved-urls-dialog-json-input"].addEventListener("change", function() { DOM["#saved-urls-dialog-json"].style.display = this.checked ? "block" : "none"; });
+    // Increment Decrement
+    MDC.selects.get("selection-select").listen("MDCSelect:change", (el) => { DOM["#selection-custom"].className = el.detail.value === "custom" ? "display-block fade-in" : "display-none"; chrome.storage.local.set({"selectionPriority": el.detail.value}); });
+    MDC.selects.get("base-select").listen("MDCSelect:change", (el) => {
+      const value = el.detail.value;
+      chrome.storage.local.set({"base": isNaN(value) ? value : +value});
+      DOM["#base-case"].className = +value > 10 ? "display-block fade-in" : "display-none";
+      DOM["#base-date"].className = value === "date" ? "display-block fade-in" : "display-none";
+      DOM["#base-roman"].className = value === "roman" ? "display-block fade-in" : "display-none";
+      DOM["#base-custom"].className = value === "custom" ? "display-block fade-in" : "display-none";
+      MDC.layout();
+    });
     DOM["#selection-custom-save-button"].addEventListener("click", function () { customSelection("save"); });
     DOM["#selection-custom-test-button"].addEventListener("click", function() { customSelection("test"); });
     DOM["#interval-input"].addEventListener("change", function () { if (+this.value > 0) { saveInput(this, "interval", "number");} });
     DOM["#leading-zeros-pad-by-detection-input"].addEventListener("change", function() { chrome.storage.local.set({ "leadingZerosPadByDetection": this.checked}); });
-    DOM["#base-select"].addEventListener("change", function() {
-      DOM["#base-case"].className = +this.value > 10 ? "display-block fade-in" : "display-none";
-      DOM["#base-date"].className = this.value === "date" ? "display-block fade-in" : "display-none";
-      DOM["#base-roman"].className = this.value === "roman" ? "display-block fade-in" : "display-none";
-      DOM["#base-custom"].className = this.value === "custom" ? "display-block fade-in" : "display-none";
-      chrome.storage.local.set({"base": +this.value > 10 ? +this.value : this.value});
-    });
     DOM["#base-case"].addEventListener("change", function() { chrome.storage.local.set({"baseCase": event.target.value}); });
     DOM["#base-date-format-input"].addEventListener("input", function() { saveInput(this, "baseDateFormat", "value"); });
     DOM["#base-roman"].addEventListener("change", function() { chrome.storage.local.set({"baseRoman": event.target.value}); });
@@ -83,36 +101,300 @@ var Options = (() => {
     DOM["#error-skip-input"].addEventListener("change", function() { if (+this.value >= 0 && +this.value <= 100) { saveInput(this, "errorSkip", "number"); } });
     DOM["#error-skip-checkboxes"].addEventListener("change", function() { updateErrorCodes(); });
     DOM["#error-codes-custom-input"].addEventListener("input", function() { saveInput(this, "errorCodesCustom", "array-split-all"); });
-    DOM["#next-prev-rule-next"].addEventListener("change", function() {
+    // Next Prev
+    DOM["#next-type"].addEventListener("change", function() {
       chrome.storage.local.set({"nextType": event.target.value});
-      DOM["#next-prev-selector-next-input"].style.display = event.target.value === "selector" ? "" : "none";
-      DOM["#next-prev-xpath-next-input"].style.display = event.target.value === "xpath" ? "" : "none";
+      DOM["#next-selector-text-field"].style.display = event.target.value === "selector" ? "" : "none";
+      DOM["#next-xpath-text-field"].style.display = event.target.value === "xpath" ? "" : "none";
+      MDC.layout();
     });
-    DOM["#next-prev-rule-prev"].addEventListener("change", function() {
+    DOM["#prev-type"].addEventListener("change", function() {
       chrome.storage.local.set({"prevType": event.target.value});
-      DOM["#next-prev-selector-prev-input"].style.display = event.target.value === "selector" ? "" : "none";
-      DOM["#next-prev-xpath-prev-input"].style.display = event.target.value === "xpath" ? "" : "none";
+      DOM["#prev-selector-text-field"].style.display = event.target.value === "selector" ? "" : "none";
+      DOM["#prev-xpath-text-field"].style.display = event.target.value === "xpath" ? "" : "none";
+      MDC.layout();
     });
-    DOM["#next-prev-selector-next-input"].addEventListener("input", function() { saveInput(this, "nextSelector", "value"); });
-    DOM["#next-prev-selector-prev-input"].addEventListener("input", function() { saveInput(this, "prevSelector", "value"); });
-    DOM["#next-prev-xpath-next-input"].addEventListener("input", function() { saveInput(this, "nextXpath", "value"); });
-    DOM["#next-prev-xpath-prev-input"].addEventListener("input", function() { saveInput(this, "prevXpath", "value"); });
-    DOM["#next-prev-attribute-next-input"].addEventListener("input", function() { saveInput(this, "nextAttribute", "array-split-period"); });
-    DOM["#next-prev-attribute-prev-input"].addEventListener("input", function() { saveInput(this, "prevAttribute", "array-split-period"); });
-    DOM["#next-prev-keywords-next-textarea"].addEventListener("input", function() { saveInput(this, "nextKeywords", "array-split-nospace-lowercase"); });
-    DOM["#next-prev-keywords-prev-textarea"].addEventListener("input", function() { saveInput(this, "prevKeywords", "array-split-nospace-lowercase"); });
-    DOM["#next-prev-same-domain-policy-enable-input"].addEventListener("change", function() { chrome.storage.local.set({"nextPrevSameDomainPolicy": this.checked}); });
-    DOM["#next-prev-popup-buttons-input"].addEventListener("change", function() { chrome.storage.local.set({"nextPrevPopupButtons": this.checked}); });
+    DOM["#next-selector-input"].addEventListener("input", function() { saveInput(this, "nextSelector", "value"); });
+    DOM["#next-xpath-input"].addEventListener("input", function() { saveInput(this, "nextXpath", "value"); });
+    DOM["#next-attribute-input"].addEventListener("input", function() { saveInput(this, "nextAttribute", "array-split-period"); });
+    DOM["#next-keywords-textarea"].addEventListener("input", function() { saveInput(this, "nextKeywords", "array-split-nospace-lowercase"); });
+    DOM["#prev-selector-input"].addEventListener("input", function() { saveInput(this, "prevSelector", "value"); });
+    DOM["#prev-xpath-input"].addEventListener("input", function() { saveInput(this, "prevXpath", "value"); });
+    DOM["#prev-attribute-input"].addEventListener("input", function() { saveInput(this, "prevAttribute", "array-split-period"); });
+    DOM["#prev-keywords-textarea"].addEventListener("input", function() { saveInput(this, "prevKeywords", "array-split-nospace-lowercase"); });
+    // Download
     DOM["#download-enable-button"].addEventListener("click", function() { Permissions.requestPermission("download", function(granted) { if (granted) { populateValuesFromStorage("download"); } }) });
     DOM["#download-disable-button"].addEventListener("click", function() { Permissions.removePermission("download", function(removed) { if (removed) { populateValuesFromStorage("download"); } }) });
+    // Enhanced
     DOM["#enhanced-mode-enable-button"].addEventListener("click", function() { Permissions.requestPermission("enhancedMode", function(granted) { if (granted) { populateValuesFromStorage("enhancedMode"); } }) });
     DOM["#enhanced-mode-disable-button"].addEventListener("click", function() { Permissions.removePermission("enhancedMode", function(removed) { if (removed) { populateValuesFromStorage("enhancedMode"); } }) });
-    DOM["#mascot-input"].addEventListener("click", clickMascot);
+    // Extra
+    DOM["#decode-uri-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"decodeURIEnabled": this.checked}); });
+    DOM["#debug-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"debugEnabled": this.checked}); });
+    // About
     DOM["#reset-options-button"].addEventListener("click", resetOptions);
     DOM["#manifest-name"].textContent = chrome.runtime.getManifest().name;
     DOM["#manifest-version"].textContent = chrome.runtime.getManifest().version;
+    DOM["#mascot-input"].addEventListener("click", clickMascot);
     // Populate all values from storage
     populateValuesFromStorage("all");
+
+    // Old:
+    // DOM["#icon-color-radios"].addEventListener("change", function(event) { changeIconColor.call(event.target); });
+    // DOM["#icon-feedback-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"iconFeedbackEnabled": this.checked}); });
+    // DOM["#popup-button-size-input"].addEventListener("change", function () { if (+this.value >= 16 && +this.value <= 64) { saveInput(this, "popupButtonSize", "number");
+    //   DOM["#popup-button-size-img"].style = "width:" + (+this.value) + "px; height:" + (+this.value) + "px;"; } });
+    // DOM["#popup-button-size-img"].addEventListener("click", function () { if (DOM["#popup-animations-enable-input"].checked) { UI.clickHoverCss(this, "hvr-push-click"); } });
+    // DOM["#popup-animations-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"popupAnimationsEnabled": this.checked});
+    //   DOM["#popup-button-size-img"].className = this.checked ? "hvr-grow" : "" });
+    // DOM["#decode-uri-enable-input"].addEventListener("change", function () { chrome.storage.local.set({"decodeURIEnabled": this.checked}); });
+    // DOM["#saved-urls-preselect-input"].addEventListener("change", function () { chrome.storage.local.set({"savePreselect": this.checked}); });
+    // DOM["#saved-urls-delete-button"].addEventListener("click", function() { deleteSavedURL(); });
+    // DOM["#saved-urls-wildcard-add-button"].addEventListener("click", function() { DOM["#saved-urls-wildcard"].className = "display-block fade-in"; DOM["#saved-urls-wildcard-url-textarea"].value = DOM["#saved-urls-wildcard-errors"].textContent = ""; });
+    // DOM["#saved-urls-wildcard-cancel-button"].addEventListener("click", function() { DOM["#saved-urls-wildcard"].className = "display-none"; });
+    // DOM["#saved-urls-wildcard-save-button"].addEventListener("click", function() { addSavedURL(); });
+
+    // DOM["#selection-select"].addEventListener("change", function() { DOM["#selection-custom"].className = this.value === "custom" ? "display-block fade-in" : "display-none"; chrome.storage.local.set({"selectionPriority": this.value}); });
+    // DOM["#selection-custom-save-button"].addEventListener("click", function () { customSelection("save"); });
+    // DOM["#selection-custom-test-button"].addEventListener("click", function() { customSelection("test"); });
+    // DOM["#interval-input"].addEventListener("change", function () { if (+this.value > 0) { saveInput(this, "interval", "number");} });
+    // DOM["#leading-zeros-pad-by-detection-input"].addEventListener("change", function() { chrome.storage.local.set({ "leadingZerosPadByDetection": this.checked}); });
+    // DOM["#base-select"].addEventListener("change", function() {
+    //   DOM["#base-case"].className = +this.value > 10 ? "display-block fade-in" : "display-none";
+    //   DOM["#base-date"].className = this.value === "date" ? "display-block fade-in" : "display-none";
+    //   DOM["#base-roman"].className = this.value === "roman" ? "display-block fade-in" : "display-none";
+    //   DOM["#base-custom"].className = this.value === "custom" ? "display-block fade-in" : "display-none";
+    //   chrome.storage.local.set({"base": +this.value > 10 ? +this.value : this.value});
+    // });
+    // DOM["#base-case"].addEventListener("change", function() { chrome.storage.local.set({"baseCase": event.target.value}); });
+    // DOM["#base-date-format-input"].addEventListener("input", function() { saveInput(this, "baseDateFormat", "value"); });
+    // DOM["#base-roman"].addEventListener("change", function() { chrome.storage.local.set({"baseRoman": event.target.value}); });
+    // DOM["#base-custom-input"].addEventListener("input", function() { saveInput(this, "baseCustom", "value"); });
+    // DOM["#shuffle-limit-input"].addEventListener("change", function () { if (+this.value >= 1 && +this.value <= 5000) { saveInput(this, "shuffleLimit", "number"); } });
+    // DOM["#error-skip-input"].addEventListener("change", function() { if (+this.value >= 0 && +this.value <= 100) { saveInput(this, "errorSkip", "number"); } });
+    // DOM["#error-skip-checkboxes"].addEventListener("change", function() { updateErrorCodes(); });
+    // DOM["#error-codes-custom-input"].addEventListener("input", function() { saveInput(this, "errorCodesCustom", "array-split-all"); });
+
+    // DOM["#next-prev-rule-next"].addEventListener("change", function() {
+    //   chrome.storage.local.set({"nextType": event.target.value});
+    //   DOM["#next-prev-selector-next-input"].style.display = event.target.value === "selector" ? "" : "none";
+    //   DOM["#next-prev-xpath-next-input"].style.display = event.target.value === "xpath" ? "" : "none";
+    // });
+    // DOM["#next-prev-rule-prev"].addEventListener("change", function() {
+    //   chrome.storage.local.set({"prevType": event.target.value});
+    //   DOM["#next-prev-selector-prev-input"].style.display = event.target.value === "selector" ? "" : "none";
+    //   DOM["#next-prev-xpath-prev-input"].style.display = event.target.value === "xpath" ? "" : "none";
+    // });
+    // DOM["#next-prev-selector-next-input"].addEventListener("input", function() { saveInput(this, "nextSelector", "value"); });
+    // DOM["#next-prev-selector-prev-input"].addEventListener("input", function() { saveInput(this, "prevSelector", "value"); });
+    // DOM["#next-prev-xpath-next-input"].addEventListener("input", function() { saveInput(this, "nextXpath", "value"); });
+    // DOM["#next-prev-xpath-prev-input"].addEventListener("input", function() { saveInput(this, "prevXpath", "value"); });
+    // DOM["#next-prev-attribute-next-input"].addEventListener("input", function() { saveInput(this, "nextAttribute", "array-split-period"); });
+    // DOM["#next-prev-attribute-prev-input"].addEventListener("input", function() { saveInput(this, "prevAttribute", "array-split-period"); });
+    // DOM["#next-prev-keywords-next-textarea"].addEventListener("input", function() { saveInput(this, "nextKeywords", "array-split-nospace-lowercase"); });
+    // DOM["#next-prev-keywords-prev-textarea"].addEventListener("input", function() { saveInput(this, "prevKeywords", "array-split-nospace-lowercase"); });
+    // DOM["#next-prev-same-domain-policy-enable-input"].addEventListener("change", function() { chrome.storage.local.set({"nextPrevSameDomainPolicy": this.checked}); });
+    // DOM["#next-prev-popup-buttons-input"].addEventListener("change", function() { chrome.storage.local.set({"nextPrevPopupButtons": this.checked}); });
+  }
+
+  /**
+   * Populates the options form values from the extension storage.
+   *
+   * @param values which values to populate, e.g. "all" for all or "xyz" for only xyz values (with fade-in effect)
+   * @private
+   */
+  async function populateValuesFromStorage(values) {
+    const items = await Promisify.getItems();
+    if (values === "all" || values === "saves") {
+      buildSavedURLsTable(items.saves);
+    }
+    if (values === "all" || values === "internalShortcuts") {
+      DOM["#browser-shortcuts"].className = !items.permissionsInternalShortcuts ? values === "internalShortcuts" ? "display-block fade-in" : "display-block" : "display-none";
+      DOM["#internal-shortcuts"].className = items.permissionsInternalShortcuts ? values === "internalShortcuts" ? "display-block fade-in" : "display-block" : "display-none";
+    }
+    if (values === "all" || values === "download") {
+      DOM["#download-disable-button"].className = items.permissionsDownload ? values === "download" ? "display-block fade-in" : "display-block" : "display-none";
+      DOM["#download-enable-button"].className = !items.permissionsDownload ? values === "download" ? "display-block fade-in" : "display-block" : "display-none";
+      DOM["#download-settings-enable"].className = items.permissionsDownload ? values === "download" ? "display-block fade-in" : "display-block" : "display-none";
+      DOM["#download-settings-disable"].className = !items.permissionsDownload ? values === "download" ? "display-block fade-in" : "display-block" : "display-none";
+    }
+    if (values === "all" || values === "enhancedMode") {
+      DOM["#enhanced-mode-disable-button"].className = items.permissionsEnhancedMode ? values === "enhancedMode" ? "display-block fade-in" : "display-block" : "display-none";
+      DOM["#enhanced-mode-enable-button"].className = !items.permissionsEnhancedMode ? values === "enhancedMode" ? "display-block fade-in" : "display-block" : "display-none";
+      DOM["#enhanced-mode-enable"].className = items.permissionsEnhancedMode ? values === "enhancedMode" ? "display-block fade-in" : "display-block" : "display-none";
+      DOM["#enhanced-mode-disable"].className = !items.permissionsEnhancedMode ? values === "enhancedMode" ? "display-block fade-in" : "display-block" : "display-none";
+    }
+    if (values === "all") {
+      // UI
+      DOM["#toolbar-icon-radio-dark"].checked = items.toolbarIcon === "dark";
+      DOM["#toolbar-icon-radio-light"].checked = items.toolbarIcon === "light";
+      DOM["#button-size-input"].value = items.buttonSize;
+      DOM["#button-size-icon"].style = (isNaN(items.buttonSize) || items.buttonSize < 16 || items.buttonSize > 128) ? "" : "width:" + items.buttonSize + "px; height:" + items.buttonSize + "px;";
+      MDC.selects.get("interface-image-select").value = items.interfaceImage;
+      DOM["#interface-messages-input"].checked = items.interfaceMessages;
+      // Shortcuts
+      DOM["#browser-shortcuts-quick-enable-input"].checked = items.commandsQuickEnabled;
+      DOM["#shortcuts-editable-disabled-input"].checked = items.shortcutsEditableDisabled;
+      DOM["#key-quick-enable-input"].checked = items.keyQuickEnabled;
+      DOM["#mouse-quick-enable-input"].checked = items.mouseQuickEnabled;
+      DOM["#key-enable-img"].className = items.keyEnabled ? "display-inline" : "display-none";
+      DOM["#mouse-enable-img"].className = items.mouseEnabled ? "display-inline" : "display-none";
+      DOM["#mouse-click-speed-input"].value = items.mouseClickSpeed;
+      for (const shortcut of shortcuts) {
+        const keyStorageKey = getStorageKey(DOM["#key-" + shortcut + "-input"]);
+        const mouseStorageKey = getStorageKey(DOM["#mouse-" + shortcut + "-select"]);
+        writeInput(DOM["#key-" + shortcut + "-input"], items[keyStorageKey]);
+        DOM["#mouse-" + shortcut + "-select"].value = items[mouseStorageKey] ? items[mouseStorageKey].button : -1;
+        DOM["#mouse-" + shortcut + "-clicks"].value = items[mouseStorageKey] ? items[mouseStorageKey].clicks : 1;
+        DOM["#mouse-" + shortcut + "-clicks"].className = items[mouseStorageKey] ? "display-block fade-in" : "display-none";
+      }
+
+      // Increment Decrement
+      MDC.selects.get("selection-select").value = items.selectionPriority;
+      DOM["#selection-custom"].className = items.selectionPriority === "custom" ? "display-block" : "display-none";
+      DOM["#selection-custom-url-textarea"].value = items.selectionCustom.url;
+      DOM["#selection-custom-regex-input"].value = items.selectionCustom.regex;
+      DOM["#selection-custom-flags-input"].value = items.selectionCustom.flags;
+      DOM["#selection-custom-group-input"].value = items.selectionCustom.group;
+      DOM["#selection-custom-index-input"].value = items.selectionCustom.index;
+      DOM["#interval-input"].value = items.interval;
+      DOM["#leading-zeros-pad-by-detection-input"].checked = items.leadingZerosPadByDetection;
+      // Convert number base to string just in case (can't set number as value, e.g. 10 instead of "10")
+      MDC.selects.get("base-select").value = items.base + "";
+      DOM["#base-case"].className = items.base > 10 ? "display-block" : "display-none";
+      DOM["#base-case-lowercase-input"].checked = items.baseCase === "lowercase";
+      DOM["#base-case-uppercase-input"].checked = items.baseCase === "uppercase";
+      DOM["#base-date"].className = items.base === "date" ? "display-block" : "display-none";
+      DOM["#base-date-format-input"].value = items.baseDateFormat;
+      DOM["#base-roman"].className = items.base === "roman" ? "display-block" : "display-none";
+      DOM["#base-roman-latin-input"].checked = items.baseRoman === "latin";
+      DOM["#base-roman-u216x-input"].checked = items.baseRoman === "u216x";
+      DOM["#base-roman-u217x-input"].checked = items.baseRoman === "u217x";
+      DOM["#base-custom"].className = items.base === "custom" ? "display-block" : "display-none";
+      DOM["#base-custom-input"].value = items.baseCustom;
+      DOM["#shuffle-limit-input"].value = items.shuffleLimit;
+      DOM["#error-skip-input"].value = items.errorSkip;
+      DOM["#error-codes-404-input"].checked = items.errorCodes.includes("404");
+      DOM["#error-codes-3XX-input"].checked = items.errorCodes.includes("3XX");
+      DOM["#error-codes-4XX-input"].checked = items.errorCodes.includes("4XX");
+      DOM["#error-codes-5XX-input"].checked = items.errorCodes.includes("5XX");
+      DOM["#error-codes-CUS-input"].checked = items.errorCodes.includes("CUS");
+      DOM["#error-codes-EXC-input"].checked = items.errorCodes.includes("EXC");
+      DOM["#error-codes-custom"].className = items.errorCodes.includes("CUS") ? "display-block" : "display-none";
+      DOM["#error-codes-custom-input"].value = items.errorCodesCustom;
+      // Next Prev
+      DOM["#next-selector-text-field"].style.display = items.nextType === "selector" ? "" : "none";
+      DOM["#next-selector-input"].value = items.nextSelector;
+      DOM["#next-selector-input"].setAttribute("value", items.nextSelector);
+      DOM["#next-type-selector"].checked = items.nextType === "selector";
+      DOM["#next-xpath-text-field"].style.display = items.nextType === "xpath" ? "" : "none";
+      DOM["#next-xpath-input"].value = items.nextXpath;
+      DOM["#next-type-xpath"].checked = items.nextType === "xpath";
+      DOM["#next-attribute-input"].value = items.nextAttribute.join(".");
+      DOM["#next-keywords-textarea"].value = items.nextKeywords;
+      DOM["#prev-selector-text-field"].style.display = items.prevType === "selector" ? "" : "none";
+      DOM["#prev-selector-input"].value = items.prevSelector;
+      DOM["#prev-type-selector"].checked = items.prevType === "selector";
+      DOM["#prev-xpath-text-field"].style.display = items.prevType === "xpath" ? "" : "none";
+      DOM["#prev-xpath-input"].value = items.prevXpath;
+      DOM["#prev-type-xpath"].checked = items.prevType === "xpath";
+      DOM["#prev-attribute-input"].value = items.prevAttribute.join(".");
+      DOM["#prev-keywords-textarea"].value = items.prevKeywords;
+      // Extra
+      DOM["#decode-uri-enable-input"].checked = items.decodeURIEnabled;
+      DOM["#debug-enable-input"].checked = items.debugEnabled;
+      // Re-layout MDC (Needs timeout for some reason...)
+      setTimeout(() => { MDC.layout(); }, 500);
+      // If first run (extension has just been installed), open the install-dialog
+      if (items.firstRun) {
+        await Promisify.setItems({"firstRun": false});
+        MDC.dialogs.get("install-dialog").open();
+        // Detects the user's preferred color scheme and changes the toolbar icon color if necessary (Credit: @akaustav)
+        if (window.matchMedia) {
+          const color = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "dark";
+          DOM["#toolbar-icon-radio-" + color].checked = true;
+          changeToolbarIcon.call(DOM["#toolbar-icon-radio-" + color]);
+        }
+      }
+
+      // DOM["#icon-color-radio-" + items.iconColor].checked = true;
+      // DOM["#icon-feedback-enable-input"].checked = items.iconFeedbackEnabled;
+      // DOM["#popup-button-size-input"].value = items.popupButtonSize;
+      // DOM["#popup-button-size-img"].style = "width:" + items.popupButtonSize + "px; height:" + items.popupButtonSize + "px;";
+      // DOM["#popup-button-size-img"].className = items.popupAnimationsEnabled ? "hvr-grow" : "";
+      // DOM["#popup-animations-enable-input"].checked = items.popupAnimationsEnabled;
+      // DOM["#decode-uri-enable-input"].checked = items.decodeURIEnabled;
+      // DOM["#selection-select"].value = items.selectionPriority;
+      // DOM["#selection-custom"].className = items.selectionPriority === "custom" ? "display-block" : "display-none";
+      // DOM["#selection-custom-url-textarea"].value = items.selectionCustom.url;
+      // DOM["#selection-custom-regex-input"].value = items.selectionCustom.regex;
+      // DOM["#selection-custom-flags-input"].value = items.selectionCustom.flags;
+      // DOM["#selection-custom-group-input"].value = items.selectionCustom.group;
+      // DOM["#selection-custom-index-input"].value = items.selectionCustom.index;
+      // DOM["#interval-input"].value = items.interval;
+      // DOM["#leading-zeros-pad-by-detection-input"].checked = items.leadingZerosPadByDetection;
+      // DOM["#base-select"].value = items.base;
+      // DOM["#base-case"].className = items.base > 10 ? "display-block" : "display-none";
+      // DOM["#base-case-lowercase-input"].checked = items.baseCase === "lowercase";
+      // DOM["#base-case-uppercase-input"].checked = items.baseCase === "uppercase";
+      // DOM["#base-date"].className = items.base === "date" ? "display-block" : "display-none";
+      // DOM["#base-date-format-input"].value = items.baseDateFormat;
+      // DOM["#base-roman"].className = items.base === "roman" ? "display-block" : "display-none";
+      // DOM["#base-roman-latin-input"].checked = items.baseRoman === "latin";
+      // DOM["#base-roman-u216x-input"].checked = items.baseRoman === "u216x";
+      // DOM["#base-roman-u217x-input"].checked = items.baseRoman === "u217x";
+      // DOM["#base-custom"].className = items.base === "custom" ? "display-block" : "display-none";
+      // DOM["#base-custom-input"].value = items.baseCustom;
+      // DOM["#shuffle-limit-input"].value = items.shuffleLimit;
+      // DOM["#error-skip-input"].value = items.errorSkip;
+      // DOM["#error-codes-404-input"].checked = items.errorCodes.includes("404");
+      // DOM["#error-codes-3XX-input"].checked = items.errorCodes.includes("3XX");
+      // DOM["#error-codes-4XX-input"].checked = items.errorCodes.includes("4XX");
+      // DOM["#error-codes-5XX-input"].checked = items.errorCodes.includes("5XX");
+      // DOM["#error-codes-CUS-input"].checked = items.errorCodes.includes("CUS");
+      // DOM["#error-codes-EXC-input"].checked = items.errorCodes.includes("EXC");
+      // DOM["#error-codes-custom"].className = items.errorCodes.includes("CUS") ? "display-block" : "display-none";
+      // DOM["#error-codes-custom-input"].value = items.errorCodesCustom;
+      // DOM["#next-prev-rule-selector-next"].checked = items.nextType === "selector";
+      // DOM["#next-prev-rule-xpath-next"].checked = items.nextType === "xpath";
+      // DOM["#next-prev-rule-selector-prev"].checked = items.prevType === "selector";
+      // DOM["#next-prev-rule-xpath-prev"].checked = items.prevType === "xpath";
+      // DOM["#next-prev-selector-next-input"].style.display = items.nextType === "selector" ? "" : "none";
+      // DOM["#next-prev-xpath-next-input"].style.display = items.nextType === "xpath" ? "" : "none";
+      // DOM["#next-prev-selector-prev-input"].style.display = items.prevType === "selector" ? "" : "none";
+      // DOM["#next-prev-xpath-prev-input"].style.display = items.prevType === "xpath" ? "" : "none";
+      // DOM["#next-prev-selector-next-input"].value = items.nextSelector;
+      // DOM["#next-prev-selector-prev-input"].value = items.prevSelector;
+      // DOM["#next-prev-xpath-next-input"].value = items.nextXpath;
+      // DOM["#next-prev-xpath-prev-input"].value = items.prevXpath;
+      // DOM["#next-prev-attribute-next-input"].value = items.nextAttribute.join(".");
+      // DOM["#next-prev-attribute-prev-input"].value = items.prevAttribute.join(".");
+      // DOM["#next-prev-keywords-next-textarea"].value = items.nextKeywords;
+      // DOM["#next-prev-keywords-prev-textarea"].value = items.prevKeywords;
+      // DOM["#next-prev-same-domain-policy-enable-input"].checked = items.nextPrevSameDomainPolicy;
+      // DOM["#next-prev-popup-buttons-input"].checked = items.nextPrevPopupButtons;
+    }
+  }
+
+  /**
+   * Changes the extension's icon in the browser's toolbar (browserAction).
+   *
+   * @private
+   */
+  function changeToolbarIcon() {
+    // Firefox Android: chrome.browserAction.setIcon() not supported
+    if (!chrome.browserAction.setIcon) {
+      return;
+    }
+    // Possible values may be: dark, light
+    chrome.browserAction.setIcon({
+      path : {
+        "16": "/img/icon-" + this.value + ".png",
+        "24": "/img/icon-" + this.value + ".png",
+        "32": "/img/icon-" + this.value + ".png"
+      }
+    });
+    chrome.storage.local.set({"toolbarIcon": this.value});
   }
 
   /**
@@ -172,131 +454,6 @@ var Options = (() => {
       select.addEventListener("change", function() { setMouse(this, undefined); });
       clicks.addEventListener("change", function() { setMouse(undefined, this); });
     }
-  }
-
-  /**
-   * Populates the options form values from the extension storage.
-   *
-   * @param values which values to populate, e.g. "all" for all or "xyz" for only xyz values (with fade-in effect)
-   * @private
-   */
-  async function populateValuesFromStorage(values) {
-    const items = await Promisify.getItems();
-    if (values === "all" || values === "internalShortcuts") {
-      DOM["#browser-shortcuts"].className = !items.permissionsInternalShortcuts ? values === "internalShortcuts" ? "display-block fade-in" : "display-block" : "display-none";
-      DOM["#internal-shortcuts"].className = items.permissionsInternalShortcuts ? values === "internalShortcuts" ? "display-block fade-in" : "display-block" : "display-none";
-    }
-    if (values === "all" || values === "download") {
-      DOM["#download-disable-button"].className = items.permissionsDownload ? values === "download" ? "display-block fade-in" : "display-block" : "display-none";
-      DOM["#download-enable-button"].className = !items.permissionsDownload ? values === "download" ? "display-block fade-in" : "display-block" : "display-none";
-      DOM["#download-settings-enable"].className = items.permissionsDownload ? values === "download" ? "display-block fade-in" : "display-block" : "display-none";
-      DOM["#download-settings-disable"].className = !items.permissionsDownload ? values === "download" ? "display-block fade-in" : "display-block" : "display-none";
-    }
-    if (values === "all" || values === "enhancedMode") {
-      DOM["#enhanced-mode-disable-button"].className = items.permissionsEnhancedMode ? values === "enhancedMode" ? "display-block fade-in" : "display-block" : "display-none";
-      DOM["#enhanced-mode-enable-button"].className = !items.permissionsEnhancedMode ? values === "enhancedMode" ? "display-block fade-in" : "display-block" : "display-none";
-      DOM["#enhanced-mode-enable"].className = items.permissionsEnhancedMode ? values === "enhancedMode" ? "display-block fade-in" : "display-block" : "display-none";
-      DOM["#enhanced-mode-disable"].className = !items.permissionsEnhancedMode ? values === "enhancedMode" ? "display-block fade-in" : "display-block" : "display-none";
-    }
-    if (values === "all" || values === "savedURLs") {
-      DOM["#saved-urls-delete-button"].className = items.saves && items.saves.length > 0 ? "fade-in" : "display-none";
-      DOM["#saved-urls-preselect-input"].checked = items.savePreselect;
-      buildSavedURLsTable(items.saves, items.saveKey);
-    }
-    if (values === "all") {
-      DOM["#browser-shortcuts-quick-enable-input"].checked = items.commandsQuickEnabled;
-      DOM["#shortcuts-editable-disabled-input"].checked = items.shortcutsEditableDisabled;
-      DOM["#key-quick-enable-input"].checked = items.keyQuickEnabled;
-      DOM["#mouse-quick-enable-input"].checked = items.mouseQuickEnabled;
-      DOM["#key-enable-img"].className = items.keyEnabled ? "display-inline" : "display-none";
-      DOM["#mouse-enable-img"].className = items.mouseEnabled ? "display-inline" : "display-none";
-      DOM["#mouse-click-speed-input"].value = items.mouseClickSpeed;
-      for (const shortcut of shortcuts) {
-        const keyStorageKey = getStorageKey(DOM["#key-" + shortcut + "-input"]);
-        const mouseStorageKey = getStorageKey(DOM["#mouse-" + shortcut + "-select"]);
-        writeInput(DOM["#key-" + shortcut + "-input"], items[keyStorageKey]);
-        DOM["#mouse-" + shortcut + "-select"].value = items[mouseStorageKey] ? items[mouseStorageKey].button : -1;
-        DOM["#mouse-" + shortcut + "-clicks"].value = items[mouseStorageKey] ? items[mouseStorageKey].clicks : 1;
-        DOM["#mouse-" + shortcut + "-clicks"].className = items[mouseStorageKey] ? "display-block fade-in" : "display-none";
-      }
-      DOM["#icon-color-radio-" + items.iconColor].checked = true;
-      DOM["#icon-feedback-enable-input"].checked = items.iconFeedbackEnabled;
-      DOM["#popup-button-size-input"].value = items.popupButtonSize;
-      DOM["#popup-button-size-img"].style = "width:" + items.popupButtonSize + "px; height:" + items.popupButtonSize + "px;";
-      DOM["#popup-button-size-img"].className = items.popupAnimationsEnabled ? "hvr-grow" : "";
-      DOM["#popup-animations-enable-input"].checked = items.popupAnimationsEnabled;
-      DOM["#decode-uri-enable-input"].checked = items.decodeURIEnabled;
-      DOM["#selection-select"].value = items.selectionPriority;
-      DOM["#selection-custom"].className = items.selectionPriority === "custom" ? "display-block" : "display-none";
-      DOM["#selection-custom-url-textarea"].value = items.selectionCustom.url;
-      DOM["#selection-custom-regex-input"].value = items.selectionCustom.regex;
-      DOM["#selection-custom-flags-input"].value = items.selectionCustom.flags;
-      DOM["#selection-custom-group-input"].value = items.selectionCustom.group;
-      DOM["#selection-custom-index-input"].value = items.selectionCustom.index;
-      DOM["#interval-input"].value = items.interval;
-      DOM["#leading-zeros-pad-by-detection-input"].checked = items.leadingZerosPadByDetection;
-      DOM["#base-select"].value = items.base;
-      DOM["#base-case"].className = items.base > 10 ? "display-block" : "display-none";
-      DOM["#base-case-lowercase-input"].checked = items.baseCase === "lowercase";
-      DOM["#base-case-uppercase-input"].checked = items.baseCase === "uppercase";
-      DOM["#base-date"].className = items.base === "date" ? "display-block" : "display-none";
-      DOM["#base-date-format-input"].value = items.baseDateFormat;
-      DOM["#base-roman"].className = items.base === "roman" ? "display-block" : "display-none";
-      DOM["#base-roman-latin-input"].checked = items.baseRoman === "latin";
-      DOM["#base-roman-u216x-input"].checked = items.baseRoman === "u216x";
-      DOM["#base-roman-u217x-input"].checked = items.baseRoman === "u217x";
-      DOM["#base-custom"].className = items.base === "custom" ? "display-block" : "display-none";
-      DOM["#base-custom-input"].value = items.baseCustom;
-      DOM["#shuffle-limit-input"].value = items.shuffleLimit;
-      DOM["#error-skip-input"].value = items.errorSkip;
-      DOM["#error-codes-404-input"].checked = items.errorCodes.includes("404");
-      DOM["#error-codes-3XX-input"].checked = items.errorCodes.includes("3XX");
-      DOM["#error-codes-4XX-input"].checked = items.errorCodes.includes("4XX");
-      DOM["#error-codes-5XX-input"].checked = items.errorCodes.includes("5XX");
-      DOM["#error-codes-CUS-input"].checked = items.errorCodes.includes("CUS");
-      DOM["#error-codes-EXC-input"].checked = items.errorCodes.includes("EXC");
-      DOM["#error-codes-custom"].className = items.errorCodes.includes("CUS") ? "display-block" : "display-none";
-      DOM["#error-codes-custom-input"].value = items.errorCodesCustom;
-      DOM["#next-prev-rule-selector-next"].checked = items.nextType === "selector";
-      DOM["#next-prev-rule-xpath-next"].checked = items.nextType === "xpath";
-      DOM["#next-prev-rule-selector-prev"].checked = items.prevType === "selector";
-      DOM["#next-prev-rule-xpath-prev"].checked = items.prevType === "xpath";
-      DOM["#next-prev-selector-next-input"].style.display = items.nextType === "selector" ? "" : "none";
-      DOM["#next-prev-xpath-next-input"].style.display = items.nextType === "xpath" ? "" : "none";
-      DOM["#next-prev-selector-prev-input"].style.display = items.prevType === "selector" ? "" : "none";
-      DOM["#next-prev-xpath-prev-input"].style.display = items.prevType === "xpath" ? "" : "none";
-      DOM["#next-prev-selector-next-input"].value = items.nextSelector;
-      DOM["#next-prev-selector-prev-input"].value = items.prevSelector;
-      DOM["#next-prev-xpath-next-input"].value = items.nextXpath;
-      DOM["#next-prev-xpath-prev-input"].value = items.prevXpath;
-      DOM["#next-prev-attribute-next-input"].value = items.nextAttribute.join(".");
-      DOM["#next-prev-attribute-prev-input"].value = items.prevAttribute.join(".");
-      DOM["#next-prev-keywords-next-textarea"].value = items.nextKeywords;
-      DOM["#next-prev-keywords-prev-textarea"].value = items.prevKeywords;
-      DOM["#next-prev-same-domain-policy-enable-input"].checked = items.nextPrevSameDomainPolicy;
-      DOM["#next-prev-popup-buttons-input"].checked = items.nextPrevPopupButtons;
-    }
-  }
-
-  /**
-   * Changes the extension icon color in the browser's toolbar (browserAction).
-   *
-   * @private
-   */
-  function changeIconColor() {
-    // Firefox Android: chrome.browserAction.setIcon() not supported
-    if (!chrome.browserAction.setIcon) {
-      return;
-    }
-    // Possible values may be: default, light, confetti, or urli
-    chrome.browserAction.setIcon({
-      path : {
-        "16": "/img/16-" + this.value + ".png",
-        "24": "/img/24-" + this.value + ".png",
-        "32": "/img/32-" + this.value + ".png"
-      }
-    });
-    chrome.storage.local.set({"iconColor": this.value});
   }
 
   /**

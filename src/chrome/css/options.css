@@ -7,35 +7,33 @@
 
 /* Native */
 
-/* Firefox: Set max-width and margin. Chrome: Set min-width to keep popup reasonably sized */
 body {
-  min-width: 480px;
-  max-width: 640px;
+  max-width: 700px;
   margin: 2rem auto;
-  color: #333333;
-  font-size: 100%;
 }
 
-header {
-  margin: 2rem 0;
+header#options-header {
+  margin: 1rem 0;
   font-size: 1.75rem;
+  font-weight: 500;
 }
 
-section:not(:last-of-type) {
-  margin-bottom: 40px;
-}
-
-textarea {
-  color: #333333;
-  vertical-align: text-top;
-  resize: vertical;
-  width: 400px;
-  min-height: 41px;
-  max-height: 100px;
-}
-
-input[type="number"] {
+header#options-header img {
   width: 64px;
+  height: 64px;
+  vertical-align: middle;
+}
+
+header#options-header > #options-header-buttons > *:not(:last-child) {
+  margin-right: 1rem;
+}
+
+section header {
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: 1px solid #333333;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
 }
 
 input[type="image"] {
@@ -50,221 +48,200 @@ input[type="image"]:focus {
 /* Classes */
 
 .column {
-  padding-bottom: 10px;
+  padding-bottom: 24px;
+}
+
+.row-column:not(:last-child) {
+  padding-bottom: 24px;
 }
 
 .column:not(:last-child) {
   padding-right: 10px;
 }
 
-/* Heading */
+/* Dialogs */
 
-.heading {
-  border-bottom: 1px solid #333333;
-  padding-bottom: 6px;
-  margin-bottom: 12px;
+#install-dialog-content, #error-dialog-content {
+  margin-top: 1rem;
 }
 
-.heading-right {
-  font-style: italic;
-  font-size: 0.9em;
-  display: inline-block;
-  margin-left: 6px;
+#install-dialog-icon {
+  fill: var(--urli-color);
+  margin-left: 0.25rem;
 }
 
-.heading-right img {
-  margin-bottom: 1px;
+#error-dialog-icon {
+  fill: var(--error-color);
+  margin-right: 0.25rem;
 }
 
-.heading button {
-  float: right;
-  position: relative;
-  top: -16px;
+#install-dialog-text, #error-dialog-text {
+  font-size: 0.875rem;
 }
 
-/* Heading border-bottom-color overrides */
-
-#saved-urls-settings div.heading {
-  border-bottom-color: var(--saved-urls-color);
+#install-dialog-list, #error-dialog-list {
+  color: var(--infy-color);
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
 
-#increment-decrement-settings div.heading {
-  border-bottom-color: var(--increment-decrement-color);
+/* Tab Bar */
+
+.mdc-tab-bar {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
-#next-prev-settings div.heading {
-  border-bottom-color: var(--next-prev-color);
-}
+/* User Interface */
 
-#auto-settings div.heading {
-  border-bottom-color: var(--auto-color);
-}
-
-#download-settings div.heading {
-  border-bottom-color: var(--download-color);
-}
-
-#enhanced-mode div.heading {
-  border-bottom-color: var(--enhanced-mode-color);
-}
-
-/* Heading h3 color overrides */
-
-#saved-urls-settings div.heading h3 {
-  color: var(--saved-urls-color);
-}
-
-#increment-decrement-settings div.heading h3 {
-  color: var(--increment-decrement-color);
-}
-
-#next-prev-settings div.heading h3 {
-  color: var(--next-prev-color);
-}
-
-#auto-settings div.heading h3 {
-  color: var(--auto-color);
-}
-
-#download-settings div.heading h3, #download-settings div.heading-right {
-  color: var(--download-color);
-}
-
-#enhanced-mode div.heading h3 {
-  color: var(--enhanced-mode-color);
-}
-
-/* Internal Shortcuts */
-
-#mouse-click-speed {
-  display: inline-block;
-  margin-left: 3em;
-  margin-bottom: 1em;
-}
-
-#internal-shortcuts-table .column {
-  vertical-align: middle;
-}
-
-input[type="text"].key-input {
-  width: 200px;
-  margin-right: 4px;
-}
-
-input[type="image"].key-clear {
-  vertical-align: text-bottom;
-}
-
-/* Icon */
-
-.icon-color.radio, #popup-button-size-div {
+#button-size-div {
   margin-bottom: 24px;
 }
 
-/* Popup */
-
-#popup-button-size-div {
-  margin-bottom: 24px;
-}
-
-#popup-button-size-label {
+#button-size-label {
   display: block;
   margin-bottom: 5px;
 }
 
-#popup-button-size-img {
+#button-size-icon {
   vertical-align: top;
   cursor: pointer;
+  margin-left: 4px;
 }
 
 /* Saved URLs */
+
+#saved-urls-none, #saved-urls-stats {
+  color: var(--mdc-theme-primary);
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 
 #saved-urls-buttons {
   margin-top: 2em;
 }
 
-#saved-urls-wildcard, #saved-urls-wildcard-buttons {
-  margin-top: 1em;
+.mdc-data-table__table {
+  min-width: initial;
+  width: 100%;
 }
 
-#saved-urls-buttons button:not(:last-child), #saved-urls-wildcard-buttons button:not(:last-child) {
-  margin-right: 1em;
+table .checkbox-cell, table .id-cell {
+  width: 10%;
 }
 
-#saved-urls-table th, #saved-urls-table td {
-  max-width: 250px;
+table .url-cell {
+  width: 60%;
 }
 
-/* Selection Custom  */
-
-#selection-custom {
-  margin: 10px 0;
+table .date-cell {
+  width: 20%;
 }
 
-#selection-custom-url-textarea {
-  vertical-align: initial;
+table tbody .url-cell .saved-urls-details {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#saved-urls-dialog-content .table .row > .column:first-child {
+  font-weight: 500;
+}
+
+#saved-urls-dialog-url-value {
   word-break: break-all;
 }
 
-#selection-custom-regex-input {
-  width: 120px;
-  margin: 0 4px;
+#saved-urls-dialog-json-title {
+  font-weight: 500;
+  color: var(--mdc-theme-primary);
+  border-bottom: 1px dotted;
+  margin-bottom: 1rem;
 }
 
-#selection-custom-flags-input {
-  width: 52px;
+/* Pre tag also need the white-space: pre-wrap to break all properly */
+#saved-urls-dialog-json-data {
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
-/* Base */
-
-/* Smaller font-size to avoid fit on one line without issue */
-#leading-zeros-pad-label, #base-case, #base-date, #base-decimal, #base-roman, #base-custom {
-  font-size: 0.88em;
+#whitelist {
+  margin-top: 2rem;
 }
 
-#base-case label:not(:last-child) {
-  margin-right: 1em;
+/* Database */
+
+#database-disclaimer-icon {
+  fill: var(--error-color);
 }
 
-/* display inline-block to remove whitespace from link */
-#base-date-format-a, #base-custom-a {
-  display: inline-block;
+#database-stats {
+  color: var(--mdc-theme-primary);
+  font-weight: 500;
 }
 
-#base-date-format-input, #base-custom-input {
-  width: 134px;
-  height: 2em;
-  min-height: 2em;
-  margin-top: 8px;
-  margin-left: 12px;
+#database-buttons {
+  margin-bottom: 2rem;
 }
 
-#base-custom-input {
-  width: 124px;
+#database-buttons > button:not(last-child) {
+  margin-right: 2rem;
 }
 
-/* Error Skip */
-
-#error-skip.column {
-  padding-bottom: 0;
+#database-auto-update {
+  margin-bottom: 1rem;
 }
 
-#error-skip-description {
-  margin-left: 4px;
+#database-auto-update-text-field {
+  margin: 0 1rem;
 }
 
-#error-skip-checkboxes div.column {
-  padding: 4px 32px 4px 0;
+/* Shortcuts */
+
+#shortcuts-firefox {
+  color: var(--mdc-theme-primary);
+  font-weight: 500;
 }
 
-#error-skip-checkboxes label {
-  padding: 0;
+/* Scroll Settings */
+
+#scroll-element, #scroll-media-type {
+  margin-top: 2rem;
 }
 
-/* Download */
+/* TODO: Keeping global scripts and styles hidden for the time being so the user doesn't accidentally check these by default, they are mainly only for debugging and should always be false by default */
+#scroll-append-scripts, #scroll-append-styles {
+  display: none;
+}
 
-#download-cloud-download {
-  margin-bottom: -1px;
+/* Next Prev */
+
+input.next-prev-selector {
+  width: 175px;
+}
+
+input.next-prev-attribute {
+  width: 115px;
+}
+
+.next-prev-rule {
+  margin-bottom: 8px;
+}
+
+/* Increment Decrement */
+
+#selection-custom {
+  margin: 1rem 0;
+}
+
+/* Add spacing between the Base Select and the Base Details divs like Date Time (only when they're visible) */
+#base-details > div {
+  margin-top: 1rem;
+}
+
+#error-skip-field {
+  margin-bottom: 1rem;
 }
 
 /* About */
@@ -273,7 +250,34 @@ input[type="image"].key-clear {
   margin-bottom: 17px;
 }
 
-/* Thank You */
+#name-version {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+#manifest-name {
+  font-size: 1.25rem;
+  vertical-align: middle;
+}
+
+#beta {
+  font-size: 10px;
+  vertical-align: super;
+}
+
+#version {
+  margin-top: -4px;
+}
+
+#email-website div {
+  margin-bottom: 4px;
+}
+
+#reset-options-disclaimer {
+  font-size: 10px;
+  color: var(--mdc-theme-primary);
+  margin-top: 0.5rem;
+}
 
 #thank-you {
   width: 100%;
@@ -281,49 +285,50 @@ input[type="image"].key-clear {
   padding-top: 2px;
 }
 
-#thank-you-rainbow {
-  font-size: 1.1em;
+#thank-you-rainbow-underline {
+  font-size: 1.2em;
+  font-weight: 500;
   margin-bottom: 8px;
 }
 
-#thank-you-wish {
-  font-style: italic;
-}
-
-/* Credits */
-
 #credits {
-  margin-top: 0.75em;
-}
-
-#credits-everyone, #credits-you {
-  font-size: 0.75em;
-  font-style: italic;
-}
-
-#credits-you {
-  font-weight: bold;
+  margin-top: 1rem;
   text-align: center;
 }
 
-#copyleft {
-  font-size: 0.75em;
+#credits-icon-label {
+  display: inline-block;
+  font-weight: 500;
+  border-bottom: 2px solid var(--infy-color);
+  padding-bottom: 4px;
+}
+
+#thank-you-icon, #credits-icon {
+  fill: var(--infy-color);
+}
+
+#credits-everyone ul {
+  list-style: none;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+}
+
+#credits-you {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+#copyright {
+  font-size: 0.8rem;
   text-align: right;
   margin-top: 8px;
 }
 
-/* Browser-Specific Styling */
-
-/* Chrome themed browser underline */
-.browser-underline:after {
+#thank-you-rainbow-underline:after {
   content: '';
   display: block;
   margin-top: 2px;
   height: 2px;
-  background: linear-gradient(to right, #4C8BF5 0%, #4C8BF5 24%, #DD5144 25%, #DD5144 49%, #FFCD46 50%, #FFCD46 74%, #1DA462 75%, #1DA462 100%);
-}
-
-/* Chrome override options overlay position so generated alert is displayed in gap space on the Options Page */
-#options .overlay {
-  top: 80%;
+  background: linear-gradient(to right, #4D407B 0%, #675A95 24%, #675A95 25%, #8073AE 49%, #8073AE  50%, #8073AE 74%, #8073AE 75%, #AAAAAA 100%);
 }

@@ -1,0 +1,329 @@
+/**
+ * URL Incrementer
+ * @file options.css
+ * @author Roy Six
+ * @license LGPL-3.0
+ */
+
+/* Native */
+
+/* Firefox: Set max-width and margin. Chrome: Set min-width to keep popup reasonably sized */
+body {
+  min-width: 480px;
+  max-width: 640px;
+  margin: 2rem auto;
+  color: #333333;
+  font-size: 100%;
+}
+
+header {
+  margin: 2rem 0;
+  font-size: 1.75rem;
+}
+
+section:not(:last-of-type) {
+  margin-bottom: 40px;
+}
+
+textarea {
+  color: #333333;
+  vertical-align: text-top;
+  resize: vertical;
+  width: 400px;
+  min-height: 41px;
+  max-height: 100px;
+}
+
+input[type="number"] {
+  width: 64px;
+}
+
+input[type="image"] {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+input[type="image"]:focus {
+  outline: none;
+}
+
+/* Classes */
+
+.column {
+  padding-bottom: 10px;
+}
+
+.column:not(:last-child) {
+  padding-right: 10px;
+}
+
+/* Heading */
+
+.heading {
+  border-bottom: 1px solid #333333;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+.heading-right {
+  font-style: italic;
+  font-size: 0.9em;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.heading-right img {
+  margin-bottom: 1px;
+}
+
+.heading button {
+  float: right;
+  position: relative;
+  top: -16px;
+}
+
+/* Heading border-bottom-color overrides */
+
+#saved-urls-settings div.heading {
+  border-bottom-color: var(--saved-urls-color);
+}
+
+#increment-decrement-settings div.heading {
+  border-bottom-color: var(--increment-decrement-color);
+}
+
+#next-prev-settings div.heading {
+  border-bottom-color: var(--next-prev-color);
+}
+
+#auto-settings div.heading {
+  border-bottom-color: var(--auto-color);
+}
+
+#download-settings div.heading {
+  border-bottom-color: var(--download-color);
+}
+
+#enhanced-mode div.heading {
+  border-bottom-color: var(--enhanced-mode-color);
+}
+
+/* Heading h3 color overrides */
+
+#saved-urls-settings div.heading h3 {
+  color: var(--saved-urls-color);
+}
+
+#increment-decrement-settings div.heading h3 {
+  color: var(--increment-decrement-color);
+}
+
+#next-prev-settings div.heading h3 {
+  color: var(--next-prev-color);
+}
+
+#auto-settings div.heading h3 {
+  color: var(--auto-color);
+}
+
+#download-settings div.heading h3, #download-settings div.heading-right {
+  color: var(--download-color);
+}
+
+#enhanced-mode div.heading h3 {
+  color: var(--enhanced-mode-color);
+}
+
+/* Internal Shortcuts */
+
+#mouse-click-speed {
+  display: inline-block;
+  margin-left: 3em;
+  margin-bottom: 1em;
+}
+
+#internal-shortcuts-table .column {
+  vertical-align: middle;
+}
+
+input[type="text"].key-input {
+  width: 200px;
+  margin-right: 4px;
+}
+
+input[type="image"].key-clear {
+  vertical-align: text-bottom;
+}
+
+/* Icon */
+
+.icon-color.radio, #popup-button-size-div {
+  margin-bottom: 24px;
+}
+
+/* Popup */
+
+#popup-button-size-div {
+  margin-bottom: 24px;
+}
+
+#popup-button-size-label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#popup-button-size-img {
+  vertical-align: top;
+  cursor: pointer;
+}
+
+/* Saved URLs */
+
+#saved-urls-buttons {
+  margin-top: 2em;
+}
+
+#saved-urls-wildcard, #saved-urls-wildcard-buttons {
+  margin-top: 1em;
+}
+
+#saved-urls-buttons button:not(:last-child), #saved-urls-wildcard-buttons button:not(:last-child) {
+  margin-right: 1em;
+}
+
+#saved-urls-table th, #saved-urls-table td {
+  max-width: 250px;
+}
+
+/* Selection Custom  */
+
+#selection-custom {
+  margin: 10px 0;
+}
+
+#selection-custom-url-textarea {
+  vertical-align: initial;
+  word-break: break-all;
+}
+
+#selection-custom-regex-input {
+  width: 120px;
+  margin: 0 4px;
+}
+
+#selection-custom-flags-input {
+  width: 52px;
+}
+
+/* Base */
+
+/* Smaller font-size to avoid fit on one line without issue */
+#leading-zeros-pad-label, #base-case, #base-date, #base-decimal, #base-roman, #base-custom {
+  font-size: 0.88em;
+}
+
+#base-case label:not(:last-child) {
+  margin-right: 1em;
+}
+
+/* display inline-block to remove whitespace from link */
+#base-date-format-a, #base-custom-a {
+  display: inline-block;
+}
+
+#base-date-format-input, #base-custom-input {
+  width: 134px;
+  height: 2em;
+  min-height: 2em;
+  margin-top: 8px;
+  margin-left: 12px;
+}
+
+#base-custom-input {
+  width: 124px;
+}
+
+/* Error Skip */
+
+#error-skip.column {
+  padding-bottom: 0;
+}
+
+#error-skip-description {
+  margin-left: 4px;
+}
+
+#error-skip-checkboxes div.column {
+  padding: 4px 32px 4px 0;
+}
+
+#error-skip-checkboxes label {
+  padding: 0;
+}
+
+/* Download */
+
+#download-cloud-download {
+  margin-bottom: -1px;
+}
+
+/* About */
+
+#about-floats-div {
+  margin-bottom: 17px;
+}
+
+/* Thank You */
+
+#thank-you {
+  width: 100%;
+  vertical-align: top;
+  padding-top: 2px;
+}
+
+#thank-you-rainbow {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+
+#thank-you-wish {
+  font-style: italic;
+}
+
+/* Credits */
+
+#credits {
+  margin-top: 0.75em;
+}
+
+#credits-everyone, #credits-you {
+  font-size: 0.75em;
+  font-style: italic;
+}
+
+#credits-you {
+  font-weight: bold;
+  text-align: center;
+}
+
+#copyleft {
+  font-size: 0.75em;
+  text-align: right;
+  margin-top: 8px;
+}
+
+/* Browser-Specific Styling */
+
+/* Chrome themed browser underline */
+.browser-underline:after {
+  content: '';
+  display: block;
+  margin-top: 2px;
+  height: 2px;
+  background: linear-gradient(to right, #4C8BF5 0%, #4C8BF5 24%, #DD5144 25%, #DD5144 49%, #FFCD46 50%, #FFCD46 74%, #1DA462 75%, #1DA462 100%);
+}
+
+/* Chrome override options overlay position so generated alert is displayed in gap space on the Options Page */
+#options .overlay {
+  top: 80%;
+}

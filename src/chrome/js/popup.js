@@ -19,7 +19,6 @@ var Popup = (() => {
    * @param items    the storage items cache
    * @param tabs     TODO Is this needed? the reusable tabs object
    * @param timeouts the reusable timeouts object that stores all named timeouts used on this page
-   * @param backgroundPage TODO Remove This
    * @param downloadPreviewCache TODO
    */
   const DOM = {};
@@ -28,7 +27,6 @@ var Popup = (() => {
   let items;
   let tabs;
   let timeouts = {};
-  let backgroundPage = {};
   let downloadPreviewCache = {};
 
   /**
@@ -108,15 +106,12 @@ var Popup = (() => {
     DOM["#download-preview-checkboxes"].addEventListener("change", function(event) { updateDownloadPreviewCheckboxes.call(event.target); });
     DOM["#download-preview-table-div"].addEventListener("click", updateDownloadSelectedsUnselecteds);
     // Initialize popup content (1-time only)
-    const tabs = await Promisify.getTabs();
     items = await Promisify.getItems();
-    backgroundPage = await Promisify.getBackgroundPage();
-    // Firefox: Background Page is null in Private Window
-    if (!backgroundPage) {
-      DOM["#messages"].className = DOM["#private-window-unsupported"].className = "display-block";
-      return;
-    }
-    instance = backgroundPage.Background.getInstance(tabs[0].id) || await backgroundPage.Background.buildInstance(tabs[0], items);
+    const tabs = await Promisify.getTabs();
+    // instance = backgroundPage.Background.getInstance(tabs[0].id) || await backgroundPage.Background.buildInstance(tabs[0], items);
+    // TODO: Do we need to supply the tab id if we can use the sender.tab.id on the receiving end?
+    instance = await Promisify.runtimeSendMessage({greeting: "getInstance", tab: tabs[0]});
+    console.log(JSON.stringify(instance));
     _ = JSON.parse(JSON.stringify(instance));
     const buttons = document.querySelectorAll("#controls-buttons svg");
     for (const button of buttons) {

@@ -22,16 +22,16 @@
     <script defer src="../js/options.js"></script>
   </head>
   <body id="options">
-    <header id="infy-scroll-header">
+    <header id="options-header">
       <img src="../img/icon-dark.png" alt="" width="64" height="64">
       <span id="options-header-label" data-i18n="textContent"></span>
       <!-- Make sure to provide default labels for Help Guide and Report a Problem buttons in case chrome.i18n fails -->
       <div id="options-header-buttons" class="float-right">
-        <a href="https://github.com/roysix/infy-scroll/wiki" target="_blank" class="mdc-button mdc-button--raised mdc-ripple-upgraded">
+        <a href="https://github.com/roysix/url-incrementer/wiki" target="_blank" class="mdc-button mdc-button--raised mdc-ripple-upgraded">
           <span class="mdc-button__ripple"></span>
           <span class="mdc-button__label" id="help-guide-label" data-i18n="textContent">Help Guide</span>
         </a>
-        <a href="https://github.com/roysix/infy-scroll/wiki#report-a-problem" target="_blank" class="mdc-button mdc-button--raised mdc-ripple-upgraded">
+        <a href="https://github.com/roysix/url-incrementer/wiki#report-a-problem" target="_blank" class="mdc-button mdc-button--raised mdc-ripple-upgraded">
           <span class="mdc-button__ripple"></span>
           <span class="mdc-button__label" id="report-problem-label" data-i18n="textContent">Report a Problem</span>
         </a>
@@ -47,7 +47,8 @@
           </h2>
           <div class="mdc-dialog__content">
             <div id="install-dialog-content" class="display-flex">
-              <img src="../img/infy.png" alt="infy" id="messages-infy" height="333">
+              <img src="../img/urli.svg" alt="urli" id="messages-infy" height="196">
+
               <div id="install-dialog-text">
                 <p id="install-dialog-beta" data-i18n="textContent"></p>
                 <ol id="install-dialog-list">
@@ -482,88 +483,850 @@
         </div>
       </div>
     </section>
-
-
-
-    <header>
-      <img src="../img/128-default.png" alt="" width="48" height="48">
-      <span>URL Incrementer Options</span>
-    </header>
-    <section id="browser-shortcuts">
-      <div class="heading">
-        <img src="../img/browser.png" alt="" width="16" height="16">
-        <img src="../img/keyboard-o.png" alt="" width="18" height="18">
-        <h3 id="browser-shortcuts-h3" data-i18n="textContent"></h3>
-        <button id="internal-shortcuts-enable-button" data-i18n="textContent"></button>
-      </div>
-      <p id="browser-shortcuts-p1" data-i18n="textContent"></p>
-      <div class="checkbox">
-        <label id="quick-enable-help*browser" class="tooltip-alt" data-i18n="title">
-          <input id="browser-shortcuts-quick-enable-input" type="checkbox">
-          <span id="browser-shortcuts-quick-enable-label" data-i18n="textContent"></span>
-          <img src="../img/question-circle.png" alt="" width="16" height="16">
-        </label>
-      </div>
-      <p>
-        <button id="browser-shortcuts-button" data-i18n="textContent"></button>
-      </p>
-      <p id="browser-shortcuts-p2-note" class="note">
-        <img src="../img/info-circle.png" alt="" width="16" height="16">
-        <span id="browser-shortcuts-p2" data-i18n="textContent"></span>
-      </p>
-    </section>
-    <section id="internal-shortcuts">
-      <div class="heading">
-        <img src="../img/mouse-pointer.png" alt="" width="16" height="16">
-        <img src="../img/keyboard-o.png" alt="" width="18" height="18">
-        <h3 id="internal-shortcuts-h3" data-i18n="textContent"></h3>
-        <button id="browser-shortcuts-enable-button" data-i18n="textContent"></button>
-      </div>
-      <p id="internal-shortcuts-p" data-i18n="textContent"></p>
-      <div class="checkbox">
-        <label id="shortcuts-editable-disabled-help" class="tooltip-alt" data-i18n="title">
-          <input id="shortcuts-editable-disabled-input" type="checkbox">
-          <span id="shortcuts-editable-disabled-label" data-i18n="textContent"></span>
-          <img src="../img/question-circle.png" alt="" width="16" height="16">
-        </label>
-      </div>
-      <div class="checkbox">
-        <label id="quick-enable-help*key" class="tooltip-alt" data-i18n="title">
-          <input id="key-quick-enable-input" type="checkbox">
-          <span id="key-quick-enable-label" data-i18n="textContent"></span>
-          <img src="../img/question-circle.png" alt="" width="16" height="16">
-        </label>
-      </div>
-      <div class="checkbox">
-        <label id="quick-enable-help*mouse" class="tooltip-alt" data-i18n="title">
-          <input id="mouse-quick-enable-input" type="checkbox">
-          <span id="mouse-quick-enable-label" data-i18n="textContent"></span>
-          <img src="../img/question-circle.png" alt="" width="16" height="16">
-        </label>
-        <div id="mouse-click-speed">
-          <label id="mouse-click-speed-label" for="mouse-click-speed-input" data-i18n="textContent"></label>
-          <input id="mouse-click-speed-input" type="number" min="100" step="100" max="1000">
-          <span id="mouse-click-speed-ms" data-i18n="textContent"></span>
-          <img id="mouse-click-speed-help" src="../img/question-circle.png" alt="" width="16" height="16" data-i18n="title">
-        </div>
-      </div>
-      <div id="internal-shortcuts-table" class="table">
+    <section id="increment-decrement" class="mdc-tab-content">
+      <header>
+        <svg><use xlink:href="../lib/fontawesome.svg#solid-plus-circle"></use></svg>
+        <svg><use xlink:href="../lib/fontawesome.svg#solid-minus-circle"></use></svg>
+        <span id="increment-decrement-settings-header" data-i18n="textContent"></span>
+      </header>
+      <p id="increment-decrement-settings-p" data-i18n="textContent"></p>
+      <div class="table">
         <div class="row">
-          <div class="column"></div>
           <div class="column">
-            <img id="key-enable-img" src="../img/check.png" alt="" width="16" height="16">
-            <span id="key-label" data-i18n="textContent"></span>
+            <label id="selection-label" for="selection-select" data-i18n="textContent"></label>
           </div>
           <div class="column">
-            <img id="mouse-enable-img" src="../img/check.png" alt="" width="16" height="16">
-            <span id="mouse-label" data-i18n="textContent"></span>
+            <div id="selection">
+              <div id="selection-select" class="mdc-select mdc-select--outlined mdc-select--no-label">
+                <div class="mdc-select__anchor">
+                  <input id="selection-selected-text" class="mdc-select__selected-text" type="text" disabled readonly>
+                  <i class="mdc-select__dropdown-icon"></i>
+                  <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__trailing"></span>
+              </span>
+                </div>
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+                  <ul class="mdc-list" id="selection-list">
+                    <li class="mdc-list-item" id="selection-option-smart" data-value="smart" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="selection-option-lastnumber" data-value="lastnumber" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="selection-option-firstnumber" data-value="firstnumber" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="selection-option-custom" data-value="custom" data-i18n="textContent"></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div id="selection-custom" class="display-none">
+              <div class="row-column">
+                <div id="selection-custom-url-text-field-container" class="text-field-container">
+                  <div id="selection-custom-url-text-field" class="mdc-text-field mdc-text-field--fullwidth mdc-text-field--textarea">
+                    <textarea id="selection-custom-url-textarea" class="mdc-text-field__input" spellcheck="false"></textarea>
+                    <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+                      <div class="mdc-notched-outline__leading"></div>
+                      <div class="mdc-notched-outline__notch">
+                        <label class="mdc-floating-label mdc-floating-label--float-above" for="selection-custom-url-textarea" id="selection-custom-url-label" data-i18n="textContent"></label>
+                      </div>
+                      <div class="mdc-notched-outline__trailing"></div>
+                    </div>
+                  </div>
+                  <div class="mdc-text-field-helper-line">
+                    <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent" id="save-url-textarea-help">e.g. https://www.google.com/search?q=infy&start=10</p>
+                  </div>
+                </div>
+              </div>
+              <div class="table">
+                <div class="row">
+                  <div class="column">
+                    <div id="selection-custom-regex" class="mdc-text-field mdc-text-field--outlined">
+                      <input class="mdc-text-field__input" id="selection-custom-regex-input" spellcheck="false" data-action="next">
+                      <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                          <label id="selection-custom-regex-label" for="selection-custom-regex-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                      </div>
+                    </div>
+                    <div class="mdc-text-field-helper-line">
+                      <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">e.g. \d+</p>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div id="selection-custom-flags-text-field" class="mdc-text-field mdc-text-field--outlined">
+                      <input class="mdc-text-field__input" id="selection-custom-flags-input" spellcheck="false" data-action="next">
+                      <div class="mdc-notched-outline">
+                        <div class="mdc-notched-outline__leading"></div>
+                        <div class="mdc-notched-outline__notch">
+                          <label id="selection-custom-flags-label" for="selection-custom-flags-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+                        </div>
+                        <div class="mdc-notched-outline__trailing"></div>
+                      </div>
+                    </div>
+                    <div class="mdc-text-field-helper-line">
+                      <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">e.g. gmi</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="column">
+                    <div id="selection-custom-group">
+                      <div id="selection-custom-group-text-field" class="mdc-text-field mdc-text-field--outlined">
+                        <input class="mdc-text-field__input" type="number" id="selection-custom-group-input" min="0">
+                        <div class="mdc-notched-outline">
+                          <div class="mdc-notched-outline__leading"></div>
+                          <div class="mdc-notched-outline__notch">
+                            <label id="selection-custom-group-label" for="selection-custom-group-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+                          </div>
+                          <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                      </div>
+                      <div class="mdc-text-field-helper-line">
+                        <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent" id="selection-custom-group-index-help*group" data-i18n="textContent"></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div id="selection-custom-index">
+                      <div id="selection-custom-index-text-field" class="mdc-text-field mdc-text-field--outlined">
+                        <input class="mdc-text-field__input" type="number" id="selection-custom-index-input" min="0">
+                        <div class="mdc-notched-outline">
+                          <div class="mdc-notched-outline__leading"></div>
+                          <div class="mdc-notched-outline__notch">
+                            <label id="selection-custom-index-label" for="selection-custom-index-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+                          </div>
+                          <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                      </div>
+                      <div class="mdc-text-field-helper-line">
+                        <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent" id="selection-custom-group-index-help*index" data-i18n="textContent"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="button-group">
+                <button id="selection-custom-test-button" class="mdc-button mdc-button--raised">
+                  <span class="mdc-button__ripple"></span>
+                  <span id="selection-custom-test-button-label" class="mdc-button__label" data-i18n="textContent"></span>
+                </button>
+                <button id="selection-custom-save-button" class="mdc-button mdc-button--raised">
+                  <span class="mdc-button__ripple"></span>
+                  <span id="selection-custom-save-button-label" class="mdc-button__label" data-i18n="textContent"></span>
+                </button>
+                <span id="selection-custom-message-span"></span>
+              </div>
+              <div class="mdc-text-field-helper-line">
+                <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">
+                  <span id="selection-custom-help-label" data-i18n="textContent"></span>
+                  <a href="https://regex101.com" target="_blank">https://regex101.com</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <label id="interval-label" for="interval-input" data-i18n="textContent"></label>
           </div>
           <div class="column">
-            <span id="mouse-clicks-label" data-i18n="textContent"></span>
+            <div id="interval-text-field" class="mdc-text-field mdc-text-field--outlined">
+              <input class="mdc-text-field__input" type="number" id="interval-input" min="0">
+              <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch"></div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <label id="leading-zeros-label" data-i18n="textContent"></label>
+          </div>
+          <div class="column">
+            <div id="leading-zeros" class="mdc-form-field">
+              <div class="mdc-checkbox">
+                <input id="leading-zeros-pad-by-detection-input" type="checkbox" class="mdc-checkbox__native-control"/>
+                <div class="mdc-checkbox__background">
+                  <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                  </svg>
+                </div>
+                <div class="mdc-checkbox__ripple"></div>
+              </div>
+              <label id="leading-zeros-pad-by-detection-label" for="leading-zeros-pad-by-detection-input" data-i18n="textContent"></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <label id="base-label" for="base-select" data-i18n="textContent"></label>
+          </div>
+          <div class="column">
+            <div id="base">
+              <div id="base-select" class="mdc-select mdc-select--outlined mdc-select--no-label">
+                <div class="mdc-select__anchor">
+                  <input id="base-selected-text" class="mdc-select__selected-text" type="text" disabled readonly>
+                  <i class="mdc-select__dropdown-icon"></i>
+                  <span class="mdc-notched-outline">
+                <span class="mdc-notched-outline__leading"></span>
+                <span class="mdc-notched-outline__trailing"></span>
+              </span>
+                </div>
+                <div class="mdc-select__menu mdc-menu mdc-menu-surface">
+                  <ul id="base-list" class="mdc-list">
+                    <li class="mdc-list-item" id="base-option-default" data-value="10" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-date" data-value="date" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-decimal" data-value="decimal" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-roman" data-value="roman" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-custom" data-value="custom" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-2" data-value="2" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-3" data-value="3" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-4" data-value="4" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-5" data-value="5" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-6" data-value="6" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-7" data-value="7" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-8" data-value="8" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-9" data-value="9" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-10" data-value="10" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-11" data-value="11" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-12" data-value="12" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-13" data-value="13" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-14" data-value="14" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-15" data-value="15" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-16" data-value="16" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-17" data-value="17" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-18" data-value="18" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-19" data-value="19" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-20" data-value="20" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-21" data-value="21" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-22" data-value="22" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-23" data-value="23" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-24" data-value="24" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-25" data-value="25" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-26" data-value="26" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-27" data-value="27" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-28" data-value="28" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-29" data-value="29" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-30" data-value="30" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-31" data-value="31" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-32" data-value="32" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-33" data-value="33" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-34" data-value="34" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-35" data-value="35" data-i18n="textContent"></li>
+                    <li class="mdc-list-item" id="base-option-36" data-value="36" data-i18n="textContent"></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div id="base-details">
+              <div id="base-case" class="display-none">
+                <div class="mdc-form-field">
+                  <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="base-case-lowercase-input" name="base-case" value="lowercase">
+                    <div class="mdc-radio__background">
+                      <div class="mdc-radio__outer-circle"></div>
+                      <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                  </div>
+                  <label for="base-case-lowercase-input" id="base-case-lowercase-label" data-i18n="textContent"></label>
+                </div>
+                <div class="mdc-form-field">
+                  <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="base-case-uppercase-input" name="base-case" value="uppercase">
+                    <div class="mdc-radio__background">
+                      <div class="mdc-radio__outer-circle"></div>
+                      <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                  </div>
+                  <label for="base-case-uppercase-input" id="base-case-uppercase-label" data-i18n="textContent"></label>
+                </div>
+              </div>
+              <div id="base-date" class="display-none">
+                <div id="base-date-format-text-field" class="mdc-text-field mdc-text-field--outlined">
+                  <input id="base-date-format-input" class="mdc-text-field__input" placeholder="e.g. yyyy/mm/dd" spellcheck="false">
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                      <label id="base-date-format-label" for="base-date-format-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                  </div>
+                </div>
+                <div class="mdc-text-field-helper-line">
+                  <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">
+                    <a id="help-button*base-date-format" href="https://github.com/roysix/infy-scroll/wiki#date-time-incrementing" target="_blank" data-i18n="textContent"></a>
+                  </p>
+                </div>
+              </div>
+              <div id="base-roman" class="display-none">
+                <div class="mdc-form-field">
+                  <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="base-roman-latin-input" name="base-roman" value="latin">
+                    <div class="mdc-radio__background">
+                      <div class="mdc-radio__outer-circle"></div>
+                      <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                  </div>
+                  <label for="base-roman-latin-input" id="base-roman-latin-label" data-i18n="textContent" aria-describedby="tooltip" aria-label="base-roman-latin-tooltip" data-balloon-pos="up" class="tooltip-without-underline"></label>
+                </div>
+                <div class="mdc-form-field">
+                  <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="base-roman-u216x-input" name="base-roman" value="u216x">
+                    <div class="mdc-radio__background">
+                      <div class="mdc-radio__outer-circle"></div>
+                      <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                  </div>
+                  <label for="base-roman-u216x-input" id="base-roman-u216x-label" data-i18n="textContent" aria-describedby="tooltip" aria-label="base-roman-u216x-tooltip" data-balloon-pos="up" class="tooltip-without-underline"></label>
+                </div>
+                <div class="mdc-form-field">
+                  <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="base-roman-u217x-input" name="base-roman" value="u217x">
+                    <div class="mdc-radio__background">
+                      <div class="mdc-radio__outer-circle"></div>
+                      <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                  </div>
+                  <label for="base-roman-u217x-input" id="base-roman-u217x-label" data-i18n="textContent" aria-describedby="tooltip" aria-label="base-roman-u217x-tooltip" data-balloon-pos="up" class="tooltip-without-underline"></label>
+                </div>
+              </div>
+              <div id="base-custom" class="display-none">
+                <div id="base-custom-text-field" class="mdc-text-field mdc-text-field--outlined">
+                  <input id="base-custom-input" class="mdc-text-field__input" placeholder="e.g. 0123abcXYZ" spellcheck="false">
+                  <div class="mdc-notched-outline">
+                    <div class="mdc-notched-outline__leading"></div>
+                    <div class="mdc-notched-outline__notch">
+                      <label id="base-custom-label" for="base-custom-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+                    </div>
+                    <div class="mdc-notched-outline__trailing"></div>
+                  </div>
+                </div>
+                <div class="mdc-text-field-helper-line">
+                  <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent">
+                    <a id="help-button*base-custom" class="help-input" href="https://github.com/roysix/infy-scroll/wiki#bases-and-custom-bases" target="_blank" data-i18n="textContent"></a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <label id="shuffle-limit-label" data-i18n="textContent" aria-describedby="tooltip" aria-label="shuffle-limit-tooltip" data-balloon-pos="up" data-balloon-length="xlarge"></label>
+          </div>
+          <div class="column">
+            <div id="shuffle-limit-text-field" class="mdc-text-field mdc-text-field--outlined">
+              <input class="mdc-text-field__input" type="number" id="shuffle-limit-input" min="1" max="5000">
+              <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch"></div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column">
+            <label id="error-skip-label" data-i18n="textContent" aria-describedby="tooltip" aria-label="error-skip-tooltip" data-balloon-pos="up" data-balloon-length="xlarge"></label>
+          </div>
+          <div class="column">
+            <div id="error-skip-text-field" class="mdc-text-field mdc-text-field--outlined">
+              <input id="error-skip-input" class="mdc-text-field__input" type="number" min="0" max="100">
+              <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch"></div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+            <div id="error-skip-checkboxes">
+              <div class="table">
+                <div class="row">
+                  <div class="column">
+                    <div class="mdc-form-field">
+                      <div class="mdc-checkbox">
+                        <input id="error-codes-404-input" type="checkbox" value="404" class="mdc-checkbox__native-control"/>
+                        <div class="mdc-checkbox__background">
+                          <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                          </svg>
+                        </div>
+                        <div class="mdc-checkbox__ripple"></div>
+                      </div>
+                      <label id="error-codes-404-label" for="error-codes-404-input" data-i18n="textContent"></label>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="mdc-form-field">
+                      <div class="mdc-checkbox">
+                        <input id="error-codes-3XX-input" type="checkbox" value="3XX" class="mdc-checkbox__native-control"/>
+                        <div class="mdc-checkbox__background">
+                          <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                          </svg>
+                        </div>
+                        <div class="mdc-checkbox__ripple"></div>
+                      </div>
+                      <label id="error-codes-3XX-label" for="error-codes-3XX-input" data-i18n="textContent"></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="column">
+                    <div class="mdc-form-field">
+                      <div class="mdc-checkbox">
+                        <input id="error-codes-4XX-input" type="checkbox" value="4XX" class="mdc-checkbox__native-control"/>
+                        <div class="mdc-checkbox__background">
+                          <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                          </svg>
+                        </div>
+                        <div class="mdc-checkbox__ripple"></div>
+                      </div>
+                      <label id="error-codes-4XX-label" for="error-codes-4XX-input" data-i18n="textContent"></label>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="mdc-form-field">
+                      <div class="mdc-checkbox">
+                        <input id="error-codes-5XX-input" type="checkbox" value="5XX" class="mdc-checkbox__native-control"/>
+                        <div class="mdc-checkbox__background">
+                          <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                          </svg>
+                        </div>
+                        <div class="mdc-checkbox__ripple"></div>
+                      </div>
+                      <label id="error-codes-5XX-label" for="error-codes-5XX-input" data-i18n="textContent"></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="column">
+                    <div class="mdc-form-field">
+                      <div class="mdc-checkbox">
+                        <input id="error-codes-CUS-input" type="checkbox" value="CUS" class="mdc-checkbox__native-control"/>
+                        <div class="mdc-checkbox__background">
+                          <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                          </svg>
+                        </div>
+                        <div class="mdc-checkbox__ripple"></div>
+                      </div>
+                      <label id="error-codes-CUS-label" for="error-codes-CUS-input" data-i18n="textContent"></label>
+                    </div>
+                  </div>
+                  <div class="column">
+                    <div class="mdc-form-field">
+                      <div class="mdc-checkbox">
+                        <input id="error-codes-EXC-input" type="checkbox" value="EXC" class="mdc-checkbox__native-control"/>
+                        <div class="mdc-checkbox__background">
+                          <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                            <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                          </svg>
+                        </div>
+                        <div class="mdc-checkbox__ripple"></div>
+                      </div>
+                      <label id="error-codes-EXC-label" for="error-codes-EXC-input" data-i18n="textContent"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="error-codes-custom">
+              <div id="error-codes-custom-text-field" class="mdc-text-field mdc-text-field--outlined">
+                <input class="mdc-text-field__input" id="error-codes-custom-input" data-action="next" spellcheck="false">
+                <div class="mdc-notched-outline">
+                  <div class="mdc-notched-outline__leading"></div>
+                  <div class="mdc-notched-outline__notch">
+                    <label class="mdc-floating-label mdc-floating-label--float-above" id="error-codes-custom-label" for="error-codes-custom-input" data-i18n="textContent"></label>
+                  </div>
+                  <div class="mdc-notched-outline__trailing"></div>
+                </div>
+              </div>
+              <div class="mdc-text-field-helper-line">
+                <p id="error-codes-custom-help" class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent" data-i18n="textContent"></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
+    <section id="next-prev" class="mdc-tab-content">
+      <header>
+        <svg><use xlink:href="../lib/fontawesome.svg#solid-chevron-circle-left"></use></svg>
+        <svg><use xlink:href="../lib/fontawesome.svg#solid-chevron-circle-right"></use></svg>
+        <span id="next-prev-settings-header" data-i18n="textContent"></span>
+      </header>
+      <p id="next-prev-settings-p" data-i18n="textContent"></p>
+      <div id="next">
+        <div id="next-rule" class="row">
+          <div id="next-selector-text-field" class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="next-selector-input" spellcheck="false" data-action="next">
+            <div class="mdc-notched-outline">
+              <div class="mdc-notched-outline__leading"></div>
+              <div class="mdc-notched-outline__notch">
+                <label id="next-rule-label*selector" for="next-selector-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+              </div>
+              <div class="mdc-notched-outline__trailing"></div>
+            </div>
+          </div>
+          <div id="next-xpath-text-field" class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="next-xpath-input" spellcheck="false" data-action="next">
+            <div class="mdc-notched-outline">
+              <div class="mdc-notched-outline__leading"></div>
+              <div class="mdc-notched-outline__notch">
+                <label id="next-rule-label*xpath" for="next-xpath-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+              </div>
+              <div class="mdc-notched-outline__trailing"></div>
+            </div>
+          </div>
+          <span>&nbsp;⚫&nbsp;</span>
+          <div id="next-attribute-text-field" class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="next-attribute-input" data-action="next" spellcheck="false">
+            <div class="mdc-notched-outline">
+              <div class="mdc-notched-outline__leading"></div>
+              <div class="mdc-notched-outline__notch">
+                <label class="mdc-floating-label mdc-floating-label--float-above" id="attribute-label*next" for="next-attribute-input" data-i18n="textContent"></label>
+              </div>
+              <div class="mdc-notched-outline__trailing"></div>
+            </div>
+          </div>
+          <div id="next-type" class="mdc-form-field">
+            <div class="mdc-radio">
+              <input class="mdc-radio__native-control" type="radio" id="next-type-selector" name="next-type" value="selector" data-action="next">
+              <div class="mdc-radio__background">
+                <div class="mdc-radio__outer-circle"></div>
+                <div class="mdc-radio__inner-circle"></div>
+              </div>
+              <div class="mdc-radio__ripple"></div>
+            </div>
+            <label for="next-type-selector" id="selector-label*next" data-i18n="textContent"></label>
+            <div class="mdc-radio">
+              <input class="mdc-radio__native-control" type="radio" id="next-type-xpath" name="next-type" value="xpath" data-action="next">
+              <div class="mdc-radio__background">
+                <div class="mdc-radio__outer-circle"></div>
+                <div class="mdc-radio__inner-circle"></div>
+              </div>
+              <div class="mdc-radio__ripple"></div>
+            </div>
+            <label for="next-type-xpath" id="xpath-label*next" data-i18n="textContent"></label>
+          </div>
+        </div>
+        <div id="next-keywords" class="row">
+          <div class="text-field-container">
+            <div id="next-keywords-text-field" class="mdc-text-field mdc-text-field--fullwidth mdc-text-field--textarea">
+              <textarea id="next-keywords-textarea" class="mdc-text-field__input" spellcheck="false"></textarea>
+              <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                  <label class="mdc-floating-label mdc-floating-label--float-above" id="next-keywords-label" for="next-keywords-textarea" data-i18n="textContent"></label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+            <div class="mdc-text-field-helper-line">
+              <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent" id="keywords-text-field-helper-line*next" data-i18n="textContent"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="prev">
+        <div id="prev-rule" class="row">
+          <div id="prev-selector-text-field" class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="prev-selector-input" spellcheck="false" data-action="prev">
+            <div class="mdc-notched-outline">
+              <div class="mdc-notched-outline__leading"></div>
+              <div class="mdc-notched-outline__notch">
+                <label id="prev-rule-label*selector" for="prev-selector-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+              </div>
+              <div class="mdc-notched-outline__trailing"></div>
+            </div>
+          </div>
+          <div id="prev-xpath-text-field" class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="prev-xpath-input" spellcheck="false" data-action="prev">
+            <div class="mdc-notched-outline">
+              <div class="mdc-notched-outline__leading"></div>
+              <div class="mdc-notched-outline__notch">
+                <label id="prev-rule-label*xpath" for="prev-xpath-input" class="mdc-floating-label mdc-floating-label--float-above" data-i18n="textContent"></label>
+              </div>
+              <div class="mdc-notched-outline__trailing"></div>
+            </div>
+          </div>
+          <span>&nbsp;⚫&nbsp;</span>
+          <div id="prev-attribute-text-field" class="mdc-text-field mdc-text-field--outlined">
+            <input class="mdc-text-field__input" id="prev-attribute-input" data-action="prev" spellcheck="false">
+            <div class="mdc-notched-outline">
+              <div class="mdc-notched-outline__leading"></div>
+              <div class="mdc-notched-outline__notch">
+                <label class="mdc-floating-label mdc-floating-label--float-above" id="attribute-label*prev" for="prev-attribute-input" data-i18n="textContent"></label>
+              </div>
+              <div class="mdc-notched-outline__trailing"></div>
+            </div>
+          </div>
+          <div id="prev-type" class="mdc-form-field">
+            <div class="mdc-radio">
+              <input class="mdc-radio__native-control" type="radio" id="prev-type-selector" name="prev-type" value="selector" data-action="prev">
+              <div class="mdc-radio__background">
+                <div class="mdc-radio__outer-circle"></div>
+                <div class="mdc-radio__inner-circle"></div>
+              </div>
+              <div class="mdc-radio__ripple"></div>
+            </div>
+            <label for="prev-type-selector" id="selector-label*prev" data-i18n="textContent"></label>
+            <div class="mdc-radio">
+              <input class="mdc-radio__native-control" type="radio" id="prev-type-xpath" name="prev-type" value="xpath" data-action="prev">
+              <div class="mdc-radio__background">
+                <div class="mdc-radio__outer-circle"></div>
+                <div class="mdc-radio__inner-circle"></div>
+              </div>
+              <div class="mdc-radio__ripple"></div>
+            </div>
+            <label for="prev-type-xpath" id="xpath-label*prev" data-i18n="textContent"></label>
+          </div>
+        </div>
+        <div id="prev-keywords" class="row">
+          <div class="text-field-container">
+            <div id="prev-keywords-text-field" class="mdc-text-field mdc-text-field--fullwidth mdc-text-field--textarea">
+              <textarea id="prev-keywords-textarea" class="mdc-text-field__input" spellcheck="false"></textarea>
+              <div class="mdc-notched-outline mdc-notched-outline--upgraded mdc-notched-outline--notched">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                  <label class="mdc-floating-label mdc-floating-label--float-above" id="prev-keywords-label" for="prev-keywords-textarea" data-i18n="textContent"></label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+            <div class="mdc-text-field-helper-line">
+              <p class="mdc-text-field-helper-text mdc-text-field-helper-text--persistent" id="keywords-text-field-helper-line*prev" data-i18n="textContent"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="extra" class="mdc-tab-content">
+      <header>
+        <svg><use xlink:href="../lib/fontawesome.svg#solid-asterisk"></use></svg>
+        <span id="extra-settings-header" data-i18n="textContent"></span>
+      </header>
+      <p id="extra-settings-p" data-i18n="textContent"></p>
+      <div class="mdc-form-field">
+        <div class="mdc-checkbox">
+          <input id="custom-scripts-enable-input" type="checkbox" class="mdc-checkbox__native-control"/>
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+            </svg>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label id="custom-scripts-enable-label" for="custom-scripts-enable-input" data-i18n="textContent"></label>
+      </div>
+      <div class="mdc-form-field">
+        <div class="mdc-checkbox">
+          <input id="resize-media-enable-input" type="checkbox" class="mdc-checkbox__native-control"/>
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+            </svg>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label id="resize-media-enable-label" for="resize-media-enable-input" data-i18n="textContent"></label>
+      </div>
+      <div class="mdc-form-field">
+        <div class="mdc-checkbox">
+          <input id="decode-uri-enable-input" type="checkbox" class="mdc-checkbox__native-control"/>
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+            </svg>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label id="decode-uri-enable-label" for="decode-uri-enable-input" data-i18n="textContent"></label>
+      </div>
+      <div class="mdc-form-field">
+        <div class="mdc-checkbox">
+          <input id="debug-enable-input" type="checkbox" class="mdc-checkbox__native-control"/>
+          <div class="mdc-checkbox__background">
+            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+              <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+            </svg>
+          </div>
+          <div class="mdc-checkbox__ripple"></div>
+        </div>
+        <label id="debug-enable-label" for="debug-enable-input" data-i18n="textContent"></label>
+      </div>
+    </section>
+    <section id="about" class="mdc-tab-content">
+      <header>
+        <svg><use xlink:href="../lib/fontawesome.svg#solid-info-circle"></use></svg>
+        <span id="about-header" data-i18n="textContent"></span>
+      </header>
+      <div id="about-floats-div">
+        <div id="name-version-email-website-div" class="float-left">
+          <div id="name-version">
+            <div>
+              <img src="../img/icon-dark.png" alt="" width="40" height="40">
+              <span id="manifest-name"></span>
+              <span id="beta">BETA</span>
+            </div>
+            <div id="version">
+              <span id="version-span" data-i18n="textContent"></span>&nbsp;<span id="manifest-version"></span> &beta;
+            </div>
+          </div>
+          <div id="email-website">
+            <div>
+              <svg class="smaller-icon"><use xlink:href="../lib/fontawesome.svg#regular-envelope"></use></svg>
+              <a href="mailto:infyscrollapp@gmail.com?subject=Infy%20Scroll">infyscrollapp@gmail.com</a>
+            </div>
+            <div>
+              <svg class="smaller-icon"><use xlink:href="../lib/fontawesome.svg#solid-globe-americas"></use></svg>
+              <a href="https://github.com/roysix/infy-scroll" target="_blank">https://github.com/roysix/infy-scroll</a>
+            </div>
+          </div>
+        </div>
+        <div id="reset-options-div" class="float-right">
+          <button id="reset-options-button" class="mdc-button mdc-button--raised">
+            <span class="mdc-button__ripple"></span>
+            <span id="reset-options-button-label" class="mdc-button__label" data-i18n="textContent"></span>
+          </button>
+          <div id="reset-options-disclaimer" data-i18n="textContent"></div>
+        </div>
+        <div class="clear-both"></div>
+      </div>
+      <div class="table">
+        <div class="row">
+          <div class="column">
+            <input id="mascot-input" type="image" src="../img/urli.svg" alt="mascot-input" width="96" height="96" class="hvr-grow" data-value="0">
+          </div>
+          <div id="thank-you" class="column">
+            <div id="thank-you-rainbow-underline">
+              <span id="thank-you-rainbow" data-i18n="textContent"></span>
+              <svg id="thank-you-icon"><use xlink:href="../lib/fontawesome.svg#solid-heart"></use></svg>
+            </div>
+            <div id="thank-you-wish" data-i18n="textContent"></div>
+            <div id="credits">
+              <div id="credits-icon-label">
+                <svg id="credits-icon" class="smaller-icon"><use xlink:href="../lib/fontawesome.svg#solid-paint-brush"></use></svg>
+                <span id="credits-label" data-i18n="textContent"></span>
+              </div>
+              <div id="credits-everyone">
+                <ul>
+                  <li>UI: <a href="https://material.io/">Material Design</a></li>
+                  <li>Icons: <a href="https://fontawesome.com/">FontAwesome</a></li>
+                  <li>Animations: <a href="https://ianlunn.github.io/Hover/">Hover.css</a></li>
+                  <li>Tooltips: <a href="https://kazzkiq.github.io/balloon.css/">Balloon.css</a></li>
+                  <li>Dialogs: <a href="https://github.com/mikewest">Mike West</a></li>
+                  <li>Loading: <a href="https://loading.io/">Loading.io</a></li>
+                  <li>Code Fragments: <a href="https://stackoverflow.com/">Stack Overflow Users</a></li>
+                  <li>User Contributions: @akaustav (Color), Coolio Wolfus (Test), Eric C (Alpha), Gopi P & NickMWPrince (Auto)</li>
+                  <li>Firefox: <a href="#">URL Flipper</a></li>
+                </ul>
+              </div>
+              <div id="credits-you" data-i18n="textContent"></div>
+              <div id="copyright"><a href="https://github.com/roysix/url-incrementer/blob/master/LICENSE" target="_blank">Open Source Software (License)</a><br>Copyright &copy; 2020 Roy Six</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="reset-options-snackbar" class="mdc-snackbar">
+        <div class="mdc-snackbar__surface">
+          <div id="reset-options-snackbar-label" class="mdc-snackbar__label" role="status" aria-live="polite" data-i18n="textContent"></div>
+          <div class="mdc-snackbar__actions">
+            <button type="button" class="mdc-button mdc-snackbar__action">
+              <div class="mdc-button__ripple"></div>
+              <span class="mdc-button__label">OK</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="shortcuts">
+      <div id="browser-shortcuts">
+        <div class="heading">
+          <img src="../img/browser.png" alt="" width="16" height="16">
+          <img src="../img/keyboard-o.png" alt="" width="18" height="18">
+          <h3 id="browser-shortcuts-h3" data-i18n="textContent"></h3>
+          <button id="internal-shortcuts-enable-button" data-i18n="textContent"></button>
+        </div>
+        <p id="browser-shortcuts-p1" data-i18n="textContent"></p>
+        <div class="checkbox">
+          <label id="quick-enable-help*browser" class="tooltip-alt" data-i18n="title">
+            <input id="browser-shortcuts-quick-enable-input" type="checkbox">
+            <span id="browser-shortcuts-quick-enable-label" data-i18n="textContent"></span>
+            <img src="../img/question-circle.png" alt="" width="16" height="16">
+          </label>
+        </div>
+        <p>
+          <button id="browser-shortcuts-button" data-i18n="textContent"></button>
+        </p>
+        <p id="browser-shortcuts-p2-note" class="note">
+          <img src="../img/info-circle.png" alt="" width="16" height="16">
+          <span id="browser-shortcuts-p2" data-i18n="textContent"></span>
+        </p>
+      </div>
+      <div id="internal-shortcuts">
+        <div class="heading">
+          <img src="../img/mouse-pointer.png" alt="" width="16" height="16">
+          <img src="../img/keyboard-o.png" alt="" width="18" height="18">
+          <h3 id="internal-shortcuts-h3" data-i18n="textContent"></h3>
+          <button id="browser-shortcuts-enable-button" data-i18n="textContent"></button>
+        </div>
+        <p id="internal-shortcuts-p" data-i18n="textContent"></p>
+        <div class="checkbox">
+          <label id="shortcuts-editable-disabled-help" class="tooltip-alt" data-i18n="title">
+            <input id="shortcuts-editable-disabled-input" type="checkbox">
+            <span id="shortcuts-editable-disabled-label" data-i18n="textContent"></span>
+            <img src="../img/question-circle.png" alt="" width="16" height="16">
+          </label>
+        </div>
+        <div class="checkbox">
+          <label id="quick-enable-help*key" class="tooltip-alt" data-i18n="title">
+            <input id="key-quick-enable-input" type="checkbox">
+            <span id="key-quick-enable-label" data-i18n="textContent"></span>
+            <img src="../img/question-circle.png" alt="" width="16" height="16">
+          </label>
+        </div>
+        <div class="checkbox">
+          <label id="quick-enable-help*mouse" class="tooltip-alt" data-i18n="title">
+            <input id="mouse-quick-enable-input" type="checkbox">
+            <span id="mouse-quick-enable-label" data-i18n="textContent"></span>
+            <img src="../img/question-circle.png" alt="" width="16" height="16">
+          </label>
+          <div id="mouse-click-speed">
+            <label id="mouse-click-speed-label" for="mouse-click-speed-input" data-i18n="textContent"></label>
+            <input id="mouse-click-speed-input" type="number" min="100" step="100" max="1000">
+            <span id="mouse-click-speed-ms" data-i18n="textContent"></span>
+            <img id="mouse-click-speed-help" src="../img/question-circle.png" alt="" width="16" height="16" data-i18n="title">
+          </div>
+        </div>
+        <div id="internal-shortcuts-table" class="table">
+          <div class="row">
+            <div class="column"></div>
+            <div class="column">
+              <img id="key-enable-img" src="../img/check.png" alt="" width="16" height="16">
+              <span id="key-label" data-i18n="textContent"></span>
+            </div>
+            <div class="column">
+              <img id="mouse-enable-img" src="../img/check.png" alt="" width="16" height="16">
+              <span id="mouse-label" data-i18n="textContent"></span>
+            </div>
+            <div class="column">
+              <span id="mouse-clicks-label" data-i18n="textContent"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="one-click-buttons">
       <div class="heading">
         <img src="../img/browser-store.png" alt="" height="25">
@@ -580,462 +1343,10 @@
         <span id="one-click-buttons-decrement" data-i18n="textContent"></span>
       </a>
     </section>
-    <section id="icon-settings">
-        <div class="heading">
-          <img src="../img/128-default.png" alt="" width="16" height="16">
-          <h3 id="icon-settings-h3" data-i18n="textContent"></h3>
-        </div>
-        <p id="icon-color-label" data-i18n="textContent"></p>
-        <div id="icon-color-radios" class="icon-color radio inline">
-          <label>
-            <input id="icon-color-radio-dark" value="dark" name="icon-color" type="radio">
-            <img src="../img/32-dark.png" alt="" width="16" height="16">
-            <span id="icon-color-label-dark" data-i18n="textContent"></span>
-          </label>
-          <label>
-            <input id="icon-color-radio-light" value="light" name="icon-color" type="radio">
-            <img src="../img/32-light.png" alt="" width="16" height="16">
-            <span id="icon-color-label-light" data-i18n="textContent"></span>
-          </label>
-          <label>
-            <input id="icon-color-radio-confetti" value="confetti" name="icon-color" type="radio">
-            <img src="../img/32-confetti.png" alt="" width="16" height="16">
-            <span id="icon-color-label-confetti" data-i18n="textContent"></span>
-          </label>
-          <label>
-            <input id="icon-color-radio-urli" value="urli" name="icon-color" type="radio">
-            <img src="../img/32-urli.png" alt="" width="16" height="16">
-            <span id="icon-color-label-urli" data-i18n="textContent"></span>
-          </label>
-        </div>
-        <div class="checkbox">
-          <label>
-            <input id="icon-feedback-enable-input" type="checkbox">
-            <span id="icon-feedback-enable-label" data-i18n="textContent"></span>
-          </label>
-        </div>
-      </section>
-    <section id="popup-settings">
-      <div class="heading">
-        <img src="../img/window-restore.png" alt="" width="16" height="16">
-        <h3 id="popup-settings-h3" data-i18n="textContent"></h3>
-      </div>
-      <div id="popup-button-size-div">
-        <label id="popup-button-size-label" data-i18n="textContent"></label>
-        <input id="popup-button-size-input" type="number" min="16" max="64">&nbsp;px
-        <input id="popup-button-size-img" type="image" src="../img/plus-circle.png" alt="popup-button-size-img" width="32">
-      </div>
-      <div class="checkbox">
-        <label>
-          <input id="popup-animations-enable-input" type="checkbox">
-          <span id="popup-animations-enable-label" data-i18n="textContent"></span>
-        </label>
-      </div>
-      <div class="checkbox">
-        <label>
-          <input id="decode-uri-enable-input" type="checkbox">
-          <span id="decode-uri-enable-label" data-i18n="textContent"></span>
-        </label>
-      </div>
-    </section>
-    <section id="saved-urls-settings">
-      <div class="heading">
-        <img src="../img/heart.png" alt="" width="16" height="16">
-        <h3 id="saved-urls-settings-h3" data-i18n="textContent"></h3>
-      </div>
-      <p id="saved-urls-settings-p" data-i18n="textContent"></p>
-      <div id="saved-urls-how-title" class="tooltip link" data-i18n="title">
-        <a href="https://github.com/roysix/url-incrementer/wiki/Help#saving-urls" target="_blank">
-          <img src="../img/exclamation-circle.png" alt="" width="16" height="16">
-          <span id="saved-urls-how-span" data-i18n="textContent"></span>
-        </a>
-      </div>
-      <div class="checkbox">
-        <label>
-          <input id="saved-urls-preselect-input" type="checkbox">
-          <span id="saved-urls-preselect-label" data-i18n="textContent"></span>
-        </label>
-      </div>
-      <p><span id="saved-urls-my" data-i18n="textContent"></span><span id="saved-urls-quantity"></span></p>
-      <div id="saved-urls-table-div"><div></div></div>
-      <div id="saved-urls-buttons">
-        <button id="saved-urls-delete-button" data-i18n="textContent"></button>
-        <button id="saved-urls-wildcard-add-button" data-i18n="textContent"></button>
-      </div>
-      <div id="saved-urls-wildcard" class="display-none">
-        <p id="saved-urls-wildcard-instructions-p" data-i18n="textContent"></p>
-        <div class="row">
-          <div class="column">
-            <label id="saved-urls-wildcard-url-label" for="saved-urls-wildcard-url-textarea" data-i18n="textContent" class="display-block"></label>
-          </div>
-          <div class="column">
-            <textarea id="saved-urls-wildcard-url-textarea" spellcheck="false" data-i18n="placeholder"></textarea>
-            <div class="checkbox">
-              <label>
-                <input id="saved-urls-regexp-input" type="checkbox">
-                <span id="saved-urls-regexp-label" data-i18n="textContent"></span>
-              </label>
-            </div>
-            <div id="saved-urls-wildcard-buttons">
-              <button id="saved-urls-wildcard-save-button" data-i18n="textContent"></button>
-              <button id="saved-urls-wildcard-cancel-button" data-i18n="textContent"></button>
-              <span id="saved-urls-wildcard-errors"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="increment-decrement-settings">
-      <div class="heading">
-        <img src="../img/plus-circle.png" alt="" width="16" height="16">
-        <img src="../img/minus-circle.png" alt="" width="16" height="16">
-        <h3 id="increment-decrement-settings-h3" data-i18n="textContent"></h3>
-      </div>
-      <p id="increment-decrement-settings-p" data-i18n="textContent"></p>
-      <div class="table">
-        <div class="row">
-          <div class="column">
-            <label id="selection-label" for="selection-select" data-i18n="textContent"></label>
-          </div>
-          <div class="column">
-            <select id="selection-select">
-              <option id="selection-option-smart" value="smart" data-i18n="textContent"></option>
-              <option id="selection-option-lastnumber" value="lastnumber" data-i18n="textContent"></option>
-              <option id="selection-option-firstnumber" value="firstnumber" data-i18n="textContent"></option>
-              <option id="selection-option-custom" value="custom" data-i18n="textContent"></option>
-            </select>
-            <div id="selection-custom" class="display-none">
-              <label id="selection-custom-url-label" for="selection-custom-url-textarea" data-i18n="textContent" class="display-block"></label>
-              <textarea id="selection-custom-url-textarea" placeholder="https://www.google.com/search?q=urli&start=10" spellcheck="false"></textarea>
-              <div class="table">
-                <div class="row">
-                  <div class="column">
-                    <label id="selection-custom-regex-label" for="selection-custom-regex-input" data-i18n="textContent" class="display-block"></label>
-                    /<input id="selection-custom-regex-input" type="text" value="" placeholder="\d+" spellcheck="false">/
-                  </div>
-                  <div class="column">
-                    <label id="selection-custom-flags-label" for="selection-custom-flags-input" data-i18n="textContent" class="display-block"></label>
-                    <input id="selection-custom-flags-input" type="text" value="" placeholder="gmi" spellcheck="false">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="column">
-                    <label id="selection-custom-group-label" for="selection-custom-group-input" data-i18n="textContent" class="display-block"></label>
-                    <input id="selection-custom-group-input" type="number" value="0" min="0">
-                  </div>
-                  <div class="column">
-                    <label id="selection-custom-index-label" for="selection-custom-index-input" data-i18n="textContent" class="display-block"></label>
-                    <input id="selection-custom-index-input" type="number" value="0" min="0">
-                  </div>
-                </div>
-              </div>
-              <div>
-                <button id="selection-custom-test-button" data-i18n="textContent"></button>
-                <button id="selection-custom-save-button" data-i18n="textContent"></button>
-                <span id="selection-custom-message-span"></span>
-              </div>
-              (<span id="selection-custom-help-label" data-i18n="textContent"></span> <a href="https://regex101.com" target="_blank">https://regex101.com</a>)
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="interval-label" for="interval-input" data-i18n="textContent"></label>
-          </div>
-          <div class="column">
-            <input id="interval-input" type="number" min="1">
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="leading-zeros-label" data-i18n="textContent"></label>
-          </div>
-          <div class="column">
-            <div class="checkbox">
-              <label>
-                <input id="leading-zeros-pad-by-detection-input" type="checkbox">
-                <span id="leading-zeros-pad-by-detection-label" data-i18n="textContent"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="base-label" for="base-select" data-i18n="textContent"></label>
-          </div>
-          <div class="column">
-            <select id="base-select">
-              <option id="base-option-default" value="10" data-i18n="textContent"></option>
-              <option id="base-option-date" value="date" data-i18n="textContent"></option>
-              <option id="base-option-decimal" value="decimal" data-i18n="textContent"></option>
-              <option id="base-option-roman" value="roman" data-i18n="textContent"></option>
-              <option id="base-option-custom" value="custom" data-i18n="textContent"></option>
-              <option id="base-option-2" value="2" data-i18n="textContent"></option>
-              <option id="base-option-3" value="3" data-i18n="textContent"></option>
-              <option id="base-option-4" value="4" data-i18n="textContent"></option>
-              <option id="base-option-5" value="5" data-i18n="textContent"></option>
-              <option id="base-option-6" value="6" data-i18n="textContent"></option>
-              <option id="base-option-7" value="7" data-i18n="textContent"></option>
-              <option id="base-option-8" value="8" data-i18n="textContent"></option>
-              <option id="base-option-9" value="9" data-i18n="textContent"></option>
-              <option id="base-option-10" value="10" data-i18n="textContent"></option>
-              <option id="base-option-11" value="11" data-i18n="textContent"></option>
-              <option id="base-option-12" value="12" data-i18n="textContent"></option>
-              <option id="base-option-13" value="13" data-i18n="textContent"></option>
-              <option id="base-option-14" value="14" data-i18n="textContent"></option>
-              <option id="base-option-15" value="15" data-i18n="textContent"></option>
-              <option id="base-option-16" value="16" data-i18n="textContent"></option>
-              <option id="base-option-17" value="17" data-i18n="textContent"></option>
-              <option id="base-option-18" value="18" data-i18n="textContent"></option>
-              <option id="base-option-19" value="19" data-i18n="textContent"></option>
-              <option id="base-option-20" value="20" data-i18n="textContent"></option>
-              <option id="base-option-21" value="21" data-i18n="textContent"></option>
-              <option id="base-option-22" value="22" data-i18n="textContent"></option>
-              <option id="base-option-23" value="23" data-i18n="textContent"></option>
-              <option id="base-option-24" value="24" data-i18n="textContent"></option>
-              <option id="base-option-25" value="25" data-i18n="textContent"></option>
-              <option id="base-option-26" value="26" data-i18n="textContent"></option>
-              <option id="base-option-27" value="27" data-i18n="textContent"></option>
-              <option id="base-option-28" value="28" data-i18n="textContent"></option>
-              <option id="base-option-29" value="29" data-i18n="textContent"></option>
-              <option id="base-option-30" value="30" data-i18n="textContent"></option>
-              <option id="base-option-31" value="31" data-i18n="textContent"></option>
-              <option id="base-option-32" value="32" data-i18n="textContent"></option>
-              <option id="base-option-33" value="33" data-i18n="textContent"></option>
-              <option id="base-option-34" value="34" data-i18n="textContent"></option>
-              <option id="base-option-35" value="35" data-i18n="textContent"></option>
-              <option id="base-option-36" value="36" data-i18n="textContent"></option>
-            </select>
-            <div id="base-case" class="display-none">
-              <div class="radio">
-                <label>
-                  <input id="base-case-lowercase-input" type="radio" name="base-case" value="lowercase">
-                  <span id="base-case-lowercase-label" data-i18n="textContent"></span>
-                </label>
-                <label>
-                  <input id="base-case-uppercase-input" type="radio" name="base-case" value="uppercase">
-                  <span id="base-case-uppercase-label" data-i18n="textContent"></span>
-                </label>
-              </div>
-            </div>
-            <div id="base-date" class="display-none">
-              <a id="base-date-format-a" href="https://github.com/roysix/url-incrementer/wiki/Help#date-time-incrementing" target="_blank">
-                <span id="base-date-format-label" data-i18n="textContent"></span>
-              </a>
-              <input id="base-date-format-input" type="text" placeholder="e.g. yyyy/mm/dd" spellcheck="false">
-            </div>
-            <div id="base-decimal" class="display-none"></div>
-            <div id="base-roman" class="display-none">
-              <div class="radio">
-                <label>
-                  <input id="base-roman-latin-input" type="radio" name="base-roman" value="latin">
-                  <span id="base-roman-latin-label" data-i18n="textContent"></span>
-                </label>
-                <label>
-                  <input id="base-roman-u216x-input" type="radio" name="base-roman" value="u216x">
-                  <span id="base-roman-u216x-label" data-i18n="textContent"></span>
-                </label>
-                <label>
-                  <input id="base-roman-u217x-input" type="radio" name="base-roman" value="u217x">
-                  <span id="base-roman-u217x-label" data-i18n="textContent"></span>
-                </label>
-              </div>
-            </div>
-            <div id="base-custom" class="display-none">
-              <a id="base-custom-a" href="https://github.com/roysix/url-incrementer/wiki/Help#bases-and-custom-bases" target="_blank">
-                <span id="base-custom-label" data-i18n="textContent"></span>
-              </a>
-              <input id="base-custom-input" type="text" placeholder="e.g. 0123abcXYZ" spellcheck="false">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="shuffle-limit-label" for="shuffle-limit-input" data-i18n="textContent"></label>
-          </div>
-          <div class="column">
-            <input id="shuffle-limit-input" type="number" min="1" max="5000">
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="error-skip-label" data-i18n="textContent"></label>
-          </div>
-          <div class="column">
-            <input id="error-skip-input" type="number" min="0" max="100">
-            <div id="error-skip-description" class="tooltip link" data-i18n="title">
-              <a href="https://github.com/roysix/url-incrementer/wiki/Help#error-skipping" target="_blank">
-                <img src="../img/question-circle.png" alt="" width="16" height="16">
-                <span id="error-skip-what" data-i18n="textContent"></span>
-              </a>
-            </div>
-            <div id="error-skip-checkboxes" class="checkbox">
-              <div class="table">
-                <div class="row">
-                  <div class="column">
-                    <label>
-                      <input id="error-codes-404-input" value="404" type="checkbox">
-                      <span id="error-codes-404-label" data-i18n="textContent"></span>
-                    </label>
-                  </div>
-                  <div class="column">
-                    <label>
-                      <input id="error-codes-3XX-input" value="3XX" type="checkbox">
-                      <span id="error-codes-3XX-label" data-i18n="textContent"></span>
-                    </label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="column">
-                    <label>
-                      <input id="error-codes-4XX-input" value="4XX" type="checkbox">
-                      <span id="error-codes-4XX-label" data-i18n="textContent"></span>
-                    </label>
-                  </div>
-                  <div class="column">
-                    <label>
-                      <input id="error-codes-5XX-input" value="5XX" type="checkbox">
-                      <span id="error-codes-5XX-label" data-i18n="textContent"></span>
-                    </label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="column">
-                    <label>
-                      <input id="error-codes-CUS-input" value="CUS" type="checkbox">
-                      <span id="error-codes-CUS-label" data-i18n="textContent"></span>
-                    </label>
-                  </div>
-                  <div class="column">
-                    <label>
-                      <input id="error-codes-EXC-input" value="EXC" type="checkbox">
-                      <span id="error-codes-EXC-label" data-i18n="textContent"></span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="error-codes-custom">
-              <input id="error-codes-custom-input" type="text" placeholder="e.g. 404, 302, 500" spellcheck="false">
-            </div>
-            <p class="note">
-              <img src="../img/exclamation-circle.png" alt="" width="16" height="16">
-              <span id="error-skip-disclaimer" class="note" data-i18n="textContent"></span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="next-prev-settings">
-      <div class="heading">
-        <img src="../img/chevron-circle-left.png" alt="" width="16" height="16">
-        <img src="../img/chevron-circle-right.png" alt="" width="16" height="16">
-        <h3 id="next-prev-settings-h3" data-i18n="textContent"></h3>
-      </div>
-      <p id="next-prev-settings-p" data-i18n="textContent"></p>
-      <div class="table">
-        <div class="row">
-          <div class="column">
-            <label id="next-prev-selector-next-label" for="next-prev-selector-next-input">
-              <span id="next-prev-next-label*selector" data-i18n="textContent"></span>
-              <br>
-              <span id="next-prev-selector-label*next" data-i18n="textContent"></span>
-            </label>
-          </div>
-          <div class="column">
-            <input id="next-prev-selector-next-input" class="next-prev-selector" spellcheck="false" data-i18n="placeholder">
-            <input id="next-prev-xpath-next-input" class="next-prev-selector" spellcheck="false" data-i18n="placeholder">
-            .
-            <input id="next-prev-attribute-next-input" class="next-prev-attribute" spellcheck="false" data-i18n="placeholder">
-            <div id="next-prev-rule-next" class="radio inline">
-              <label>
-                <input id="next-prev-rule-selector-next" type="radio" name="next-rule-type" value="selector">
-                <span id="selector-label*next" data-i18n="textContent"></span>
-              </label>
-              <label>
-                <input id="next-prev-rule-xpath-next" type="radio" name="next-rule-type" value="xpath">
-                <span id="xpath-label*next" data-i18n="textContent"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="next-prev-selector-prev-label" for="next-prev-selector-prev-input">
-              <span id="next-prev-prev-label*selector" data-i18n="textContent"></span>
-              <br>
-              <span id="next-prev-selector-label*prev" data-i18n="textContent"></span>
-            </label>
-          </div>
-          <div class="column">
-            <input id="next-prev-selector-prev-input" class="next-prev-selector" spellcheck="false" data-i18n="placeholder">
-            <input id="next-prev-xpath-prev-input" class="next-prev-selector" spellcheck="false" data-i18n="placeholder">
-            .
-            <input id="next-prev-attribute-prev-input" class="next-prev-attribute" spellcheck="false" data-i18n="placeholder">
-            <div id="next-prev-rule-prev" class="radio inline">
-              <label>
-                <input id="next-prev-rule-selector-prev" type="radio" name="prev-rule-type" value="selector">
-                <span id="selector-label*prev" data-i18n="textContent"></span>
-              </label>
-              <label>
-                <input id="next-prev-rule-xpath-prev" type="radio" name="prev-rule-type" value="xpath">
-                <span id="xpath-label*prev" data-i18n="textContent"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="next-prev-keywords-next-label" for="next-prev-keywords-next-textarea">
-              <span id="next-prev-next-label" data-i18n="textContent"></span>
-              <br>
-              <span id="next-prev-keywords-label*next" data-i18n="textContent"></span>
-            </label>
-          </div>
-          <div class="column">
-            <textarea id="next-prev-keywords-next-textarea" spellcheck="false" data-i18n="placeholder"></textarea>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="next-prev-keywords-prev-label" for="next-prev-keywords-prev-textarea">
-              <span id="next-prev-prev-label" data-i18n="textContent"></span>
-              <br>
-              <span id="next-prev-keywords-label*prev" data-i18n="textContent"></span>
-            </label>
-          </div>
-          <div class="column">
-            <textarea id="next-prev-keywords-prev-textarea" spellcheck="false" data-i18n="placeholder"></textarea>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="next-prev-domain-label" data-i18n="textContent"></label>
-          </div>
-          <div class="column">
-            <div class="checkbox">
-              <label>
-                <input id="next-prev-same-domain-policy-enable-input" type="checkbox">
-                <span id="next-prev-same-domain-policy-enable-label" data-i18n="textContent"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="column">
-            <label id="next-prev-popup-buttons-label" data-i18n="textContent"></label>
-          </div>
-          <div class="column">
-            <div class="checkbox">
-              <label>
-                <input id="next-prev-popup-buttons-input" type="checkbox">
-                <span id="next-prev-popup-buttons-description-label" data-i18n="textContent"></span>
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+
+
+
+
     <section id="toolkit-settings">
       <div class="heading">
         <img src="../img/wrench.png" alt="" width="16" height="16">
@@ -1094,7 +1405,7 @@
         <p id="enhanced-mode-disable-p" data-i18n="textContent"></p>
       </div>
     </section>
-    <section id="about">
+<!--    <section id="about">
       <div class="heading">
         <img src="../img/info-circle.png" alt="" width="16" height="16">
         <h3 id="about-h3" data-i18n="textContent"></h3>
@@ -1136,6 +1447,6 @@
         <div id="credits-you" data-i18n="textContent"></div>
         <div id="copyleft">Copyright &copy; 2011 - 2020 Roy Six</div>
       </div>
-    </section>
+    </section>-->
   </body>
 </html>

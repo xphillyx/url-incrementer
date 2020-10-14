@@ -25,8 +25,8 @@ URLI can help you increment URLs. For example, if the URL has a "page=1" in it o
 ## Features
 <em>Some Features Coming Soon in 6.0 (October 2020)</em>
 <ul>
-  <li>Keyboard and Mouse Shortcuts (Multi-Click + Rocker)</li>
-  <li>1-Click Increment Decrement Buttons (Optional)</li>
+  <li>Keyboard and Mouse Shortcuts</li>
+  <li>1-Click Increment Decrement Buttons</li>
   <li>Auto Incrementing</li>
   <li>Download Incrementing (Multiple Page Downloading) [Experimental]</li>
   <li>Advanced Incrementing Features: Multi, Error Skip, Date Time, Decimal Number, Roman Numeral, Custom Base, and Alphanumeric (Base 2-36)</li>
