@@ -47,8 +47,7 @@
           </h2>
           <div class="mdc-dialog__content">
             <div id="install-dialog-content" class="display-flex">
-              <img src="../img/urli.svg" alt="urli" id="messages-infy" height="196">
-
+              <img src="../img/urli.svg" alt="urli" class="messages-mascot" width="196" height="196">
               <div id="install-dialog-text">
                 <p id="install-dialog-beta" data-i18n="textContent"></p>
                 <ol id="install-dialog-list">
@@ -59,7 +58,7 @@
                   <span id="install-dialog-email" data-i18n="textContent"></span>
                   <div>
                     <svg class="smaller-icon"><use xlink:href="../lib/fontawesome.svg#regular-envelope"></use></svg>
-                    <a href="mailto:infyscrollapp@gmail.com?subject=Infy%20Scroll">infyscrollapp@gmail.com</a>
+                    <a href="mailto:urlincrementer@gmail.com?subject=URL%20Incrementer">urlincrementer@gmail.com</a>
                   </div>
                 </div>
               </div>
@@ -79,22 +78,22 @@
         <div class="mdc-dialog__surface">
           <h2 class="mdc-dialog__title">
             <svg id="error-dialog-icon"><use xlink:href="../lib/fontawesome.svg#solid-exclamation-circle"></use></svg>
-            <span>Uh Oh! — Sorry, That's an Error! Infy Couldn't Load :(</span>
+            <span>Uh Oh! — Sorry, That's an Error! URLI Couldn't Load :(</span>
           </h2>
           <div class="mdc-dialog__content">
             <div id="error-dialog-content" class="display-flex">
-              <img src="../img/infy.png" alt="infy" id="messages-infy*error" height="333">
+              <img src="../img/urli.svg" alt="urli" class="messages-mascot" width="196" height="196">
               <div id="error-dialog-text">
                 <p>This might be because you installed it in a Private/Incognito Window and haven't given it permission yet to run in this context. Please try these steps:</p>
                 <ol id="error-dialog-list">
-                  <li>View the <a href="https://github.com/roysix/infy-scroll/wiki#supporting-private-incognito-windows-and-local-files" target="_blank">Help Guide</a> to see how to give Infy permission to run in Private/Incognito Windows, and then try refreshing this Options Page again.</li>
-                  <li>If this doesn't work, please uninstall and install Infy again in a Normal (Non-Private/Incognito) Window.</li>
+                  <li>View the <a href="https://github.com/roysix/url-incrementer/wiki#supporting-private-incognito-windows-and-local-files" target="_blank">Help Guide</a> to see how to give URLI permission to run in Private/Incognito Windows, and then try refreshing this Options Page again.</li>
+                  <li>If this doesn't work, please uninstall and install URLI again in a Normal (Non-Private/Incognito) Window.</li>
                 </ol>
                 <div>
                   <span>Please also feel free to email me for help and I'll reply back as soon as I can!</span>
                   <div>
                     <svg class="smaller-icon"><use xlink:href="../lib/fontawesome.svg#regular-envelope"></use></svg>
-                    <a href="mailto:infyscrollapp@gmail.com?subject=Infy%20Scroll%20Load%20Error">infyscrollapp@gmail.com</a>
+                    <a href="mailto:urlincrementer@gmail.com?subject=URL%20Incrementer%20Load%20Error">urlincrementer@gmail.com</a>
                   </div>
                 </div>
               </div>
@@ -308,6 +307,20 @@
                   <label for="toolbar-icon-radio-light">
                     <img src="../img/icon-light.png" alt="" width="24" height="24">
                     <span id="toolbar-icon-label-light" data-i18n="textContent"></span>
+                  </label>
+                </div>
+                <div class="mdc-form-field">
+                  <div class="mdc-radio">
+                    <input class="mdc-radio__native-control" type="radio" id="toolbar-icon-radio-urli" value="urli" name="toolbar-icon">
+                    <div class="mdc-radio__background">
+                      <div class="mdc-radio__outer-circle"></div>
+                      <div class="mdc-radio__inner-circle"></div>
+                    </div>
+                    <div class="mdc-radio__ripple"></div>
+                  </div>
+                  <label for="toolbar-icon-radio-urli">
+                    <img src="../img/icon-urli.png" alt="" width="24" height="24">
+                    <span id="toolbar-icon-label-urli" data-i18n="textContent"></span>
                   </label>
                 </div>
               </div>

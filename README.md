@@ -1,5 +1,5 @@
 # URL Incrementer
-<img src="https://raw.githubusercontent.com/roysix/url-incrementer/master/assets/app/icon-dark.svg?sanitize=true" width="196" height="196" alt="URL Incrementer" title="URL Incrementer">
+<img src="https://raw.githubusercontent.com/roysix/url-incrementer/master/assets/app/icon-dark.png" width="128" height="128" alt="URL Incrementer" title="URL Incrementer">
 <br><br>
 
 <a href="https://chrome.google.com/webstore/detail/url-incrementer/hjgllnccfndbjbedlecgdedlikohgbko" title="Chrome Web Store Download">

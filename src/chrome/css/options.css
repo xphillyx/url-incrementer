@@ -80,10 +80,18 @@ input[type="image"]:focus {
 }
 
 #install-dialog-list, #error-dialog-list {
-  color: var(--infy-color);
+  color: var(--urli-color);
   font-size: 0.8rem;
   font-weight: 500;
   margin-bottom: 1rem;
+}
+
+/* Messages */
+
+/* For some reason, this is needed perhaps because the urli mascot image is an SVG */
+.messages-mascot {
+  min-width: 196px;
+  min-height: 196px;
 }
 
 /* Tab Bar */

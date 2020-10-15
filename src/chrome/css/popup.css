@@ -43,71 +43,73 @@
   height: 12px;
 }
 
-#increment-span-r, #decrement-span-r, #increment-span-s, #decrement-span-s  {
-  color: var(--increment-decrement-m-color);
+/* Setup */
+
+#setup {
+  margin: 0;
+  min-width: 780px;
+  min-height: 500px;
 }
 
-#increment-span-1, #decrement-span-1 {
-  color: var(--increment-decrement-1-color);
+/* Drawer */
+
+.drawer-frame-root {
+  display: flex;
 }
 
-#increment-span-2, #decrement-span-2 {
-  color: var(--increment-decrement-2-color);
+#drawer-image {
+  cursor: pointer;
+  height: 250px;
 }
 
-#increment-span-3, #decrement-span-3 {
-  color: var(--increment-decrement-3-color);
+#drawer-infinity {
+  width: 132px;
+  height: 132px;
+}
+
+#drawer-infy {
+  height: 300px;
+  position: absolute;
+  margin-left: -16px;
+}
+
+main {
+  margin: 1rem;
+  width: 100%;
+}
+
+/* Actions Tab Bar - Make width smaller so it doesn't cover Save Button Icon */
+
+.mdc-tab-bar {
+  width: 50%;
+  margin-bottom: 1rem;
+}
+
+/* Save URL */
+
+#save-url-button {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+}
+
+#save-url-text-field-container {
+  margin-top: 1rem;
+}
+
+.dialog-notice {
+  font-weight: 500;
+  color: var(--mdc-theme-primary);
+  text-align: right;
 }
 
 /* Setup */
 
-#setup {
-  margin: 12px;
-  max-width: 530px;
-}
-
-.heading {
-  font-weight: bold;
-  padding-bottom: 2px;
-  margin-bottom: 0.6em;
-  color: #333333;
-  border-bottom: 1px solid #333333;
-  position: relative; /* Firefox Android: for heading-right position absolute to stay inside setup container width */
-}
-
-.heading-right {
-  font-style: italic;
-  font-size: 0.9em;
-  position: absolute;
-  right: 0;
-  margin-top: -16px;
-}
-
-.heading-right img {
-  margin-bottom: 1px;
-}
-
-.heading-right .icon-button img {
-  margin-bottom: 2px;
-}
-
-#setup input[type="number"] {
-  width: 52px;
-}
-
-#setup textarea {
-  word-break: break-all;
-  resize: vertical;
-  width: 530px;
-  min-height: 41px;
-  max-height: 200px;
-}
-
-#setup img {
+#setup svg {
   user-select: none;
 }
 
-#setup div.column {
+#setup div.column, #setup div.section {
   padding-top: 7px;
 }
 
@@ -120,32 +122,58 @@
   display: inline-block;
 }
 
-#increment-decrement {
-  margin-bottom: 16px;
+#increment-decrement div.column:not(:last-child), #auto div.column:not(:last-child) {
+  padding-right: 24px;
 }
 
-#toolkit, #auto, #download {
-  margin-bottom: 24px;
+.section {
+  margin-bottom: 1rem;
 }
 
-#increment-decrement div.column:not(:last-child), #toolkit div.column:not(:last-child), #auto div.column:not(:last-child), #download div.column:not(:last-child)  {
-  padding-right: 32px;
+/* Keep action sections the same height */
+#next-prev, #increment-decrement, #special {
+  min-height: 255px;
+}
+
+/* Popup buttons shorter due to smaller window */
+#popup #setup .mdc-button {
+  height: 31px;
+}
+
+header {
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Next Prev */
+
+#next-prev-result-using {
+  color: var(--next-prev-color);
+  border-bottom-color: var(--next-prev-color);
+  font-weight: 500;
+}
+
+/* TODO: Keeping Keywords hidden for the time being so that they are globally used for all saved URLs */
+#next-keywords, #prev-keywords {
+  display: none;
 }
 
 /* Increment Decrement */
 
-#increment-decrement-img-mouse-pointer, #list-img-mouse-pointer {
-  margin-bottom: 2px;
+#mouse-pointer-icon {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 1px;
 }
 
-/* Firefox: Needs this or else the input width is a little shorter */
-#selection-input {
-  width: 143px;
+#shuffle-urls-label {
+  color: var(--shuffle-color);
+  font-weight: 500;
 }
 
-/* Smaller font-size to avoid fit on one line without issue */
-#leading-zeros-pad-label, #base-case, #base-date, #base-decimal, #base-roman, #base-custom {
-  font-size: 0.88em;
+/* Different width than in Options due to no floating label there */
+#error-skip-text-field {
+  width: 90px;
 }
 
 #base-case label:not(:last-child) {
@@ -157,105 +185,62 @@
   display: inline-block;
 }
 
-#base-date-format-input, #base-custom-input {
-  width: 134px;
-  height: 2em;
-  min-height: 2em;
-  margin-top: 8px;
-  margin-left: 12px;
+#multi-button {
+  cursor: pointer;
 }
 
-#base-custom-input {
-  width: 124px;
+#multi-button svg {
+  vertical-align: initial;
+}
+
+#multi-button svg.disabled {
+  opacity: 0.4;
+}
+
+/* Button */
+
+/* Keeps the row from breaking on the select (alternative is to use flex-row on the row) */
+#button-method-select {
+  display: inline-block;
 }
 
 /* List */
 
-#list-button {
-  margin-bottom: 2px;
+/* Scroll */
+
+#scroll {
+  margin-top: 1rem;
 }
 
-#list-instructions {
-  font-style: italic;
+#scroll-element {
+  margin-bottom: 0.5rem;
 }
 
-/* Multi */
-
-#multi-button {
-  float: right;
-  cursor: pointer;
-}
-
-#multi-button img {
-  vertical-align: initial;
-}
-
-#multi-button img.disabled {
-  opacity: 0.4;
-}
-
-/* Toolkit */
-
-#toolkit-instructions {
-  font-style: italic;
-}
-
-#toolkit .radio label {
-  padding-top: 3px;
-}
-
-#toolkit-urli-button-div {
-  vertical-align: top;
-}
-
-#toolkit-urli-button-img {
-  transform: scaleX(-1);
-  cursor: pointer;
-}
-
-#toolkit-scrape {
-  margin-top: -30px;
-  text-align: right;
-}
-
-#toolkit-table-outer, #toolkit-table-div, #crawl-table-outer, #crawl-table-div, #crawl-percentage-eta-checkboxes {
-  margin-top: 1em;
-}
-
-#toolkit-table-download-button, #crawl-table-download-button {
-  cursor: pointer;
-}
-
-/* Scrape */
-
-#scrape, #scrape-instructions, #scrape-example {
-  margin-top: 8px;
-}
-
-#scrape-h3 {
-  font-weight: bold;
-  font-style: italic;
-  font-size: 110%;
-  display: inline;
-}
-
-#scrape-instructions {
-  font-style: italic;
-}
-
-#scrape-selector-input {
-  width: 160px;
-}
-
-#scrape-property-input {
-  width: 96px;
+.mdc-card-row {
+  margin-bottom: 1rem;
 }
 
 /* Auto */
 
-#auto .heading {
+#auto {
+  margin-top: 1rem;
+}
+
+/* position:relative because the Auto Slideshow checkbox is absolutely positioned inside the header */
+#auto header {
   color: var(--auto-color);
-  border-bottom-color: var(--auto-color);
+  position: relative;
+}
+
+#auto header #auto-slideshow-form-field {
+  position: absolute;
+  top: -6px;
+  right: 8px;
+}
+
+#auto header #auto-slideshow-label {
+  color: var(--auto-color);
+  font-weight: 500;
 }
 
 #auto #auto-wait-badge {
@@ -266,302 +251,123 @@
   padding: 2px 0;
 }
 
-#auto div.column, #download div.column {
+#auto div.column {
   padding-top: 3px;
 }
 
-/* Download */
-
-#download .heading {
-  color: var(--download-color);
-  border-bottom-color: var(--download-color);
-  margin: 0;
+#auto-times-input {
+  width: 55px;
 }
 
-#download-setup.table {
-  width: 100%;
-  border-bottom: 1px solid var(--download-color);
+#auto-seconds-input {
+  width: 50px;
 }
 
-/* position: relative for position absolute help */
-div.column#download-strategy, div.column#download-optional {  
-  padding-top: 8px;
-  padding-bottom: 12px;
-  width: 50%;
-  position: relative;
-}
+/* Buttons */
 
-#download-strategy-help, #download-filters-help, #download-subfolder-help {
-  font-weight: bold;
-  font-size: 0.9em;
-  position: absolute;
-  right: 8px;
-  top: 4px;
-  border-bottom: 1px dotted #333333;
-  padding-bottom: 1px;
-}
-
-#download-subfolder-help {
-  top: 0;
-}
-
-/* position: relative for position absolute help */
-#download-subfolder {
-  position: relative;
-  margin-top: 1em;
-}
-
-#download-subfolder-increment {
-  display: inline-block;
-}
-
-div.column#download-optional {
-  border-left: 1px solid var(--download-color);
-  padding-left: 12px;
-}
-
-#download-filters-label-div {
-  font-weight: bold;
-  font-style: italic;
-}
-
-#download-strategy-sub-options {
-  height: 100%;
-  min-height: 60px;
-}
-
-/* display: inline-block keeps extension next to checkbox on same line without breaking  */
-#download-extensions label, #download-tags label, #download-attributes label {
-  display: inline-block;
-  margin-right: 8px;
-  margin-bottom: 4px;
-}
-
-#download-extensions label span, #download-tags label span, #download-attributes label span {
-  padding-left: 3px;
-}
-
-#download-strategy-select {
-  margin-bottom: 8px;
-}
-
-#download-selector-input {
-  width: 90%;
-  margin-top: 4px;
-}
-
-#download-includes-input, #download-excludes-input, #download-subfolder-input {
-  width: 108px;
-}
-
-/* Download Preview Heading and Checkboxes */
-
-#download-preview-heading {
-  margin: 6px 0;
-}
-
-#download-preview-heading-title {
-  font-weight: bold;
-}
-
-#download-preview-heading-title .success {
-  color: var(--success-color);
-}
-
-#download-preview-heading-title .error {
-  color: var(--error-color);
-}
-
-#download-preview-checkboxes label:not(:last-child), #crawl-checkboxes label:not(:last-child) {
-  margin-right: 1em
-}
-
-/* Download Preview Table */
-
-/* unselected should have the check be really low opacity */
-/* check can be clicked to manually select/de-select items */
-table th.check, td.check { min-width: 20px; }
-table th.count, td.count { min-width: 24px; }
-table th.thumb, td.thumb { min-width: 42px; } table td.thumb img, table td.thumb video { max-width: 40px; max-height: 40px; }
-table th.extension, td.extension { min-width: 34px; }
-table th.filename, td.filename { min-width: 50px; }
-table th.tag, td.tag { min-width: 36px; }
-table th.attribute, td.attribute { min-width: 34px; }
-table th.url, td.url { min-width: 34px; }
-table tr.unselected td.check img { opacity: 0.1; }
-table td.check img.check-circle { cursor: pointer; transition: 0.4s; }
-
-/* Setup Buttons */
-
-/* need position relative height auto for position absolute elements auto/download toggles and options button */
 #setup-buttons {
-  text-align: center;
-  position: relative;
-  height: auto;
+  margin: 0 1rem 1.2rem;
 }
 
-#setup-buttons > button:not(:last-child) {
-  margin-right: 12px;
+#setup #setup-buttons #buttons > button:not(:last-child) {
+  margin-right: 24px;
 }
 
-#extra-options {
-  position: absolute;
-  right: 0;
-  bottom: 4px;
+/* This icon looks a little small compared to the other two at default width/height */
+#scripts-and-styles-button svg {
+  width: 24px;
 }
 
 /* Toggles */
 
-#extra-toggles {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+#setup #toggles {
+  margin-left: 180px;
 }
 
-#extra-toggles > div:not(:last-child) {
+#setup #toggles > div:not(:last-child) {
   margin-right: 8px;
-}
-
-#auto-toggle-input.tgl-ios:checked + .tgl-btn {
-  background: var(--auto-color);
-}
-
-#download-toggle-input.tgl-ios:checked + .tgl-btn {
-  background: var(--download-color);
 }
 
 #auto-toggle .tgl-text {
   color: var(--auto-color);
 }
 
-#download-toggle .tgl-text {
-  color: var(--download-color);
+#auto-toggle-label {
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--auto-color);
+  margin-right: 0.3rem;
 }
 
-#download-toggle {
-  vertical-align: bottom;
+#auto-toggle-icon {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 1px;
 }
 
 /* Icon Button */
+
+.icon-button {
+  display: inline-block;
+}
 
 .icon-button label, .icon-button a {
   padding: 8px;
   cursor: pointer;
 }
 
-.icon-button, .icon-button input + img {
-  transition: 0.6s;
-}
-
-.icon-button input:not(:checked) + img.checkbox-img {
-  opacity: 0.35;
-}
-
-.icon-button input:checked + img.checkbox-img {
-  opacity: 1;
-}
-
-/* Crawl */
-
-#crawl {
-  margin: 12px;
-}
-
-#crawl-heading, #crawl-progress, #crawl-checkboxes, #crawl-table-outer {
-  margin-bottom: 16px;
-}
-
-#crawl-progress {
-  color: var(--auto-color);
-  font-weight: bold;
-  font-style: italic;
-}
-
-#crawl-checkboxes {
-  border: 1px solid #CCCCCC;
-  background: #F8F8F8;
-  padding: 0 8px;
-}
-
-#crawl-checkboxes label {
-  font-weight: bold;
-}
-
-#crawl-info-label {
-  color: var(--info-color);
-}
-
-#crawl-ok-label {
-  color: var(--success-color);
-}
-
-#crawl-error-label {
-  color: var(--error-color);
-}
-
-#crawl-redirected-label {
-  color: var(--download-color);
-}
-
-#crawl-other-label {
-  color: var(--increment-decrement-color);
-}
-
-#crawl-exception-label {
-  color: var(--saved-urls-color);
-}
-
-#crawl-urli-tip {
-  border-top: 1px solid #333333;
-  padding-top: 12px;
-}
-
-#crawl-urli-img {
-  cursor: pointer;
-  vertical-align: top;
-}
-
-/* Keep crawl tip looking like a paragraph when window is expanded or crawl table is full size */
-#crawl-tip {
-  font-style: italic;
-  max-width: 500px;
-}
-
 /* Messages */
 
 #messages {
   margin: 20px;
-  max-width: 530px;
+  width: 450px;
 }
 
-#messages-urli {
-  vertical-align: text-top;
+#messages-buttons {
+  margin-top: 2rem;
 }
 
-/* Progress Bar */
-
-.progress-bar {
-  position: relative;
-  width: 20rem;
-  height: 1rem;
-  background-color: #BABABA;
-  border-radius: 4px;
+#messages-buttons .mdc-button:not(:last-child) {
+  margin-right: 1rem;
 }
 
-.progress-bar > .progress-bar-filled {
-  position: relative;
-  width: 0;
-  height: 100%;
-  background-color: var(--auto-color);
-  border-radius: 4px;
-  overflow: hidden;
-  transition: 2s linear;
-  transition-property: width, background-color;
+#page-unsupported-reason {
+  color: var(--mdc-theme-primary);
+  font-weight: 500;
 }
 
-.progress-bar > .progress-bar-percentage {
-  color: #FFFFFF;
-  position: absolute;
-  top: -1px;
-  left: 9rem;
+/* SVG Fill Colors */
+
+#scroll header svg, #save-url-icon {
+  fill: var(--mdc-theme-primary);
+}
+
+#next-prev-result-found-icon {
+  fill: var(--success-color);
+}
+
+#clear-button, #next-prev-result-not-found-icon {
+  fill: var(--error-color);
+}
+
+#auto-button, #auto-toggle-icon, #auto-clock-icon, #auto-slideshow-icon, #auto-slideshow-checkbox-icon {
+  fill: var(--auto-color);
+}
+
+#shuffle-urls-icon, #shuffle-urls-checkbox-icon {
+  fill: var(--shuffle-color);
+}
+
+#multi-button-1 {
+  fill: var(--increment-decrement-1-color);
+}
+
+#multi-button-2 {
+  fill: var(--increment-decrement-2-color);
+}
+
+#multi-button-3 {
+  fill: var(--increment-decrement-3-color);
 }

@@ -228,6 +228,7 @@ var Options = (() => {
       // UI
       DOM["#toolbar-icon-radio-dark"].checked = items.toolbarIcon === "dark";
       DOM["#toolbar-icon-radio-light"].checked = items.toolbarIcon === "light";
+      DOM["#toolbar-icon-radio-urli"].checked = items.toolbarIcon === "urli";
       DOM["#button-size-input"].value = items.buttonSize;
       DOM["#button-size-icon"].style = (isNaN(items.buttonSize) || items.buttonSize < 16 || items.buttonSize > 128) ? "" : "width:" + items.buttonSize + "px; height:" + items.buttonSize + "px;";
       MDC.selects.get("interface-image-select").value = items.interfaceImage;

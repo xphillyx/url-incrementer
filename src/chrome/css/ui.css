@@ -6,6 +6,7 @@
  */
 
 /* Variables */
+/* Google Blue is #1A73E8 */
 
 :root {
   --increment-decrement-color: #1779BA;
@@ -25,7 +26,7 @@
   --default-color: #333333;
   --balloon-color: #333333;
   --urli-color: #000028;
-  --mdc-theme-primary: #4285F4;
+  --mdc-theme-primary: #000028;
 }
 
 /* Fonts */
@@ -466,7 +467,7 @@ input[type="number"]:hover, input[type="number"]:focus {
 
 /* Shared Popup / Options Styling */
 
-#messages-infy {
+.messages-mascot {
   vertical-align: text-top;
   margin-right: 1rem;
 }
