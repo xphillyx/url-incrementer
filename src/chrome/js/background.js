@@ -219,13 +219,14 @@ var Background = (() => {
     }
     // Update:
     else if (details.reason === "update") {
-      // Pre 6.0 needs to reset storage items
+      // Pre 6.0 needs to reset storage items and add boolean for update message about 6.0
       if (details.previousVersion < "6.0") {
         console.log("installedListener() - updating to 6.0...");
         await Promisify.clearItems("sync");
         await Promisify.clearItems("local");
         await Promisify.setItems(STORAGE_DEFAULT_VALUES);
         await Permissions.removeAllPermissions();
+        await Promisify.setItems({"installVersion": "0.0", "firstRunUpdate": true});
       }
     }
     startupListener();

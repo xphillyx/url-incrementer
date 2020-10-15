@@ -92,6 +92,7 @@ input[type="image"]:focus {
 .messages-mascot {
   min-width: 196px;
   min-height: 196px;
+  margin-top: 3rem;
 }
 
 /* Tab Bar */
