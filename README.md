@@ -47,11 +47,14 @@ URLI can help you increment URLs. For example, if the URL has a "page=1" in it o
   <li>Mapping shortcut keys to mouse buttons with 3rd party apps like Logitech Gaming Software is not supported and may only work if you use Logitech's "Multikey Macro" option.</li>
   <li>Download Incrementing is an optional and experimental feature that is designed to be used with Auto so you can have a unique Multiple Page Downloader (think a simple "Down them all" that can run automatically!). It uses a custom-built downloader that I've developed for URLI.</li>
   <li>URLI's Toolkit is a toolkit I made to help me develop and test URLI, but I've "unlocked" for you to use as a non-standard feature!</li>
-  <li>Saving URLs is completely optional. URLI only saves URLs as cryptographic hashes that are stored on your device's local storage -- not in the cloud.</li>
+  <li>Saving URLs is completely optional.</li>
   <li>Firefox only: Local file:// URLs may not increment due to a bug in Firefox (Bug 1266960).</li>
   <li>Firefox only: URLI's Popup may not work in Private Windows due to the different way Firefox decided to handle this in respect to Chrome (Bug 1329304).</li>
   <li>Firefox only: Firefox 60 (non ESR) Users won't be able to grant Download permissions on the Options page due to a bug in Firefox 60 (Bug 1382953); please update to Firefox 61 or higher.</li>
 </ol>
+
+## Help Guide
+[View the Help Guide!](https://github.com/roysix/url-incrementer/wiki)
 
 ## Permissions Justification
 Chrome/Edge: URL Incrementer requires no special permissions.
@@ -71,9 +74,6 @@ URL Incrementer does *not* use any remote code. All code is included locally in 
 ## Privacy Policy
 URL Incrementer does *not* collect or transmit any data from your device or computer. All data is stored locally on your device. Your data is *your* data.
 
-## Help Guide
-[View the Help Guide!](https://github.com/roysix/url-incrementer/wiki)
-
 ## Credits and Special Thanks
 <ul>
   <li>UI: <a href="https://material.io/">Material Design</a></li>
@@ -90,4 +90,4 @@ URL Incrementer does *not* collect or transmit any data from your device or comp
 ## Copyright and License
 URLI, a URL Incrementer    
 Copyright © 2011-2020 Roy Six  
-<a href="https://github.com/roysix/infy-scroll/blob/master/LICENSE">License</a>
+<a href="https://github.com/roysix/url-incrementer/blob/master/LICENSE">License</a>
