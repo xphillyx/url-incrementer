@@ -142,6 +142,12 @@ var Popup = (() => {
     } else {
       toggleView.call(DOM["#accept-button"]);
     }
+    // Pause Auto when Popup is opened
+    if (instance.autoEnabled && !instance.autoPaused) {
+      console.log("init() - pausing instance on popup startup");
+      backgroundPage.Action.performAction("auto", "popupClickActionButton", instance, items);
+      // chrome.tabs.sendMessage(tabs[0].id, {greeting: "performAction", action: "auto", caller: "popupClickActionButton"});
+    }
   }
 
   /**
