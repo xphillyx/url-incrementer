@@ -277,22 +277,35 @@ var Background = (() => {
     if (sender && sender.url && sender.tab && !sender.tab.url) {
       sender.tab.url = sender.url;
     }
-    let instance;
+    // Tab object can either be sent with the request (e.g. popup) or via the sender (e.g. content script)
+    const tab = request && request.tab ? request.tab : sender && sender.tab ? sender.tab : undefined;
+    let instance = request && request.instance ? request.instance : undefined;
     switch (request.greeting) {
       case "getSDV":
         sendResponse(STORAGE_DEFAULT_VALUES);
         break;
       case "getInstance":
-        instance = getInstance(request.tab.id) || await buildInstance(request.tab, undefined);
+        instance = getInstance(tab.id) || await buildInstance(tab, undefined);
         sendResponse(instance);
+        break;
+      case "setInstance":
+        setInstance(instance.tabId, instance);
+        break;
+      case "deleteInstance":
+        deleteInstance(instance.tabId);
         break;
       case "performAction":
         const items = await Promisify.getItems();
-        instance = getInstance(sender.tab.id) || await buildInstance(sender.tab, items);
-        if ((request.shortcut === "key" && items.keyEnabled && (items.keyQuickEnabled || (instance && (instance.enabled || instance.saveFound)))) ||
+        instance = instance || getInstance(tab.id) || await buildInstance(tab, items);
+        // TODO: Consolidate popup callers
+        if (request.caller === "popupClickActionButton" || request.caller === "popup" ||
+          (request.shortcut === "key" && items.keyEnabled && (items.keyQuickEnabled || (instance && (instance.enabled || instance.saveFound)))) ||
           (request.shortcut === "mouse" && items.mouseEnabled && (items.mouseQuickEnabled || (instance && (instance.enabled || instance.saveFound))))) {
-          Action.performAction(request.action, "message", instance, items);
+          Action.performAction(request.action, request.caller, instance, items);
         }
+        break;
+      case "startAutoTimer":
+        Auto.startAutoTimer(request.instance, request.caller);
         break;
       default:
         break;

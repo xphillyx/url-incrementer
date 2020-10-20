@@ -108,8 +108,6 @@ var Popup = (() => {
     // Initialize popup content (1-time only)
     items = await Promisify.getItems();
     const tabs = await Promisify.getTabs();
-    // instance = backgroundPage.Background.getInstance(tabs[0].id) || await backgroundPage.Background.buildInstance(tabs[0], items);
-    // TODO: Do we need to supply the tab id if we can use the sender.tab.id on the receiving end?
     instance = await Promisify.runtimeSendMessage({greeting: "getInstance", tab: tabs[0]});
     console.log(JSON.stringify(instance));
     _ = JSON.parse(JSON.stringify(instance));
@@ -145,8 +143,7 @@ var Popup = (() => {
     // Pause Auto when Popup is opened
     if (instance.autoEnabled && !instance.autoPaused) {
       console.log("init() - pausing auto on popup startup");
-      backgroundPage.Action.performAction("auto", "popupClickActionButton", instance, items);
-      // chrome.tabs.sendMessage(tabs[0].id, {greeting: "performAction", action: "auto", caller: "popupClickActionButton"});
+      Promisify.runtimeSendMessage({greeting: "performAction", action: "auto", caller: "popupClickActionButton", tab: tabs[0]});
     }
   }
 
@@ -193,7 +190,7 @@ var Popup = (() => {
          (action === "auto" && instance.autoEnabled) ||
          (action === "download" && instance.downloadEnabled)) {
       UI.clickHoverCss(this, "hvr-push-click");
-      backgroundPage.Action.performAction(action, "popupClickActionButton", instance, items);
+      Promisify.runtimeSendMessage({greeting: "performAction", action: action, caller: "popupClickActionButton", tab: tabs[0]});
     }
   }
 
@@ -530,7 +527,8 @@ var Popup = (() => {
       if (toolkitInstance.toolkitTool === "links") {
         buildToolkitURLsTable(toolkitInstance.urls, false);
       }
-      backgroundPage.Action.performAction("toolkit", "popup", toolkitInstance, items);
+      // backgroundPage.Action.performAction("toolkit", "popup", toolkitInstance, items);
+      Promisify.runtimeSendMessage({greeting: "performAction", action: "toolkit", caller: "popup", instance: "toolkitInstance"});
       // Note: After performing the action, the background sends a message back to popup with the results (if necessary)
       chrome.storage.local.set({
         "toolkitTool": _.toolkitTool,
@@ -621,7 +619,8 @@ var Popup = (() => {
     updateETA(instance.toolkitQuantity * (instance.toolkitSeconds + 1), DOM["#crawl-eta-value"], true);
     buildToolkitURLsTable(instance.urls, true);
     crawlURLs();
-    backgroundPage.Background.deleteInstance(instance.tabId);
+    // backgroundPage.Background.deleteInstance(instance.tabId);
+    Promisify.runtimeSendMessage({greeting: "deleteInstance", instance: instance});
   }
 
   /**
@@ -1177,9 +1176,12 @@ var Popup = (() => {
         });
       }
       // Now clear the old instance make the new instance be _
-      await backgroundPage.Action.performAction("clear", "popupClearBeforeSet", instance, items);
-      backgroundPage.Background.setInstance(_.tabId, _);
-      instance = backgroundPage.Background.getInstance(_.tabId);
+      // await backgroundPage.Action.performAction("clear", "popupClearBeforeSet", instance, items);
+      // backgroundPage.Background.setInstance(_.tabId, _);
+      // instance = backgroundPage.Background.getInstance(_.tabId);
+      // Set _ as the instance by sending it to the Content Script
+      await Promisify.runtimeSendMessage({greeting: "setInstance", instance: _});
+      instance = _;
       // If internal shortcuts permissions granted, send message to shortcuts content script to add key/mouse listeners:
       if (items.permissionsInternalShortcuts && items.keyEnabled && !items.keyQuickEnabled) {
         chrome.tabs.sendMessage(_.tabId, {greeting: "addKeyListener"});
@@ -1188,8 +1190,9 @@ var Popup = (() => {
         chrome.tabs.sendMessage(_.tabId, {greeting: "addMouseListener"});
       }
       // If auto is enabled, ask Auto to start auto timer (must do this after setting instance in Background)
-      if (_.autoEnabled) {
-        backgroundPage.Auto.startAutoTimer(_, "popup");
+      if (instance.autoEnabled) {
+        // backgroundPage.Auto.startAutoTimer(_, "popup");
+        Promisify.runtimeSendMessage({greeting: "startAutoTimer", caller: "popup", instance: instance});
       }
       toggleView.call(DOM["#accept-button"]);
     }

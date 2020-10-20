@@ -5,6 +5,13 @@
  * @license LGPL-3.0
  */
 
+/**
+ * TODO
+ *
+ * Note: Single Page Downloading (Web Page Complete) is Mhtml requires and pageCapture Permission
+ * @see https://stackoverflow.com/a/24673271
+ * @type {{previewDownloadURLs: *, findDownloadURLs: *}}
+ */
 var Download = (() => {
 
   // A list of all attributes that can contain URLs (Note the following URL attributes are deprecated in HTML5: background, classid, codebase, longdesc, profile)

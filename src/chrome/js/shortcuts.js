@@ -42,14 +42,14 @@ var Shortcuts = Shortcuts || (() => {
     if (items.shortcutsEditableDisabled && isElementEditable(event.target)) {
       return;
     }
-    if      (keyPressed(event, items.keyIncrement)) { chrome.runtime.sendMessage({greeting: "performAction", action: "increment", "shortcut": "key"}); }
-    else if (keyPressed(event, items.keyDecrement)) { chrome.runtime.sendMessage({greeting: "performAction", action: "decrement", "shortcut": "key"}); }
-    else if (keyPressed(event, items.keyNext))      { chrome.runtime.sendMessage({greeting: "performAction", action: "next",      "shortcut": "key"}); }
-    else if (keyPressed(event, items.keyPrev))      { chrome.runtime.sendMessage({greeting: "performAction", action: "prev",      "shortcut": "key"}); }
-    else if (keyPressed(event, items.keyClear))     { chrome.runtime.sendMessage({greeting: "performAction", action: "clear",     "shortcut": "key"}); }
-    else if (keyPressed(event, items.keyReturn))    { chrome.runtime.sendMessage({greeting: "performAction", action: "return",    "shortcut": "key"}); }
-    else if (keyPressed(event, items.keyAuto))      { chrome.runtime.sendMessage({greeting: "performAction", action: "auto",      "shortcut": "key"}); }
-    else if (keyPressed(event, items.keyDownload))  { chrome.runtime.sendMessage({greeting: "performAction", action: "download",  "shortcut": "key"}); }
+    if      (keyPressed(event, items.keyIncrement)) { chrome.runtime.sendMessage({greeting: "performAction", action: "increment", caller: "shortcut", shortcut: "key"}); }
+    else if (keyPressed(event, items.keyDecrement)) { chrome.runtime.sendMessage({greeting: "performAction", action: "decrement", caller: "shortcut", shortcut: "key"}); }
+    else if (keyPressed(event, items.keyNext))      { chrome.runtime.sendMessage({greeting: "performAction", action: "next",      caller: "shortcut", shortcut: "key"}); }
+    else if (keyPressed(event, items.keyPrev))      { chrome.runtime.sendMessage({greeting: "performAction", action: "prev",      caller: "shortcut", shortcut: "key"}); }
+    else if (keyPressed(event, items.keyClear))     { chrome.runtime.sendMessage({greeting: "performAction", action: "clear",     caller: "shortcut", shortcut: "key"}); }
+    else if (keyPressed(event, items.keyReturn))    { chrome.runtime.sendMessage({greeting: "performAction", action: "return",    caller: "shortcut", shortcut: "key"}); }
+    else if (keyPressed(event, items.keyAuto))      { chrome.runtime.sendMessage({greeting: "performAction", action: "auto",      caller: "shortcut", shortcut: "key"}); }
+    else if (keyPressed(event, items.keyDownload))  { chrome.runtime.sendMessage({greeting: "performAction", action: "download",  caller: "shortcut", shortcut: "key"}); }
   }
 
   /**
@@ -91,14 +91,14 @@ var Shortcuts = Shortcuts || (() => {
       clicks = 0;
     }
     console.log("mouseupListener() - event.button=" + event.button + ", event.buttons=" + event.buttons + ", button=" + button + ", clicks=" + clicks);
-    if      (mousePressed(event, items.mouseIncrement)) { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "increment", "shortcut": "mouse"}); }, items.mouseClickSpeed); }
-    else if (mousePressed(event, items.mouseDecrement)) { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "decrement", "shortcut": "mouse"}); }, items.mouseClickSpeed); }
-    else if (mousePressed(event, items.mouseNext))      { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "next",      "shortcut": "mouse"}); }, items.mouseClickSpeed); }
-    else if (mousePressed(event, items.mousePrev))      { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "prev",      "shortcut": "mouse"}); }, items.mouseClickSpeed); }
-    else if (mousePressed(event, items.mouseClear))     { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "clear",     "shortcut": "mouse"}); }, items.mouseClickSpeed); }
-    else if (mousePressed(event, items.mouseReturn))    { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "return",    "shortcut": "mouse"}); }, items.mouseClickSpeed); }
-    else if (mousePressed(event, items.mouseAuto))      { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "auto",      "shortcut": "mouse"}); }, items.mouseClickSpeed); }
-    else if (mousePressed(event, items.mouseDownload))  { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "download",  "shortcut": "mouse"}); }, items.mouseClickSpeed); }
+    if      (mousePressed(event, items.mouseIncrement)) { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "increment", caller: "shortcut", shortcut: "mouse"}); }, items.mouseClickSpeed); }
+    else if (mousePressed(event, items.mouseDecrement)) { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "decrement", caller: "shortcut", shortcut: "mouse"}); }, items.mouseClickSpeed); }
+    else if (mousePressed(event, items.mouseNext))      { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "next",      caller: "shortcut", shortcut: "mouse"}); }, items.mouseClickSpeed); }
+    else if (mousePressed(event, items.mousePrev))      { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "prev",      caller: "shortcut", shortcut: "mouse"}); }, items.mouseClickSpeed); }
+    else if (mousePressed(event, items.mouseClear))     { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "clear",     caller: "shortcut", shortcut: "mouse"}); }, items.mouseClickSpeed); }
+    else if (mousePressed(event, items.mouseReturn))    { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "return",    caller: "shortcut", shortcut: "mouse"}); }, items.mouseClickSpeed); }
+    else if (mousePressed(event, items.mouseAuto))      { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "auto",      caller: "shortcut", shortcut: "mouse"}); }, items.mouseClickSpeed); }
+    else if (mousePressed(event, items.mouseDownload))  { timeouts.mouseup2 = setTimeout(function() { chrome.runtime.sendMessage({greeting: "performAction", action: "download",  caller: "shortcut", shortcut: "mouse"}); }, items.mouseClickSpeed); }
   }
 
   /**
