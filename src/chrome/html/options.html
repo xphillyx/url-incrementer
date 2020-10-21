@@ -195,16 +195,6 @@
             </button>
             <button class="mdc-tab mdc-tab--stacked" role="tab" tabindex="-1">
               <span class="mdc-tab__content">
-                <svg class="mdc-tab__icon" aria-hidden="true"><use xlink:href="../lib/fontawesome.svg#solid-cubes"></use></svg>
-                <span class="mdc-tab__text-label" id="options-tab-database" data-i18n="textContent"></span>
-                <span class="mdc-tab-indicator">
-                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                </span>
-              </span>
-              <span class="mdc-tab__ripple mdc-ripple-upgraded"></span>
-            </button>
-            <button class="mdc-tab mdc-tab--stacked" role="tab" tabindex="-1">
-              <span class="mdc-tab__content">
                 <svg class="mdc-tab__icon"><use xlink:href="../lib/fontawesome.svg#regular-keyboard"></use></svg>
                 <span class="mdc-tab__text-label" id="options-tab-shortcuts" data-i18n="textContent"></span>
                 <span class="mdc-tab-indicator">
@@ -215,8 +205,18 @@
             </button>
             <button class="mdc-tab mdc-tab--stacked" role="tab" tabindex="-1">
               <span class="mdc-tab__content">
-                <svg class="mdc-tab__icon"><use xlink:href="../lib/fontawesome.svg#solid-chevron-circle-down"></use></svg>
-                <span class="mdc-tab__text-label" id="options-tab-scroll" data-i18n="textContent"></span>
+                <svg class="mdc-tab__icon"><use xlink:href="../lib/fontawesome.svg#solid-mouse-pointer"></use></svg>
+                <span class="mdc-tab__text-label" id="options-tab-one-click" data-i18n="textContent"></span>
+                <span class="mdc-tab-indicator">
+                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                </span>
+              </span>
+              <span class="mdc-tab__ripple mdc-ripple-upgraded"></span>
+            </button>
+            <button class="mdc-tab mdc-tab--stacked" role="tab" tabindex="-1">
+              <span class="mdc-tab__content">
+                <svg class="mdc-tab__icon"><use xlink:href="../lib/fontawesome.svg#solid-plus-circle"></use></svg>
+                <span class="mdc-tab__text-label" id="options-tab-increment" data-i18n="textContent"></span>
                 <span class="mdc-tab-indicator">
                   <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
                 </span>
@@ -235,8 +235,18 @@
             </button>
             <button class="mdc-tab mdc-tab--stacked" role="tab" tabindex="-1">
               <span class="mdc-tab__content">
-                <svg class="mdc-tab__icon"><use xlink:href="../lib/fontawesome.svg#solid-plus-circle"></use></svg>
-                <span class="mdc-tab__text-label" id="options-tab-increment" data-i18n="textContent"></span>
+                <svg class="mdc-tab__icon"><use xlink:href="../lib/fontawesome.svg#solid-download"></use></svg>
+                <span class="mdc-tab__text-label" id="options-tab-download" data-i18n="textContent"></span>
+                <span class="mdc-tab-indicator">
+                  <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                </span>
+              </span>
+              <span class="mdc-tab__ripple mdc-ripple-upgraded"></span>
+            </button>
+            <button class="mdc-tab mdc-tab--stacked" role="tab" tabindex="-1">
+              <span class="mdc-tab__content">
+                <svg class="mdc-tab__icon"><use xlink:href="../lib/fontawesome.svg#solid-star"></use></svg>
+                <span class="mdc-tab__text-label" id="options-tab-enhanced" data-i18n="textContent"></span>
                 <span class="mdc-tab-indicator">
                   <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
                 </span>
@@ -343,7 +353,7 @@
                   </div>
                 </div>
                 px
-                <svg id="button-size-icon" class="hvr-grow"><use xlink:href="../lib/fontawesome.svg#solid-chevron-circle-down"></use></svg>
+                <svg id="button-size-icon" class="hvr-grow"><use xlink:href="../lib/fontawesome.svg#solid-plus-circle"></use></svg>
               </div>
             </div>
           </div>
@@ -495,6 +505,108 @@
           </div>
         </div>
       </div>
+    </section>
+    <section id="shortcuts" class="mdc-tab-content">
+      <header>
+        <svg><use xlink:href="../lib/fontawesome.svg#regular-keyboard"></use></svg>
+        <span id="shortcuts-settings-header" data-i18n="textContent"></span>
+      </header>
+      <div class="section-content">
+        <p id="shortcuts-p" data-i18n="textContent"></p>
+        <div class="row">
+          <p id="shortcuts-firefox" data-i18n="textContent"></p>
+          <button id="shortcuts-button" class="mdc-button mdc-button--raised mdc-ripple-upgraded">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label" id="shortcuts-button-label" data-i18n="textContent"></span>
+          </button>
+          <button id="internal-shortcuts-enable-button" data-i18n="textContent"></button>
+        </div>
+      </div>
+      <div id="browser-shortcuts">
+        <p id="browser-shortcuts-p1" data-i18n="textContent"></p>
+        <div class="checkbox">
+          <label id="quick-enable-help*browser" class="tooltip-alt" data-i18n="title">
+            <input id="browser-shortcuts-quick-enable-input" type="checkbox">
+            <span id="browser-shortcuts-quick-enable-label" data-i18n="textContent"></span>
+            <img src="../img/question-circle.png" alt="" width="16" height="16">
+          </label>
+        </div>
+        <p>
+          <button id="browser-shortcuts-button" data-i18n="textContent"></button>
+        </p>
+        <p id="browser-shortcuts-p2-note" class="note">
+          <img src="../img/info-circle.png" alt="" width="16" height="16">
+          <span id="browser-shortcuts-p2" data-i18n="textContent"></span>
+        </p>
+      </div>
+      <div id="internal-shortcuts">
+        <div class="heading">
+          <img src="../img/mouse-pointer.png" alt="" width="16" height="16">
+          <img src="../img/keyboard-o.png" alt="" width="18" height="18">
+          <h3 id="internal-shortcuts-h3" data-i18n="textContent"></h3>
+          <button id="browser-shortcuts-enable-button" data-i18n="textContent"></button>
+        </div>
+        <p id="internal-shortcuts-p" data-i18n="textContent"></p>
+        <div class="checkbox">
+          <label id="shortcuts-editable-disabled-help" class="tooltip-alt" data-i18n="title">
+            <input id="shortcuts-editable-disabled-input" type="checkbox">
+            <span id="shortcuts-editable-disabled-label" data-i18n="textContent"></span>
+            <img src="../img/question-circle.png" alt="" width="16" height="16">
+          </label>
+        </div>
+        <div class="checkbox">
+          <label id="quick-enable-help*key" class="tooltip-alt" data-i18n="title">
+            <input id="key-quick-enable-input" type="checkbox">
+            <span id="key-quick-enable-label" data-i18n="textContent"></span>
+            <img src="../img/question-circle.png" alt="" width="16" height="16">
+          </label>
+        </div>
+        <div class="checkbox">
+          <label id="quick-enable-help*mouse" class="tooltip-alt" data-i18n="title">
+            <input id="mouse-quick-enable-input" type="checkbox">
+            <span id="mouse-quick-enable-label" data-i18n="textContent"></span>
+            <img src="../img/question-circle.png" alt="" width="16" height="16">
+          </label>
+          <div id="mouse-click-speed">
+            <label id="mouse-click-speed-label" for="mouse-click-speed-input" data-i18n="textContent"></label>
+            <input id="mouse-click-speed-input" type="number" min="100" step="100" max="1000">
+            <span id="mouse-click-speed-ms" data-i18n="textContent"></span>
+            <img id="mouse-click-speed-help" src="../img/question-circle.png" alt="" width="16" height="16" data-i18n="title">
+          </div>
+        </div>
+        <div id="internal-shortcuts-table" class="table">
+          <div class="row">
+            <div class="column"></div>
+            <div class="column">
+              <img id="key-enable-img" src="../img/check.png" alt="" width="16" height="16">
+              <span id="key-label" data-i18n="textContent"></span>
+            </div>
+            <div class="column">
+              <img id="mouse-enable-img" src="../img/check.png" alt="" width="16" height="16">
+              <span id="mouse-label" data-i18n="textContent"></span>
+            </div>
+            <div class="column">
+              <span id="mouse-clicks-label" data-i18n="textContent"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="one-click-buttons" class="mdc-tab-content">
+      <div class="heading">
+        <img src="../img/browser-store.png" alt="" height="25">
+        <h3 id="one-click-buttons-h3" data-i18n="textContent"></h3>
+      </div>
+      <p id="one-click-buttons-p" data-i18n="textContent"></p>
+      <a href="https://chrome.google.com/webstore/detail/url-increment-button/decebmdlceenceecblpfjanoocfcmjai" target="_blank">
+        <img src="../img/plus-circle.png" alt="" width="16" height="16">
+        <span id="one-click-buttons-increment" data-i18n="textContent"></span>
+      </a>
+      <p></p>
+      <a href="https://chrome.google.com/webstore/detail/url-decrement-button/nnmjbfglinmjnieblelacmlobabcenfk" target="_blank">
+        <img src="../img/minus-circle.png" alt="" width="16" height="16">
+        <span id="one-click-buttons-decrement" data-i18n="textContent"></span>
+      </a>
     </section>
     <section id="increment-decrement" class="mdc-tab-content">
       <header>
@@ -1122,6 +1234,46 @@
         </div>
       </div>
     </section>
+    <section id="download" class="mdc-tab-content">
+      <div class="heading">
+        <img id="download-cloud-download" src="../img/cloud-download.png" alt="" width="19" height="19">
+        <h3 id="download-settings-h3" data-i18n="textContent"></h3>
+        <div class="heading-right">
+          <img id="download-experimental-flask" src="../img/flask.png" alt="" width="11" height="11">
+          <span id="experimental-label*download" data-i18n="textContent"></span>
+        </div>
+        <button id="download-enable-button" data-i18n="textContent"></button>
+        <button id="download-disable-button" data-i18n="textContent"></button>
+      </div>
+      <div id="download-settings-disable">
+        <p id="download-disable-p" data-i18n="textContent"></p>
+        <p>
+          <img src="../img/exclamation-circle.png" alt="" width="16" height="16">
+          <span id="download-experimental-disclaimer" class="note" data-i18n="textContent"></span>
+        </p>
+      </div>
+      <div id="download-settings-enable">
+        <p id="download-enable-p" data-i18n="textContent"></p>
+        <p>
+          <img src="../img/exclamation-circle.png" alt="" width="16" height="16">
+          <span id="download-settings-disclaimer" class="note" data-i18n="textContent"></span>
+        </p>
+      </div>
+    </section>
+    <section id="enhanced" class="mdc-tab-content">
+      <div class="heading">
+        <img src="../img/star.png" alt="" width="16" height="16">
+        <h3 id="enhanced-mode-h3" data-i18n="textContent"></h3>
+        <button id="enhanced-mode-enable-button" data-i18n="textContent"></button>
+        <button id="enhanced-mode-disable-button" data-i18n="textContent"></button>
+      </div>
+      <div id="enhanced-mode-enable">
+        <p id="enhanced-mode-enable-p" data-i18n="textContent"></p>
+      </div>
+      <div id="enhanced-mode-disable">
+        <p id="enhanced-mode-disable-p" data-i18n="textContent"></p>
+      </div>
+    </section>
     <section id="extra" class="mdc-tab-content">
       <header>
         <svg><use xlink:href="../lib/fontawesome.svg#solid-asterisk"></use></svg>
@@ -1188,20 +1340,19 @@
             <div>
               <img src="../img/icon-dark.png" alt="" width="40" height="40">
               <span id="manifest-name"></span>
-              <span id="beta">BETA</span>
             </div>
             <div id="version">
-              <span id="version-span" data-i18n="textContent"></span>&nbsp;<span id="manifest-version"></span> &beta;
+              <span id="version-span" data-i18n="textContent"></span>&nbsp;<span id="manifest-version"></span>
             </div>
           </div>
           <div id="email-website">
             <div>
               <svg class="smaller-icon"><use xlink:href="../lib/fontawesome.svg#regular-envelope"></use></svg>
-              <a href="mailto:infyscrollapp@gmail.com?subject=Infy%20Scroll">infyscrollapp@gmail.com</a>
+              <a href="mailto:urlincrementer@gmail.com?subject=URL%20Incrementer">urlincrementer@gmail.com</a>
             </div>
             <div>
               <svg class="smaller-icon"><use xlink:href="../lib/fontawesome.svg#solid-globe-americas"></use></svg>
-              <a href="https://github.com/roysix/infy-scroll" target="_blank">https://github.com/roysix/infy-scroll</a>
+              <a href="https://github.com/roysix/url-incrementer" target="_blank">https://github.com/roysix/url-incrementer</a>
             </div>
           </div>
         </div>
@@ -1232,6 +1383,7 @@
               </div>
               <div id="credits-everyone">
                 <ul>
+                  <li>Firefox: <a href="#">URL Flipper</a></li>
                   <li>UI: <a href="https://material.io/">Material Design</a></li>
                   <li>Icons: <a href="https://fontawesome.com/">FontAwesome</a></li>
                   <li>Animations: <a href="https://ianlunn.github.io/Hover/">Hover.css</a></li>
@@ -1239,8 +1391,7 @@
                   <li>Dialogs: <a href="https://github.com/mikewest">Mike West</a></li>
                   <li>Loading: <a href="https://loading.io/">Loading.io</a></li>
                   <li>Code Fragments: <a href="https://stackoverflow.com/">Stack Overflow Users</a></li>
-                  <li>User Contributions: @akaustav (Color), Coolio Wolfus (Test), Eric C (Alpha), Gopi P & NickMWPrince (Auto)</li>
-                  <li>Firefox: <a href="#">URL Flipper</a></li>
+                  <li>User Contributions: @akaustav, Coolio Wolfus, Eric C, Gopi P & NickMWPrince</li>
                 </ul>
               </div>
               <div id="credits-you" data-i18n="textContent"></div>
@@ -1262,105 +1413,12 @@
       </div>
     </section>
 
-    <section id="shortcuts">
-      <div id="browser-shortcuts">
-        <div class="heading">
-          <img src="../img/browser.png" alt="" width="16" height="16">
-          <img src="../img/keyboard-o.png" alt="" width="18" height="18">
-          <h3 id="browser-shortcuts-h3" data-i18n="textContent"></h3>
-          <button id="internal-shortcuts-enable-button" data-i18n="textContent"></button>
-        </div>
-        <p id="browser-shortcuts-p1" data-i18n="textContent"></p>
-        <div class="checkbox">
-          <label id="quick-enable-help*browser" class="tooltip-alt" data-i18n="title">
-            <input id="browser-shortcuts-quick-enable-input" type="checkbox">
-            <span id="browser-shortcuts-quick-enable-label" data-i18n="textContent"></span>
-            <img src="../img/question-circle.png" alt="" width="16" height="16">
-          </label>
-        </div>
-        <p>
-          <button id="browser-shortcuts-button" data-i18n="textContent"></button>
-        </p>
-        <p id="browser-shortcuts-p2-note" class="note">
-          <img src="../img/info-circle.png" alt="" width="16" height="16">
-          <span id="browser-shortcuts-p2" data-i18n="textContent"></span>
-        </p>
-      </div>
-      <div id="internal-shortcuts">
-        <div class="heading">
-          <img src="../img/mouse-pointer.png" alt="" width="16" height="16">
-          <img src="../img/keyboard-o.png" alt="" width="18" height="18">
-          <h3 id="internal-shortcuts-h3" data-i18n="textContent"></h3>
-          <button id="browser-shortcuts-enable-button" data-i18n="textContent"></button>
-        </div>
-        <p id="internal-shortcuts-p" data-i18n="textContent"></p>
-        <div class="checkbox">
-          <label id="shortcuts-editable-disabled-help" class="tooltip-alt" data-i18n="title">
-            <input id="shortcuts-editable-disabled-input" type="checkbox">
-            <span id="shortcuts-editable-disabled-label" data-i18n="textContent"></span>
-            <img src="../img/question-circle.png" alt="" width="16" height="16">
-          </label>
-        </div>
-        <div class="checkbox">
-          <label id="quick-enable-help*key" class="tooltip-alt" data-i18n="title">
-            <input id="key-quick-enable-input" type="checkbox">
-            <span id="key-quick-enable-label" data-i18n="textContent"></span>
-            <img src="../img/question-circle.png" alt="" width="16" height="16">
-          </label>
-        </div>
-        <div class="checkbox">
-          <label id="quick-enable-help*mouse" class="tooltip-alt" data-i18n="title">
-            <input id="mouse-quick-enable-input" type="checkbox">
-            <span id="mouse-quick-enable-label" data-i18n="textContent"></span>
-            <img src="../img/question-circle.png" alt="" width="16" height="16">
-          </label>
-          <div id="mouse-click-speed">
-            <label id="mouse-click-speed-label" for="mouse-click-speed-input" data-i18n="textContent"></label>
-            <input id="mouse-click-speed-input" type="number" min="100" step="100" max="1000">
-            <span id="mouse-click-speed-ms" data-i18n="textContent"></span>
-            <img id="mouse-click-speed-help" src="../img/question-circle.png" alt="" width="16" height="16" data-i18n="title">
-          </div>
-        </div>
-        <div id="internal-shortcuts-table" class="table">
-          <div class="row">
-            <div class="column"></div>
-            <div class="column">
-              <img id="key-enable-img" src="../img/check.png" alt="" width="16" height="16">
-              <span id="key-label" data-i18n="textContent"></span>
-            </div>
-            <div class="column">
-              <img id="mouse-enable-img" src="../img/check.png" alt="" width="16" height="16">
-              <span id="mouse-label" data-i18n="textContent"></span>
-            </div>
-            <div class="column">
-              <span id="mouse-clicks-label" data-i18n="textContent"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="one-click-buttons">
-      <div class="heading">
-        <img src="../img/browser-store.png" alt="" height="25">
-        <h3 id="one-click-buttons-h3" data-i18n="textContent"></h3>
-      </div>
-      <p id="one-click-buttons-p" data-i18n="textContent"></p>
-      <a href="https://chrome.google.com/webstore/detail/url-increment-button/decebmdlceenceecblpfjanoocfcmjai" target="_blank">
-        <img src="../img/plus-circle.png" alt="" width="16" height="16">
-        <span id="one-click-buttons-increment" data-i18n="textContent"></span>
-      </a>
-      <p></p>
-      <a href="https://chrome.google.com/webstore/detail/url-decrement-button/nnmjbfglinmjnieblelacmlobabcenfk" target="_blank">
-        <img src="../img/minus-circle.png" alt="" width="16" height="16">
-        <span id="one-click-buttons-decrement" data-i18n="textContent"></span>
-      </a>
-    </section>
 
 
 
 
-    <section id="toolkit-settings">
+
+<!--    <section id="toolkit-settings">
       <div class="heading">
         <img src="../img/wrench.png" alt="" width="16" height="16">
         <h3 id="toolkit-settings-h3" data-i18n="textContent"></h3>
@@ -1377,47 +1435,8 @@
         <h3 id="auto-settings-h3" data-i18n="textContent"></h3>
       </div>
       <p id="auto-settings-p" data-i18n="textContent"></p>
-    </section>
-    <section id="download-settings">
-      <div class="heading">
-        <img id="download-cloud-download" src="../img/cloud-download.png" alt="" width="19" height="19">
-        <h3 id="download-settings-h3" data-i18n="textContent"></h3>
-        <div class="heading-right">
-          <img id="download-experimental-flask" src="../img/flask.png" alt="" width="11" height="11">
-          <span id="experimental-label*download" data-i18n="textContent"></span>
-        </div>
-        <button id="download-enable-button" data-i18n="textContent"></button>
-        <button id="download-disable-button" data-i18n="textContent"></button>
-      </div>
-      <div id="download-settings-disable">
-        <p id="download-disable-p" data-i18n="textContent"></p>
-        <p>
-          <img src="../img/exclamation-circle.png" alt="" width="16" height="16">
-          <span id="download-experimental-disclaimer" class="note" data-i18n="textContent"></span>
-        </p>
-      </div>
-      <div id="download-settings-enable">
-        <p id="download-enable-p" data-i18n="textContent"></p>
-        <p>
-          <img src="../img/exclamation-circle.png" alt="" width="16" height="16">
-          <span id="download-settings-disclaimer" class="note" data-i18n="textContent"></span>
-        </p>
-      </div>
-    </section>
-    <section id="enhanced-mode">
-      <div class="heading">
-        <img src="../img/star.png" alt="" width="16" height="16">
-        <h3 id="enhanced-mode-h3" data-i18n="textContent"></h3>
-        <button id="enhanced-mode-enable-button" data-i18n="textContent"></button>
-        <button id="enhanced-mode-disable-button" data-i18n="textContent"></button>
-      </div>
-      <div id="enhanced-mode-enable">
-        <p id="enhanced-mode-enable-p" data-i18n="textContent"></p>
-      </div>
-      <div id="enhanced-mode-disable">
-        <p id="enhanced-mode-disable-p" data-i18n="textContent"></p>
-      </div>
-    </section>
+    </section>-->
+
 <!--    <section id="about">
       <div class="heading">
         <img src="../img/info-circle.png" alt="" width="16" height="16">

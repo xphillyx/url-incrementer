@@ -78,6 +78,16 @@ var Options = (() => {
     DOM["#saved-urls-tbody"].addEventListener("click", viewSave);
     DOM["#saved-urls-delete-button"].addEventListener("click", function() { deleteSaveById(); });
     DOM["#saved-urls-dialog-json-input"].addEventListener("change", function() { DOM["#saved-urls-dialog-json"].style.display = this.checked ? "block" : "none"; });
+    // Shortcuts
+    // Firefox: There is no programmatic way to go to the extension shortcuts screen, so display message telling the user where to go instead
+    if (typeof browser !== "undefined") {
+      DOM["#shortcuts-firefox"].style.display = "initial";
+      DOM["#shortcuts-button"].style.display = "none";
+    } else {
+      DOM["#shortcuts-firefox"].style.display = "none";
+      DOM["#shortcuts-button"].style.display = "initial";
+      DOM["#shortcuts-button"].addEventListener("click", function() { chrome.tabs.update({url: "chrome://extensions/shortcuts"}); });
+    }
     // Increment Decrement
     MDC.selects.get("selection-select").listen("MDCSelect:change", (el) => { DOM["#selection-custom"].className = el.detail.value === "custom" ? "display-block fade-in" : "display-none"; chrome.storage.local.set({"selectionPriority": el.detail.value}); });
     MDC.selects.get("base-select").listen("MDCSelect:change", (el) => {

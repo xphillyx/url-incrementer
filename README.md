@@ -83,7 +83,7 @@ URL Incrementer does *not* collect or transmit any data from your device or comp
   <li>Dialogs: <a href="https://github.com/mikewest">Mike West</a></li>
   <li>Loading: <a href="https://loading.io/">Loading.io</a></li>
   <li>Code Fragments: <a href="https://stackoverflow.com/">Stack Overflow Users</a></li>
-  <li>User Contributions: @akaustav (Color), Coolio Wolfus (Test), Eric C (Alpha), Gopi P & NickMWPrince (Auto)</li>
+  <li>User Contributions: @akaustav, Coolio Wolfus, Eric C, Gopi P & NickMWPrince</li>
   <li>Firefox: <a href="#">URL Flipper</a></li>
 </ul>
 

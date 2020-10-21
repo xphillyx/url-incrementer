@@ -11,21 +11,6 @@
   "install_dialog_list_2": { "message": "This extension has a lot of options; however, you don't have to adjust anything if you don't want to." },
   "install_dialog_email": { "message": "Lastly, I want you to be 100% happy with URLI. If something isn't working right, please don't hesitate to email me for help: " },
 
-  "BROWSER": { "message": "----- BROWSER -----" },
-  "browser_shortcuts_h3": { "message": "Chrome Shortcuts" },
-  "browser_shortcuts_enable_button": { "message": "Enable Chrome Shortcuts" },
-  "browser_shortcuts_quick_enable_label": { "message": "Enable Quick Chrome Shortcuts" },
-  "browser_shortcuts_p1": { "message": "URLI is set to use Chrome Shortcuts." },
-  "browser_shortcuts_p2": { "message": "Chrome Shortcuts only support limited keys, but you can enable URLI's Internal Shortcuts to use any key you want and even use mouse shortcuts! (requires permissions)" },
-  "browser_shortcuts_button": { "message": "Configure Chrome Shortcuts" },
-  "internal_shortcuts_h3": { "message": "Internal Shortcuts" },
-  "internal_shortcuts_enable_button": { "message": "Enable Internal Shortcuts" },
-  "internal_shortcuts_p": { "message": "URLI is set to use its internal shortcuts! Click on the text boxes and press the key(s) you'd like to set. Alt, Ctrl, Shift, and Meta keys can be used. You can also set mouse shortcuts and the number of clicks. Rocker gestures like \"(Right) Left\" mean hold Right, click Left. If you're on a touch-screen device, select Left for Touch. Note: Internal Shortcuts do not work in Incognito Mode." },
-  "one_click_buttons_h3": { "message": "1-Click Increment Decrement Buttons" },
-  "one_click_buttons_p": { "message": "Accessing URLI's buttons requires 2 clicks, but you can add 1-Click buttons to your toolbar. They use 0 Chrome memory when inactive!" },
-  "one_click_buttons_increment": { "message": "1-Click URL Increment Button for URLI (Chrome Web Store)" },
-  "one_click_buttons_decrement": { "message": "1-Click URL Decrement Button for URLI (Chrome Web Store)" },
-
   "SHARED": { "message": "----- SHARED -----" },
   "selection_label": { "message": "Selection" },
   "interval_label": { "message": "Interval" },
@@ -275,8 +260,11 @@
   "options_tab_ui": { "message": "UI" },
   "options_tab_saves": { "message": "SAVES" },
   "options_tab_shortcuts": { "message": "SHORTCUTS" },
+  "options_tab_one_click": { "message": "1-CLICK" },
   "options_tab_increment": { "message": "INCREMENT" },
   "options_tab_next": { "message": "NEXT" },
+  "options_tab_download": { "message": "DOWNLOAD" },
+  "options_tab_enhanced": { "message": "ENHANCED" },
   "options_tab_extra": { "message": "EXTRA" },
   "options_tab_about": { "message": "ABOUT" },
   "help_guide_label": { "message": "Help Guide" },
@@ -294,6 +282,19 @@
   "interface_messages_label": { "message": "UI Messages" },
   "interface_messages_checkbox_label": { "message": "Show messages in the UI, such as if URLI is already activated" },
 
+
+  "shortcuts_header": { "message": "Shortcuts" },
+  "browser_shortcuts_enable_button": { "message": "Enable Browser Shortcuts" },
+  "browser_shortcuts_quick_enable_label": { "message": "Enable Quick Browser Shortcuts" },
+  "browser_shortcuts_p1": { "message": "URLI is set to use Browser Shortcuts." },
+  "browser_shortcuts_p2": { "message": "Browser Shortcuts only support limited keys, but you can enable URLI's Internal Shortcuts, which lets you use any key you want, and also includes mouse button shortcuts (Requires Permissions)" },
+  "browser_shortcuts_button": { "message": "Configure Browser Shortcuts" },
+  "internal_shortcuts_enable_button": { "message": "Enable Internal Shortcuts" },
+  "internal_shortcuts_p": { "message": "URLI is set to use its internal shortcuts! Click on the text boxes and press the key(s) you'd like to set. Alt, Ctrl, Shift, and Meta keys can be used. You can also set mouse shortcuts and the number of clicks. Rocker gestures like \"(Right) Left\" mean hold Right, click Left. If you're on a touch-screen device, select Left for Touch. Note: Internal Shortcuts do not work in Incognito Mode." },
+  "one_click_buttons_h3": { "message": "1-Click Increment Decrement Buttons" },
+  "one_click_buttons_p": { "message": "Accessing URLI's buttons requires 2 clicks, but you can add 1-Click buttons to your toolbar. They use 0 Chrome memory when inactive!" },
+  "one_click_buttons_increment": { "message": "1-Click URL Increment Button for URLI" },
+  "one_click_buttons_decrement": { "message": "1-Click URL Decrement Button for URLI" },
 
   "shortcuts_editable_disabled_label": { "message": "Prevent shortcuts from firing when typing or focused on an editable element\n" },
   "shortcuts_editable_disabled_help": { "message": "This option prevents internal shortcuts from firing when you are typing or focused on an input, textarea, select, or an element that \"isContentEditable.\" You may want to uncheck it if a website always auto-focuses you on an input after going to the next page." },
@@ -428,6 +429,5 @@
   "thank_you_wish": { "message": "We want you to be 100% happy with URLI, so please email if any issues! URLI loves incrementing for you and wishes you an Incrementful Day!" },
   "tickles_click": { "message" : "That tickles!" },
   "credits_label": { "message": "Credits & Special Thanks" },
-  "credits_everyone": { "message": "NickMWPrince & Gopi P (AUTO Concept), Coolio Wolfus (Ver 1.x Testing), Eric C (Alphanumeric Idea), URL Flipper (Firefox), FontAwesome (Icons), Hover.css (Animations), @mallendeo (Toggles), Mike West (Dialogs), The Chromium Authors (Styles), ZURB Foundation (Styles / Tables), tinypng.com (Compression), regex101.com (Regex Test), httpstat.us (Error Skipping Test), Stack Overflow Users (Internal Code), ..." },
-  "credits_you": { "message": "... and most of all you for using URLI!" }
+  "credits_you": { "message": "... and most of all you for using URLI" }
 }
